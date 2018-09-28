@@ -6,6 +6,10 @@
     <groupId>se.femtearenan</groupId>
     <artifactId>shipstorm</artifactId>
     <version>0.0.1-SNAPSHOT</version>
+    <modules>
+        <module>shipstorm-web</module>
+        <module>shipstorm-data</module>
+    </modules>
     <packaging>pom</packaging>
 
     <name>shipstorm</name>
