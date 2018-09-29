@@ -1,4 +1,4 @@
-package shipstorm.model;
+package se.femtearenan.shipstorm.model;
 
 public class ShipClassAlternateNames extends BaseEntity{
 

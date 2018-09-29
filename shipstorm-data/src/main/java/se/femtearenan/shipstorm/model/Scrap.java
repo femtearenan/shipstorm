@@ -1,4 +1,4 @@
-package shipstorm.model;
+package se.femtearenan.shipstorm.model;
 
 import java.sql.Timestamp;
 
