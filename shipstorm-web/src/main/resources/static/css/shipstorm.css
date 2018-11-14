@@ -38,3 +38,88 @@ div.controls {
     color: #091526;
 
 }
+/* ================================== */
+/* ====== START of NEWS CONTENT ===== */
+.news {
+    min-width: 12rem;
+    min-margin-left: 1rem;
+    min-margin-right: 1rem;
+    margin-left: 20%;
+    margin-right: 20%;
+}
+
+.news p {
+    color: #3a4960;
+}
+
+.attribute-title-column p {
+    color: #161c26;
+}
+
+.news-header {
+    text-align: center;
+}
+
+/* ---- Left column content ---- */
+.text-column {
+    float: left;
+    width: 50%;
+    min-width: 14rem;
+}
+
+.attribute-title-column {
+    float: left;
+    width: 15%;
+    min-width: 5rem;
+}
+
+.attribute-title-column p {
+    text-transform: uppercase;
+    font-weight: bold;
+}
+
+.attribute-value-column {
+    float: left;
+    width: 50%;
+}
+
+/* ---- START of Right column content ---- */
+.img-column {
+    float: left;
+    width: 50%;
+}
+
+.img-and-text {
+    text-align: justify;
+    width: 10rem;
+}
+
+.img-and-text p {
+    text-align: center;
+    font-style: italic;
+}
+
+.img-and-text img {
+    display: block;
+    margin: 0 auto;
+}
+/* ---- END of Right column content  ---- */
+
+.misc-info h2 {
+    color: #161c26;
+}
+
+.news:after {
+    content: "";
+    display: table;
+    clear: both;
+}
+/* ====== END of NEWS CONTENT ===== */
+/* ================================ */
+
+a {
+    font-weight: bold;
+    text-decoration: none;
+    color: #091526;
+
+}

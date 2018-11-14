@@ -13,9 +13,9 @@
     <!-- HEADER -->
     <header>
         <nav>
-            <img id="loggo" th:src="@{/images/shipstorm.png}" />
+            <img class="loggo" th:src="@{/images/shipstorm.png}" />
             <ul>
-                <li><a id="start"  href="/">start</a></li>
+                <li class="active"><a id="start"  href="/">start</a></li>
                 <li><a id="artiklar" href="#">View ships</a></li>
                 <li><a id="app" href="#">Search for ship</a></li>
                 <li><a id="add" href="#">Add a ship</a></li>
@@ -30,14 +30,32 @@
 
     <!-- CONTENT -->
     <main>
-        <article class="controls">
-            <!-- controls -->
-            <ul>
-                <li><a href="#">View all ships</a></li>
-                <li><a href="#">Search for ships</a></li>
-                <li><a href="#">Add a ship</a></li>
-            </ul>
-
+        <article class="news">
+            <div class="news-header">
+                <h1>Latest addition</h1>
+            </div>
+            <div class="text-column">
+                <div class="attribute-title-column">
+                    <p>Name</p>
+                    <p>Type</p>
+                    <p>Pennant</p>
+                </div>
+                <div class="attribute-value-column">
+                    <p>Example name</p>
+                    <p>Example type</p>
+                    <p>Example pennant</p>
+                </div>
+            </div>
+            <div class="img-column">
+                <div class="img-and-text">
+                    <img class="loggo" th:src="@{/images/shipstorm.png}" alt="Simplistic depiction of a sail boat" />
+                    <p>Image missing</p>
+                </div>
+            </div>
+            <div class="misc-info">
+                <h2>Miscallaneous information</h2>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+            </div>
         </article>
     </main>
 
@@ -46,9 +64,10 @@
         <div class="divider"></div>
         <div id="footer-content">
             <ul>
-
+                <li>Back to <a href="http://femtearenan.se">femtearenan.se</a></li>
+                <li>&copy;2018</li>
             </ul>
-            <p>&copy;2018</p>
+            <p> </p>
         </div>
     </footer>
 </div>
