@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/minerva.css}" />
+    <link rel="stylesheet" th:href="@{/css/shipstorm.css}" />
+    <title>SHIPSTORM - femtearenan.se</title>
+</head>
+<body>
+<div id="wrapper">
+
+    <!-- HEADER -->
+    <header>
+        <nav>
+            <img id="loggo" th:src="@{/images/shipstorm.png}" />
+            <ul>
+                <li><a id="start"  href="/">start</a></li>
+                <li><a id="artiklar" href="#">View ships</a></li>
+                <li><a id="app" href="#">Search for ship</a></li>
+                <li><a id="add" href="#">Add a ship</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <div class="divider"></div>
+    <h1 id="homepage"><span id="color-femte">s h i p</span> <span id="color-arenan">s t o r m</span>
+        <span id="spanfill"></span></h1>
+    <div class="divider"></div>
+
+    <!-- CONTENT -->
+    <main>
+        <article class="controls">
+            <!-- controls -->
+            <ul>
+                <li><a href="#">View all ships</a></li>
+                <li><a href="#">Search for ships</a></li>
+                <li><a href="#">Add a ship</a></li>
+            </ul>
+
+        </article>
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="divider"></div>
+        <div id="footer-content">
+            <ul>
+
+            </ul>
+            <p>&copy;2018</p>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

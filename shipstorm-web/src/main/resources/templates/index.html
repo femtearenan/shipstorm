@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/minerva.css}" />
+    <title>Title</title>
+</head>
+<body>
+    <div id="wrapper">
+
+        <!-- HEADER -->
+        <header>
+            <nav>
+                <img id="loggo" th:src="@{/images/fifth.png}" />
+                <ul>
+                    <li><a id="start"  href="/">start</a></li>
+                    <li><a id="artiklar" href="#">artiklar</a></li>
+                    <li><a id="app" href="#">applikationer</a></li>
+                    <li><a id="add" href="#">addendum</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <div class="divider"></div>
+        <h1 id="homepage"><span id="color-femte">f e m t e</span> <span id="color-arenan">a r e n a n</span>
+            <span id="spanfill"></span></h1>
+        <div class="divider"></div>
+
+        <!-- CONTENT -->
+        <main>
+        <article>
+            <h1>Inga artiklar för närvarande.</h1>
+        </article>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="divider"></div>
+            <div id="footer-content">
+                <ul>
+                    <!--li><a href="https://github.com/femtearenan">github</a></li-->
+                </ul>
+                <p>&copy;2018</p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

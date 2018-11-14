@@ -1,0 +1,40 @@
+article.controls {
+    max-width: 9rem;
+    padding-left: 1rem;
+    padding-top: 1rem;
+}
+
+div.controls {
+    padding-left: 0rem;
+    padding-right: 0rem;
+}
+
+.controls h1 {
+}
+
+.controls ul {
+    padding-left: 0rem;
+    list-style-type: none;
+}
+
+.controls li {
+    background: #bed3e2;
+    width: 8rem;
+    height: 2rem;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 1rem;
+    margin-right: 1rem;
+    border-style: groove;
+    border-left-color: #3a4960;
+    border-bottom-color: #4a5970;
+    border-top-color: #9eb3c2;
+    border-right-color: #aec3d2;
+}
+
+.controls a {
+    margin-left: 1rem;
+    text-decoration: none;
+    color: #091526;
+
+}

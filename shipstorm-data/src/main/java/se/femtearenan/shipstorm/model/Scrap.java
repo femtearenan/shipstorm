@@ -1,7 +1,9 @@
 package se.femtearenan.shipstorm.model;
 
+import javax.persistence.Entity;
 import java.sql.Timestamp;
 
+@Entity
 public class Scrap extends BaseEntity{
 
     //ManyToOne

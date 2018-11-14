@@ -1,7 +1,9 @@
 package se.femtearenan.shipstorm.model;
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity
 public class ShipClass extends BaseEntity{
 
     String name;

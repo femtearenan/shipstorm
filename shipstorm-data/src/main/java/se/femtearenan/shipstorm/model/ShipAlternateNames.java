@@ -1,5 +1,8 @@
 package se.femtearenan.shipstorm.model;
 
+import javax.persistence.Entity;
+
+@Entity
 public class ShipAlternateNames extends BaseEntity{
 
     //ManyToOne

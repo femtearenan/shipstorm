@@ -1,0 +1,214 @@
+html {
+    background-color: #4c4c4c;
+}
+
+img {
+    margin: 0;
+    padding: 0;
+}
+
+#wrapper {
+    margin: auto;
+    min-width: 25em;
+    max-width: 80em;
+    width: 90%;
+    background-color: #bed3e2;
+}
+
+/*
+ * THE HEADER BEGINS HERE
+ */
+nav {
+    height: 10em;
+}
+
+#loggo {
+
+    margin-top: 0.8em;
+    margin-left:2.3em;
+    margin-bottom: 0em;
+    height: 8.3em;
+    float: left;
+
+}
+
+nav ul {
+    height: 8.5em;
+    padding-top: 1.2em;
+    list-style-type: none;
+}
+
+nav a {
+    text-decoration: none;
+    text-transform:uppercase;
+    color: #303c4f;
+    line-height: 2em;
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    font-weight: 600;
+}
+
+
+#start {
+    margin-left: 0.4em;
+}
+
+#artiklar {
+    margin-left: 0.8em;
+}
+
+#app {
+    margin-left: 0.8em;
+}
+
+#add {
+    margin-left: 0em;
+}
+
+.line-list {
+    margin: 0;
+    padding: 0;
+    background-color: red;
+}
+
+.line-list ul {
+    list-style-type: none;
+}
+
+.line-list li {
+    display: inline;
+    margin-right: 2em;
+}
+
+.line-list a {
+    text-decoration: none;
+    text-transform:uppercase;
+    color: #303c4f;
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+}
+
+.active a{
+    color: rgb(209, 132, 16);
+}
+
+nav a:hover {
+    color: rgb(124, 94, 18);
+}
+
+#homepage {
+    min-width: 10em;
+    padding: 0;
+    margin: 0;
+    margin-left: 1.2em;
+    margin-right: 1.2em;
+    font-family: "Century Gothic", CenturyGothic, AppleGothic, sans-serif;
+    text-align: justify;
+    height: 1.2em;
+}
+
+#spanfill {
+    display: inline-block;
+    width: 100%;
+}
+
+#color-femte {
+    color: #161c26;
+}
+
+#color-arenan {
+    color: #3a4960;
+}
+
+/*
+ * THE HEADER ENDS HERE
+ */
+
+.divider {
+    height: 0.15em;
+    background-color: #4c4c4c;
+    margin: 0;
+    margin-left: 2.3em;
+    margin-right: 2.3em;
+    padding: 0;
+}
+
+/*
+ * THE MAIN CONTENT begins:
+ */
+
+main {
+    padding-left: 2.3em;
+    padding-right: 2.3em;
+    margin-bottom: 2em;
+}
+
+article {
+    border-left-width: 0.08em;
+    border-left-style: dashed;
+    border-color: #4c4c4c;
+    border-left-color: #161c26;
+    border-bottom-width: 0.15em;
+    border-bottom-style: dotted;
+    background-color: aliceblue;
+
+    margin-top: 1.5em;
+    padding-top: 0.0em;
+    padding-left: 2.5em;
+    padding-right: 2.5em;
+}
+
+p {
+    text-align:justify;
+}
+
+article h1 {
+    font-family: "Book Antiqua", Palatino, "Palatino Linotype", "Palatino LT STD", Georgia, serif;
+    margin:0;
+    color: #091526;
+}
+
+time {
+    font-family: Courier New, Courier, Lucida Sans Typewriter, Lucida Typewriter, monospace;
+}
+
+.publish {
+    margin-top: 0em;
+    /*margin-left: 3em;
+    padding-top: 0em;
+    padding-left: 0em;*/
+
+    font-size: small;
+}
+
+.author {
+    font-style: italic;
+}
+/*
+ * THE MAIN CONTENT ends.
+ */
+
+
+
+/*
+ * THE FOOTER begins:
+ */
+
+#footer-content {
+    padding-left: 2.3em;
+}
+
+footer {
+    padding-bottom: 0.5em
+}
+
+footer ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+footer a {
+    text-decoration: none;
+}
+
+/*
+ * THE FOOTER ends.
+ */

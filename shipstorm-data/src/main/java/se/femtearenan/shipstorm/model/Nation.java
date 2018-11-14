@@ -1,8 +1,10 @@
 package se.femtearenan.shipstorm.model;
 
 
+import javax.persistence.Entity;
 import java.util.ArrayList;
 
+@Entity
 public class Nation extends BaseEntity{
 
     String name;
