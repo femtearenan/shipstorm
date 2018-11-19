@@ -45,6 +45,14 @@
         </plugins>
     </build>
 
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <optional>true</optional>
+        </dependency>
+    </dependencies>
+
     <scm>
         <developerConnection>scm:git:https://github.com/femtearenan/shipstorm.git</developerConnection>
         <tag>HEAD</tag>
