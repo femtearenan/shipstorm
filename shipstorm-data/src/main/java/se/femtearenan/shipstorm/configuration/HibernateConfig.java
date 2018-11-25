@@ -43,23 +43,8 @@ public class HibernateConfig {
         return properties;
     }
 
-    /*
-    @Bean
-    public LocalSessionFactoryBean sessionFactory() {
-        System.out.println(">>>>>>>>>>  Setting up sessionFactory  <<<<<<<<<<<");
-        Resource config = new ClassPathResource("hibernate.cfg.xml");
-        LocalSessionFactoryBean sessionFactory = new LocalSessionFactoryBean();
-        sessionFactory.setConfigLocation(config);
-        sessionFactory.setPackagesToScan(env.getProperty("shipstorm.entity.package"));
-        sessionFactory.setDataSource(dataSource());
-
-        return sessionFactory;
-    }
-    */
-
     @Bean
     public DataSource dataSource() {
-        System.out.println(">>>>>>>>>>  Setting up dataSource  <<<<<<<<<<<");
         BasicDataSource ds = new BasicDataSource();
 
         ds.setDriverClassName(env.getProperty("shipstorm.db.driver"));
