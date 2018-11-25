@@ -3,9 +3,9 @@ package se.femtearenan.shipstorm.services;
 import se.femtearenan.shipstorm.model.Ship;
 
 public interface ShipService {
-    Iterable<Ship> listAllShipClasses();
+    Iterable<Ship> listAllShips();
 
-    Ship getShipClassById(Long id);
+    Ship getShipById(Long id);
 
     Ship save(Ship ship);
 }

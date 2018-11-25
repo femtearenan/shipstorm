@@ -15,12 +15,12 @@ public class ShipServiceImpl implements ShipService {
     }
 
     @Override
-    public Iterable<Ship> listAllShipClasses() {
+    public Iterable<Ship> listAllShips() {
         return shipRepository.findAll();
     }
 
     @Override
-    public Ship getShipClassById(Long id) {
+    public Ship getShipById(Long id) {
         return shipRepository.findById(id).orElse(null);
     }
 

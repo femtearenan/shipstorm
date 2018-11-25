@@ -34,7 +34,19 @@ public class ShipstormApplication {
             buster.setName("Buster");
             buster.setNation(sweden);
             buster.setShipClass(boat);
+            buster.setPennant("22");
             shipService.save(buster);
+
+            ShipClass shipClass = new ShipClass();
+            shipClass.setName("Ship");
+            shipClassService.save(shipClass);
+
+            Ship lorry = new Ship();
+            lorry.setName("Lorry");
+            lorry.setNation(sweden);
+            lorry.setShipClass(shipClass);
+            lorry.setPennant("ABC");
+            shipService.save(lorry);
         };
     }
 
