@@ -1,7 +1,10 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Ship extends BaseEntity{
@@ -9,17 +12,17 @@ public class Ship extends BaseEntity{
     String pennant;
     String name;
 
-    //OneToMany(mappedBy = "ship")
-    ArrayList<ShipAlternateNames> alternateNames;
+    @OneToMany(mappedBy = "ship")
+    List<ShipAlternateNames> alternateNames;
 
-    //ManyToOne
+    @ManyToOne
     Nation nation;
 
-    //ManyToOne
+    @ManyToOne
     ShipClass shipClass;
 
-    //OneToMany(mappedBy = "ship")
-    ArrayList<Scrap> scraps;
+    @ManyToMany
+    List<Scrap> scraps;
 
     public Ship() {}
 
@@ -39,11 +42,11 @@ public class Ship extends BaseEntity{
         this.name = name;
     }
 
-    public ArrayList<ShipAlternateNames> getAlternateNames() {
+    public List<ShipAlternateNames> getAlternateNames() {
         return alternateNames;
     }
 
-    public void setAlternateNames(ArrayList<ShipAlternateNames> alternateNames) {
+    public void setAlternateNames(List<ShipAlternateNames> alternateNames) {
         this.alternateNames = alternateNames;
     }
 
@@ -63,11 +66,11 @@ public class Ship extends BaseEntity{
         this.shipClass = shipClass;
     }
 
-    public ArrayList<Scrap> getScraps() {
+    public List<Scrap> getScraps() {
         return scraps;
     }
 
-    public void setScraps(ArrayList<Scrap> scraps) {
+    public void setScraps(List<Scrap> scraps) {
         this.scraps = scraps;
     }
 }

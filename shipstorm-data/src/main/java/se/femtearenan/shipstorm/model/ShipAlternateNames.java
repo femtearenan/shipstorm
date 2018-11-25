@@ -1,11 +1,12 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class ShipAlternateNames extends BaseEntity{
 
-    //ManyToOne
+    @ManyToOne
     Ship ship;
 
     String alternateName;

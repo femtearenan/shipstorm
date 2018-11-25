@@ -2,7 +2,8 @@ package se.femtearenan.shipstorm.model;
 
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Nation extends BaseEntity{
@@ -10,8 +11,8 @@ public class Nation extends BaseEntity{
     String name;
     String abbreviation;
 
-    //OneToMany(mappedBy = "nation")
-    ArrayList<Ship> ships;
+    @OneToMany(mappedBy = "nation")
+    List<Ship> ships;
 
     public Nation(){}
 
@@ -31,11 +32,11 @@ public class Nation extends BaseEntity{
         this.abbreviation = abbreviation;
     }
 
-    public ArrayList<Ship> getShips() {
+    public List<Ship> getShips() {
         return ships;
     }
 
-    public void setShips(ArrayList<Ship> ships) {
+    public void setShips(List<Ship> ships) {
         this.ships = ships;
     }
 }

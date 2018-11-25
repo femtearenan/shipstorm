@@ -1,16 +1,17 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class ShipClass extends BaseEntity{
 
     String name;
 
-    //OneToMany(mappedBy = "shipClass")
-    ArrayList<ShipClassAlternateNames> alternativeNames;
+    @OneToMany(mappedBy = "shipClass")
+    List<ShipClassAlternateNames> alternativeNames;
 
-    //OneToMany(mappedBy = "shipClass")
-    ArrayList<Ship> ships;
+    @OneToMany(mappedBy = "shipClass")
+    List<Ship> ships;
 }

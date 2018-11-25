@@ -1,31 +1,34 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
+import java.util.List;
 
 @Entity
 public class Scrap extends BaseEntity{
 
-    //ManyToOne
-    Ship shipMention;
+    @ManyToMany
+    List<Ship> shipMentions;
 
-    //ManyToOne
+    @ManyToOne
     ShipClass shipClassMention;
 
     String content;
 
-    //OneToOne(mappedBy = "scrap")
+    @ManyToOne
     Source source;
     Timestamp timestamp;
 
     Scrap() {}
 
-    public Ship getShipMention() {
-        return shipMention;
+    public List<Ship> getShipMentions() {
+        return shipMentions;
     }
 
-    public void setShipMention(Ship shipMention) {
-        this.shipMention = shipMention;
+    public void setShipMentions(List<Ship> shipMentions) {
+        this.shipMentions = shipMentions;
     }
 
     public ShipClass getShipClassMention() {

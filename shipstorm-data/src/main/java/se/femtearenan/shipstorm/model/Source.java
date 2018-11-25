@@ -1,7 +1,8 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
-import java.util.ArrayList;
+import javax.persistence.OneToMany;
+import java.util.List;
 
 @Entity
 public class Source extends BaseEntity{
@@ -9,6 +10,6 @@ public class Source extends BaseEntity{
     String source;
     String name;
 
-    //ManyToMany
-    ArrayList<Scrap> scraps;
+    @OneToMany
+    List<Scrap> scraps;
 }
