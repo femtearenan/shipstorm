@@ -1,13 +1,14 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
-public class Scrap extends BaseEntity{
+public class Scrap {
 
     @ManyToMany
     List<Ship> shipMentions;
@@ -19,9 +20,21 @@ public class Scrap extends BaseEntity{
 
     @ManyToOne
     Source source;
+
     Timestamp timestamp;
 
     Scrap() {}
+
+    @Id
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public List<Ship> getShipMentions() {
         return shipMentions;

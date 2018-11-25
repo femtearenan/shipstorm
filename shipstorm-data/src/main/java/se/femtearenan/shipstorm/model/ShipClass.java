@@ -1,11 +1,12 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.Entity;
+import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 
 @Entity
-public class ShipClass extends BaseEntity{
+public class ShipClass {
 
     String name;
 
@@ -14,4 +15,18 @@ public class ShipClass extends BaseEntity{
 
     @OneToMany(mappedBy = "shipClass")
     List<Ship> ships;
+
+    public ShipClass() {
+    }
+
+    @Id
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 }

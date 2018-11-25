@@ -1,13 +1,10 @@
 package se.femtearenan.shipstorm.model;
 
-import javax.persistence.Entity;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.List;
 
 @Entity
-public class Ship extends BaseEntity{
+public class Ship {
 
     String pennant;
     String name;
@@ -25,6 +22,17 @@ public class Ship extends BaseEntity{
     List<Scrap> scraps;
 
     public Ship() {}
+
+    @Id
+    private Long id;
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getPennant() {
         return pennant;
