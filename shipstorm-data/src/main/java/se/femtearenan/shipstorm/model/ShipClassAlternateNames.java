@@ -1,8 +1,6 @@
 package se.femtearenan.shipstorm.model;
 
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.ManyToOne;
+import javax.persistence.*;
 
 @Entity
 public class ShipClassAlternateNames {
@@ -15,6 +13,7 @@ public class ShipClassAlternateNames {
     ShipClassAlternateNames() {}
 
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     public Long getId() {

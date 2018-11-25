@@ -11,7 +11,6 @@ public class NationServiceImpl implements NationService {
 
     @Autowired
     public void setNationRepository(NationRepository nationRepository) {
-        System.out.println("Autowiring nationRepository.");
         this.nationRepository = nationRepository;
     }
 
