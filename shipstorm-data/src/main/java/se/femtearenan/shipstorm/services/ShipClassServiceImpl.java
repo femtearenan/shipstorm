@@ -1,9 +1,11 @@
 package se.femtearenan.shipstorm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.repositories.ShipClassRepository;
 
+@Service
 public class ShipClassServiceImpl implements ShipClassService {
     private ShipClassRepository shipClassRepository;
 
