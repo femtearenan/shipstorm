@@ -15,10 +15,10 @@
         <nav>
             <img class="loggo" th:src="@{/images/shipstorm.png}" />
             <ul>
-                <li class="active"><a id="start"  href="/">start</a></li>
+                <li><a id="start"  href="#">start</a></li>
                 <li><a id="artiklar" href="#">View ships</a></li>
                 <li><a id="app" href="#">Search for ship</a></li>
-                <li><a id="add" href="#">Add a ship</a></li>
+                <li class="active"><a id="add" href="#">Add a ship</a></li>
             </ul>
         </nav>
     </header>
@@ -30,55 +30,115 @@
 
     <!-- CONTENT -->
     <main>
-        <article class="news">
-            <div class="news-header">
+        <article class="ship-artice">
+            <div class="ship-header">
                 <h1>Add ship</h1>
             </div>
             <div class="ship">
-                <form th:object="${ship}" th:action="@{shipstrorm/ship}" method="post">
+                <form th:object="${ship}" th:action="@{add-ship}" method="post">
                     <input type="hidden" th:field="*{id}"/>
-                    <div class="form-group">
-                        <label>Name</label>
-                        <input type="text" th:field="*{name}">
+
+                    <div class="form-group-pair">
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Name</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input type="text" th:field="*{name}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Pennant</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input type="text" th:field="*{pennant}" />
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Pennant</label>
-                        <input type="text" th:field="*{pennant}">
+
+                    <div class="form-group-pair">
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Class</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input class="lister" list="ship-classes-list" />
+                                <datalist id="ship-classes-list">
+                                    <option th:each="shipClass : ${classes}" th:value="${shipClass.name}" th:text="${shipClass.name}">Example</option>
+                                </datalist>
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Nation</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input class="lister" list="nations-list" />
+                                <datalist id="nations-list" th:each="nation :  ${nations}">
+                                    <option th:value="${nation.name}" th:text="${nation.name}">Example</option>
+                                </datalist>
+                            </div>
+                        </div>
                     </div>
-                    <div class="form-group">
-                        <label>Class</label>
-                        <input type="text" th:field="*{shipClass}">
-                    </div>
-                    <div class="form-group">
-                        <label>Nation</label>
-                        <input type="text" th:field="*{nation}">
+
+                    <div class="submit">
+                        <button type="submit" class="btn btn-default">Submit</button>
                     </div>
                 </form>
 
-                <div class="text-column">
-                    <div class="attribute-title-column">
-                        <p>Name</p>
-                        <p>Type</p>
-                        <p>Pennant</p>
-                        <p>Nation</p>
-                    </div>
-                    <div class="attribute-value-column">
-                        <p th:text="${ship.name}">Example name</p>
-                        <p th:text="${ship.shipClass.name}">Example type</p>
-                        <p th:text="${ship.pennant}">Example pennant</p>
-                        <p th:text="${ship.nation.name}">Example nation</p>
-                    </div>
+                <!-- ================== SHIP CLASS FORM ================== -->
+                <div class="show-ship-class"><h3>Add a ship class</h3>
+                    <form class="form-ship-class" th:object="${shipClass}" th:action="@{add-class}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Class</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input type="text" th:field="*{name}" />
+                            </div>
+                        </div>
+
+                        <div class="submit">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="img-column">
-                    <div class="img-and-text">
-                        <img class="loggo" th:src="@{/images/shipstorm.png}" alt="Simplistic depiction of a sail boat" />
-                        <p>Image missing</p>
-                    </div>
+
+                <!-- ================== NATIONS FORM ================== -->
+                <div class="show-nation"><h3>Add a nation</h3>
+                    <form class="form-nation" th:object="${nation}" th:action="@{add-nation}" method="post">
+                        <input type="hidden" th:field="*{id}"/>
+
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Nation</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input type="text" th:field="*{name}" />
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <div class="form-left-column">
+                                <label>Abbreviation</label>
+                            </div>
+                            <div class="form-right-column">
+                                <input type="text" th:field="*{abbreviation}" />
+                            </div>
+                        </div>
+
+                        <div class="submit">
+                            <button type="submit" class="btn btn-default">Submit</button>
+                        </div>
+                    </form>
                 </div>
-                <div class="misc-info">
-                    <h2>Miscellaneous information</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
+                <!-- ================== End of forms ================== -->
+
                 <div class="divider"></div>
             </div>
         </article>

@@ -61,6 +61,7 @@ div.controls {
 }
 
 /* ---- Left column content ---- */
+
 .text-column {
     float: left;
     width: 50%;
@@ -116,6 +117,66 @@ div.controls {
 }
 /* ====== END of NEWS CONTENT ===== */
 /* ================================ */
+
+/* ------ START additional form ----- */
+
+.ship-article h3 {
+    margin-top: 1rem;
+}
+
+.ship-header {
+    padding-top: 1rem;
+    padding-bottom: 0.5rem;
+    padding-left: 5.1rem;
+}
+
+.form-ship-class {
+    display: none;
+}
+
+.show-ship-class:hover> .form-ship-class {
+    display: block;
+}
+
+.form-nation {
+    display: none;
+}
+
+.show-nation:hover> .form-nation {
+    display: block;
+}
+
+.form-group {
+    min-width: 15rem;
+    height: 3rem;
+    margin-left: 1rem;
+    display: inline-block;
+}
+
+.form-left-column {
+    min-width: 4rem;
+    display: inline-block;
+    text-align: right;
+}
+
+.form-right-column {
+    display: inline-block;
+
+}
+
+.form-group-pair {
+    display: inline-block;
+}
+
+.lister {
+    background-color: lightgrey;
+}
+
+.submit {
+    margin-left: 5.3rem;
+}
+
+/* ------ END additional form ----- */
 
 a {
     font-weight: bold;

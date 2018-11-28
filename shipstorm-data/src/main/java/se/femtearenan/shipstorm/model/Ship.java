@@ -75,6 +75,10 @@ public class Ship {
         this.shipClass = shipClass;
     }
 
+    public String getShipClassName() {
+        return shipClass.getName();
+    }
+
     public List<Scrap> getScraps() {
         return scraps;
     }
