@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -49,8 +50,11 @@ public class ShipstormController {
 
     @RequestMapping("/shipstorm/ship/{id}")
     public String showShip(@PathVariable Long id, Model model) {
-        model.addAttribute("ship", shipService.getShipById(id));
-        return "shipshow";
+        Ship ship = shipService.getShipById(id);
+        model.addAttribute("ship", ship);
+        model.addAttribute("nation", ship.getNation());
+        model.addAttribute("class", ship.getShipClass());
+        return "show";
     }
 
     @RequestMapping("/shipstorm/ship/add")
@@ -58,15 +62,17 @@ public class ShipstormController {
         model.addAttribute("ship", new Ship());
         model.addAttribute("shipClass", new ShipClass());
         model.addAttribute("nation", new Nation());
+        model.addAttribute("generateShip", new GenerateShip());
         model.addAttribute("nations", nationService.listAllNations());
         model.addAttribute("classes", shipClassService.listAllShipClasses());
         return "shipform";
     }
 
     @RequestMapping(value = "/shipstorm/ship/add-ship", method = RequestMethod.POST)
-    public String saveShip(Ship ship) {
-        shipService.save(ship);
-        return "redirect:/ship/" + ship.getId();
+    public String saveShip(GenerateShip generateShip) {
+        Ship ship = generateShip.buildShip(shipService, nationService, shipClassService);
+        Ship savedShip = shipService.save(ship);
+        return "redirect:/shipstorm/ship/" + savedShip.getId();
     }
 
     @RequestMapping(value = "/shipstorm/ship/add-class", method = RequestMethod.POST)

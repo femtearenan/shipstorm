@@ -35,7 +35,7 @@
                 <h1>Add ship</h1>
             </div>
             <div class="ship">
-                <form th:object="${ship}" th:action="@{add-ship}" method="post">
+                <form th:object="${generateShip}" th:action="@{add-ship}" method="post">
                     <input type="hidden" th:field="*{id}"/>
 
                     <div class="form-group-pair">
@@ -64,9 +64,9 @@
                                 <label>Class</label>
                             </div>
                             <div class="form-right-column">
-                                <input class="lister" list="ship-classes-list" />
+                                <input class="lister" list="ship-classes-list" th:field="*{shipClassId}"/>
                                 <datalist id="ship-classes-list">
-                                    <option th:each="shipClass : ${classes}" th:value="${shipClass.name}" th:text="${shipClass.name}">Example</option>
+                                    <option th:each="shipClass : ${classes}" th:value="${shipClass.id}" th:text="${shipClass.name}">Example</option>
                                 </datalist>
                             </div>
                         </div>
@@ -76,9 +76,9 @@
                                 <label>Nation</label>
                             </div>
                             <div class="form-right-column">
-                                <input class="lister" list="nations-list" />
+                                <input class="lister" list="nations-list" th:field="*{nationId}"/>
                                 <datalist id="nations-list" th:each="nation :  ${nations}">
-                                    <option th:value="${nation.name}" th:text="${nation.name}">Example</option>
+                                    <option th:value="${nation.id}" th:text="${nation.name}">Example</option>
                                 </datalist>
                             </div>
                         </div>
