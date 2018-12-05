@@ -81,7 +81,7 @@ public class ShipstormController {
         return "redirect:/shipstorm/ship/add";
     }
 
-    @RequestMapping(value = "/shipstorm/ship/nation", method = RequestMethod.POST)
+    @RequestMapping(value = "/shipstorm/ship/add-nation", method = RequestMethod.POST)
     public String saveNation(Nation nation) {
         nationService.save(nation);
         return "redirect:/shipstorm/ship/add";

@@ -77,8 +77,8 @@
                             </div>
                             <div class="form-right-column">
                                 <input class="lister" list="nations-list" th:field="*{nationId}"/>
-                                <datalist id="nations-list" th:each="nation :  ${nations}">
-                                    <option th:value="${nation.id}" th:text="${nation.name}">Example</option>
+                                <datalist id="nations-list">
+                                    <option th:each="nation :  ${nations}" th:value="${nation.id}" th:text="${nation.name}">Example</option>
                                 </datalist>
                             </div>
                         </div>
