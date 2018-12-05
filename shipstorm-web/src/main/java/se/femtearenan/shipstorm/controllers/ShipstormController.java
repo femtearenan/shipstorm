@@ -14,6 +14,9 @@ import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Controller
 public class ShipstormController {
 
@@ -57,7 +60,7 @@ public class ShipstormController {
         return "show";
     }
 
-    @RequestMapping("/shipstorm/ship/add")
+    @RequestMapping("/shipstorm/add")
     public String add(Model model) {
         model.addAttribute("ship", new Ship());
         model.addAttribute("shipClass", new ShipClass());
@@ -68,22 +71,36 @@ public class ShipstormController {
         return "shipform";
     }
 
-    @RequestMapping(value = "/shipstorm/ship/add-ship", method = RequestMethod.POST)
+    @RequestMapping(value = "/shipstorm/add-ship", method = RequestMethod.POST)
     public String saveShip(GenerateShip generateShip) {
         Ship ship = generateShip.buildShip(shipService, nationService, shipClassService);
         Ship savedShip = shipService.save(ship);
         return "redirect:/shipstorm/ship/" + savedShip.getId();
     }
 
-    @RequestMapping(value = "/shipstorm/ship/add-class", method = RequestMethod.POST)
+    @RequestMapping(value = "/shipstorm/add-class", method = RequestMethod.POST)
     public String saveShipClass(ShipClass shipClass) {
         shipClassService.save(shipClass);
-        return "redirect:/shipstorm/ship/add";
+        return "redirect:/shipstorm/add";
     }
 
-    @RequestMapping(value = "/shipstorm/ship/add-nation", method = RequestMethod.POST)
+    @RequestMapping(value = "/shipstorm/add-nation", method = RequestMethod.POST)
     public String saveNation(Nation nation) {
         nationService.save(nation);
-        return "redirect:/shipstorm/ship/add";
+        return "redirect:/shipstorm/add";
+    }
+
+    @RequestMapping("/shipstorm/search")
+    public String searchShip(Model model) {
+        Set<String> entityTypes = new HashSet<>();
+        entityTypes.add("Ship");
+        entityTypes.add("Type");
+        entityTypes.add("Nation");
+        entityTypes.add("Pennant");
+        entityTypes.add("All");
+
+        model.addAttribute("entityType", entityTypes);
+
+        return "search";
     }
 }
