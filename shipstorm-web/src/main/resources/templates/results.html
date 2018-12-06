@@ -15,7 +15,7 @@
         <nav>
             <img class="loggo" th:src="@{/images/shipstorm.png}" />
             <ul>
-                <li class="active"><a id="start"  href="/shipstorm">start</a></li>
+                <li class="active"><a id="start"  th:href="@{/shipstorm}">start</a></li>
                 <li><a id="artiklar" th:href="@{/shipstorm/ships}">View ships</a></li>
                 <li><a id="app" th:href="@{/shipstorm/search}">Search for ship</a></li>
                 <li><a id="add" th:href="@{/shipstorm/add}">Add a ship</a></li>
@@ -36,20 +36,22 @@
             </div>
 
             <div class="ship">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Pennant</th>
-                        <th>Nation</th>
-                    </tr>
-                    <tr th:each="ship : ${ships}">
-                        <td th:text="${ship.name}">Example name</td>
-                        <td th:text="${ship.shipClass.name}">Example type</td>
-                        <td th:text="${ship.pennant}">Example pennant</td>
-                        <td th:text="${ship.nation.name}">Example nation</td>
-                    </tr>
-                </table>
+                <div th:if="${hasResult}">
+                    <table>
+                        <tr>
+                            <th>Name</th>
+                            <th>Type</th>
+                            <th>Pennant</th>
+                            <th>Nation</th>
+                        </tr>
+                        <tr th:each="ship : ${result}">
+                            <td th:text="${ship.name}">Example name</td>
+                            <td th:text="${ship.shipClass.name}">Example type</td>
+                            <td th:text="${ship.pennant}">Example pennant</td>
+                            <td th:text="${ship.nation.name}">Example nation</td>
+                        </tr>
+                    </table>
+                </div>
             </div>
         </article>
     </main>

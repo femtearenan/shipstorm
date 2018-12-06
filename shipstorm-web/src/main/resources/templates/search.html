@@ -15,10 +15,10 @@
         <nav>
             <img class="loggo" th:src="@{/images/shipstorm.png}" />
             <ul>
-                <li class="active"><a id="start"  href="/shipstorm">start</a></li>
-                <li><a id="artiklar" href="/shipstorm/ships">View ships</a></li>
-                <li><a id="app" href="#">Search for ship</a></li>
-                <li><a id="add" href="/shipstorm/add">Add a ship</a></li>
+                <li class="active"><a id="start"  th:href="@{/shipstorm}">start</a></li>
+                <li><a id="artiklar" th:href="@{/shipstorm/ships}">View ships</a></li>
+                <li><a id="app" th:href="@{/shipstorm/search}">Search for ship</a></li>
+                <li><a id="add" th:href="@{/shipstorm/add}">Add a ship</a></li>
             </ul>
         </nav>
     </header>
@@ -36,20 +36,18 @@
             </div>
 
             <div class="ship">
-                <table>
-                    <tr>
-                        <th>Name</th>
-                        <th>Type</th>
-                        <th>Pennant</th>
-                        <th>Nation</th>
-                    </tr>
-                    <tr>
-                        <td>Example name</td>
-                        <td>Example type</td>
-                        <td>Example pennant</td>
-                        <td>Example nation</td>
-                    </tr>
-                </table>
+                <form th:action="@{search}">
+                    <select name="entity" id="entity-type-list">
+                        <option th:each="entity : ${entityType}" th:value="${entity}" th:text="${entity}"></option>
+                    </select>
+
+                    <input type="text" name="searchString"/>
+
+                    <div class="submit">
+                        <button type="submit" class="btn btn-default">Submit</button>
+                    </div>
+
+                </form>
             </div>
         </article>
     </main>

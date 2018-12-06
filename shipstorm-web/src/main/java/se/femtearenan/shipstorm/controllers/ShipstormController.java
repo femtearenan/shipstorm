@@ -14,9 +14,6 @@ import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
-import java.util.HashSet;
-import java.util.Set;
-
 @Controller
 public class ShipstormController {
 
@@ -90,17 +87,4 @@ public class ShipstormController {
         return "redirect:/shipstorm/add";
     }
 
-    @RequestMapping("/shipstorm/search")
-    public String searchShip(Model model) {
-        Set<String> entityTypes = new HashSet<>();
-        entityTypes.add("Ship");
-        entityTypes.add("Type");
-        entityTypes.add("Nation");
-        entityTypes.add("Pennant");
-        entityTypes.add("All");
-
-        model.addAttribute("entityType", entityTypes);
-
-        return "search";
-    }
 }
