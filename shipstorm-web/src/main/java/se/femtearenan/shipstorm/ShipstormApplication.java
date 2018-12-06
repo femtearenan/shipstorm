@@ -4,6 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -26,27 +27,34 @@ public class ShipstormApplication {
             sweden.setName("Sweden");
             nationService.save(sweden);
 
-            ShipClass boat = new ShipClass();
-            boat.setName("Boat");
-            shipClassService.save(boat);
+            Nation denmark = new Nation();
+            denmark.setAbbreviation("DK");
+            denmark.setName("Denmark");
+            nationService.save(denmark);
 
-            Ship buster = new Ship();
-            buster.setName("Buster");
-            buster.setNation(sweden);
-            buster.setShipClass(boat);
-            buster.setPennant("22");
-            shipService.save(buster);
+            ShipClass malmo = new ShipClass();
+            malmo.setName("Malmö");
+            malmo.setType(ShipTypes.PB);
+            shipClassService.save(malmo);
 
-            ShipClass shipClass = new ShipClass();
-            shipClass.setName("Ship");
-            shipClassService.save(shipClass);
+            Ship stockholm = new Ship();
+            stockholm.setName("Stockholm");
+            stockholm.setNation(sweden);
+            stockholm.setShipClass(malmo);
+            stockholm.setPennant("P11");
+            shipService.save(stockholm);
 
-            Ship lorry = new Ship();
-            lorry.setName("Lorry");
-            lorry.setNation(sweden);
-            lorry.setShipClass(shipClass);
-            lorry.setPennant("ABC");
-            shipService.save(lorry);
+            ShipClass thetis = new ShipClass();
+            thetis.setName("Thetis");
+            thetis.setType(ShipTypes.FF);
+            shipClassService.save(thetis);
+
+            Ship hvidbjornen = new Ship();
+            hvidbjornen.setName("Hvidbjørnen");
+            hvidbjornen.setNation(denmark);
+            hvidbjornen.setShipClass(thetis);
+            hvidbjornen.setPennant("F360");
+            shipService.save(hvidbjornen);
         };
     }
 

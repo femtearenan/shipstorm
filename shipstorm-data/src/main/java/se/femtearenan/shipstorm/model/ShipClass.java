@@ -1,5 +1,7 @@
 package se.femtearenan.shipstorm.model;
 
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -11,6 +13,8 @@ public class ShipClass {
     private Long id;
 
     String name;
+
+    ShipTypes type;
 
     @OneToMany(mappedBy = "shipClass")
     List<ShipClassAlternateNames> alternativeNames;
@@ -35,6 +39,14 @@ public class ShipClass {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public ShipTypes getType() {
+        return type;
+    }
+
+    public void setType(ShipTypes type) {
+        this.type = type;
     }
 
     public List<ShipClassAlternateNames> getAlternativeNames() {

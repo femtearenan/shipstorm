@@ -101,6 +101,10 @@
                             <div class="form-right-column">
                                 <input type="text" th:field="*{name}" />
                             </div>
+                            <input class="lister" list="type-list" th:field="*{type}" />
+                            <datalist id="type-list">
+                                <option th:each="type : ${types}" th:text="${type}"></option>
+                            </datalist>
                         </div>
 
                         <div class="submit">

@@ -6,6 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
@@ -13,6 +14,10 @@ import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
+
+import java.util.ArrayList;
+import java.util.EnumSet;
+import java.util.List;
 
 @Controller
 public class ShipstormController {
@@ -65,6 +70,8 @@ public class ShipstormController {
         model.addAttribute("generateShip", new GenerateShip());
         model.addAttribute("nations", nationService.listAllNations());
         model.addAttribute("classes", shipClassService.listAllShipClasses());
+        EnumSet<ShipTypes> types = EnumSet.allOf(ShipTypes.class);
+        model.addAttribute("types", types);
         return "shipform";
     }
 

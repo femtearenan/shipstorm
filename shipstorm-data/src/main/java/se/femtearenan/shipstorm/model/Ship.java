@@ -8,6 +8,7 @@ public class Ship {
 
     String pennant;
     String name;
+    String imo;
 
     @OneToMany(mappedBy = "ship")
     List<ShipAlternateNames> alternateNames;
@@ -49,6 +50,14 @@ public class Ship {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImo() {
+        return imo;
+    }
+
+    public void setImo(String imo) {
+        this.imo = imo;
     }
 
     public List<ShipAlternateNames> getAlternateNames() {

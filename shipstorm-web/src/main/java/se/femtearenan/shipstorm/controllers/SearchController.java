@@ -42,7 +42,7 @@ public class SearchController {
     public String search(Model model) {
         Queue<String> entityTypes = new ArrayDeque<>();
         entityTypes.add("Ship");
-        entityTypes.add("Type");
+        entityTypes.add("ShipType");
         entityTypes.add("Nation");
         entityTypes.add("Pennant");
         entityTypes.add("All");
@@ -76,7 +76,7 @@ public class SearchController {
                     }
                 }
                 break;
-            case "Type":
+            case "ShipType":
                 break;
             case "Nation":
                 break;
