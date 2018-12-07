@@ -43,6 +43,7 @@
                         <th>Type</th>
                         <th>Pennant</th>
                         <th>Nation</th>
+                        <th>Modified</th>
                     </tr>
                     <tr th:each="ship : ${ships}">
                         <td><a th:href="${'/shipstorm/ship/' + ship.id}" th:text="${ship.name}">Example name</a></td>
@@ -50,6 +51,7 @@
                         <td th:text="${ship.shipClass.type}">Example type</td>
                         <td th:text="${ship.pennant}">Example pennant</td>
                         <td th:text="${ship.nation.name}">Example nation</td>
+                        <td th:text="${ship.updated}">Example modified</td>
                     </tr>
                 </table>
             </div>

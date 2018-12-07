@@ -18,6 +18,11 @@ public enum ShipTypes {
     SS ("Submarine");
 
     private final String typeDescription;
+
+    public String getTypeDescription() {
+        return typeDescription;
+    }
+
     ShipTypes(String typeDescription) {
         this.typeDescription = typeDescription;
     }

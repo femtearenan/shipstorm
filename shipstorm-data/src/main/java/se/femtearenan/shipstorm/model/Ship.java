@@ -1,14 +1,21 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.*;
+import java.util.Date;
 import java.util.List;
 
 @Entity
 public class Ship {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id;
+
     String pennant;
     String name;
     String imo;
+    private Date created = new Date();
+    private Date updated = new Date();
 
     @OneToMany(mappedBy = "ship")
     List<ShipAlternateNames> alternateNames;
@@ -24,9 +31,10 @@ public class Ship {
 
     public Ship() {}
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @PreUpdate
+    private void setLastUpdate(){
+        this.updated = new Date();
+    }
 
     public Long getId() {
         return id;
@@ -58,6 +66,14 @@ public class Ship {
 
     public void setImo(String imo) {
         this.imo = imo;
+    }
+
+    public Date getCreated() {
+        return created;
+    }
+
+    public Date getUpdated() {
+        return updated;
     }
 
     public List<ShipAlternateNames> getAlternateNames() {
