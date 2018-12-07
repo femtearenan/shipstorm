@@ -45,7 +45,7 @@
                         <th>Nation</th>
                     </tr>
                     <tr th:each="ship : ${ships}">
-                        <td th:text="${ship.name}">Example name</td>
+                        <td><a th:href="${'/shipstorm/ship/' + ship.id}" th:text="${ship.name}">Example name</a></td>
                         <td th:text="${ship.shipClass.name}">Example class</td>
                         <td th:text="${ship.shipClass.type}">Example type</td>
                         <td th:text="${ship.pennant}">Example pennant</td>

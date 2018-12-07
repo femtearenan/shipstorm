@@ -15,9 +15,7 @@ import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
-import java.util.ArrayList;
 import java.util.EnumSet;
-import java.util.List;
 
 @Controller
 public class ShipstormController {
@@ -59,7 +57,7 @@ public class ShipstormController {
         model.addAttribute("ship", ship);
         model.addAttribute("nation", ship.getNation());
         model.addAttribute("class", ship.getShipClass());
-        return "show";
+        return "ship";
     }
 
     @RequestMapping("/shipstorm/add")
