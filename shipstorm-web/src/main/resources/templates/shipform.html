@@ -64,10 +64,9 @@
                                 <label>Class</label>
                             </div>
                             <div class="form-right-column">
-                                <input class="lister" list="ship-classes-list" th:field="*{shipClassId}"/>
-                                <datalist id="ship-classes-list">
+                                <select id="ship-classes-list" th:field="*{shipClassId}">
                                     <option th:each="shipClass : ${classes}" th:value="${shipClass.id}" th:text="${shipClass.name}">Example</option>
-                                </datalist>
+                                </select>
                             </div>
                         </div>
 
@@ -76,10 +75,9 @@
                                 <label>Nation</label>
                             </div>
                             <div class="form-right-column">
-                                <input class="lister" list="nations-list" th:field="*{nationId}"/>
-                                <datalist id="nations-list">
+                                <select id="nations-list" th:field="*{nationId}">
                                     <option th:each="nation :  ${nations}" th:value="${nation.id}" th:text="${nation.name}">Example</option>
-                                </datalist>
+                                </select>
                             </div>
                         </div>
                     </div>

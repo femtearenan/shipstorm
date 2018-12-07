@@ -38,13 +38,15 @@
                 <div class="attribute-title-column">
                     <p>Name</p>
                     <p>Nation</p>
+                    <p>Class</p>
                     <p>Type</p>
                     <p>Pennant</p>
                 </div>
                 <div class="attribute-value-column">
                     <p th:text="${ship.name}">Example name</p>
                     <p th:text="${nation.name}">Example nation</p>
-                    <p th:text="${class.name}">Example type</p>
+                    <p th:text="${class.name}">Example class</p>
+                    <p th:text="${class.type}">Example type</p>
                     <p th:text="${ship.pennant}">Example pennant</p>
                 </div>
             </div>

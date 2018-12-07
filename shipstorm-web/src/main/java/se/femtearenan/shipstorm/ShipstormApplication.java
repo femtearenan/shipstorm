@@ -44,6 +44,18 @@ public class ShipstormApplication {
             stockholm.setPennant("P11");
             shipService.save(stockholm);
 
+            ShipClass visbyClass = new ShipClass();
+            visbyClass.setName("Visby");
+            visbyClass.setType(ShipTypes.K);
+            shipClassService.save(visbyClass);
+
+            Ship visby = new Ship();
+            visby.setName("Stockholm");
+            visby.setNation(sweden);
+            visby.setShipClass(visbyClass);
+            visby.setPennant("K31");
+            shipService.save(visby);
+
             ShipClass thetis = new ShipClass();
             thetis.setName("Thetis");
             thetis.setType(ShipTypes.FF);
