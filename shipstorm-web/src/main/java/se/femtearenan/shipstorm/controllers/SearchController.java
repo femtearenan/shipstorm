@@ -38,6 +38,7 @@ public class SearchController {
         this.shipClassService = shipClassService;
     }
 
+
     @RequestMapping(value = "/shipstorm/search")
     public String search(Model model) {
         Queue<String> entityTypes = new ArrayDeque<>();

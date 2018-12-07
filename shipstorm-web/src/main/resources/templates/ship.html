@@ -10,23 +10,25 @@
 <body>
 <div id="wrapper">
 
-    <!-- HEADER -->
-    <header>
-        <nav>
-            <img class="loggo" th:src="@{/images/shipstorm.png}" />
-            <ul>
-                <li class="active"><a id="start"  href="/">start</a></li>
-                <li><a id="artiklar" th:href="@{/shipstorm/ships}">View ships</a></li>
-                <li><a id="app" th:href="@{/shipstorm/search}">Search for ship</a></li>
-                <li><a id="add" th:href="@{/shipstorm/ship/add}">Add a ship</a></li>
-            </ul>
-        </nav>
-    </header>
+    <div th:replace="/fragments/header :: header(page='ships')">
+        <!-- HEADER -->
+        <header>
+            <nav>
+                <img class="loggo" th:src="@{/images/shipstorm.png}" />
+                <ul>
+                    <li class="active"><a id="start"  href="/">start</a></li>
+                    <li><a id="artiklar" th:href="@{/shipstorm/ships}">View ships</a></li>
+                    <li><a id="app" th:href="@{/shipstorm/search}">Search for ship</a></li>
+                    <li><a id="add" th:href="@{/shipstorm/ship/add}">Add a ship</a></li>
+                </ul>
+            </nav>
+        </header>
 
-    <div class="divider"></div>
-    <h1 id="homepage"><span id="color-femte">s h i p</span> <span id="color-arenan">s t o r m</span>
-        <span id="spanfill"></span></h1>
-    <div class="divider"></div>
+        <div class="divider"></div>
+        <h1 id="homepage"><span id="color-femte">s h i p</span> <span id="color-arenan">s t o r m</span>
+            <span id="spanfill"></span></h1>
+        <div class="divider"></div>
+    </div>
 
     <!-- CONTENT -->
     <main>

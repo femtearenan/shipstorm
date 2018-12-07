@@ -9,8 +9,7 @@ import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
 @Controller
-public class ShipstormController {
-
+public class ShipsController {
     private ShipService shipService;
     private NationService nationService;
     private ShipClassService shipClassService;
@@ -30,9 +29,11 @@ public class ShipstormController {
         this.shipClassService = shipClassService;
     }
 
-    @RequestMapping({"/shipstorm"})
-    public String getShipstormPage(Model model) {
-        return "shipstorm";
+    @RequestMapping("/shipstorm/ships")
+    public String list(Model model) {
+        model.addAttribute("ships", shipService.listAllShips());
+        return "ships";
     }
+
 
 }

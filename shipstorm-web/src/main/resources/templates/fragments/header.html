@@ -1,10 +1,34 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-    <meta charset="UTF-8">
-    <title>Title</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/minerva.css}" />
+    <link rel="stylesheet" th:href="@{/css/shipstorm.css}" />
+    <title>SHIPSTORM - femtearenan.se</title>
 </head>
 <body>
+<div id="wrapper">
+    <div th:fragment="header (page)">
+        <!-- HEADER -->
+        <header>
+            <nav>
+                <img class="loggo" th:src="@{/images/shipstorm.png}" />
+                <ul>
+                    <li class="" th:classappend="|${page == 'start' ? 'active' : ''}|"><a id="start"  th:href="@{/shipstorm}">start</a></li>
+                    <li th:classappend="${page == 'ships' ? 'active' : ''}"><a id="artiklar" th:href="@{/shipstorm/ships}">View ships</a></li>
+                    <li th:classappend="${page == 'search' ? 'active' : ''}"><a id="app" th:href="@{/shipstorm/search}">Search for ship</a></li>
+                    <li th:classappend="${page == 'add' ? 'active' : ''}"><a id="add" th:href="@{/shipstorm/add}">Add a ship</a></li>
+                </ul>
+            </nav>
+        </header>
 
+        <div class="divider"></div>
+        <h1 id="homepage"><span id="color-femte">s h i p</span> <span id="color-arenan">s t o r m</span>
+            <span id="spanfill"></span></h1>
+        <div class="divider"></div>
+    </div>
+</div>
 </body>
 </html>

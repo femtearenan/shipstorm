@@ -3,14 +3,15 @@ package se.femtearenan.shipstorm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
 @Controller
-public class ShipstormController {
-
+public class ShipController {
     private ShipService shipService;
     private NationService nationService;
     private ShipClassService shipClassService;
@@ -30,9 +31,15 @@ public class ShipstormController {
         this.shipClassService = shipClassService;
     }
 
-    @RequestMapping({"/shipstorm"})
-    public String getShipstormPage(Model model) {
-        return "shipstorm";
+    @RequestMapping("/shipstorm/ship/{id}")
+    public String showShip(@PathVariable Long id, Model model) {
+        Ship ship = shipService.getShipById(id);
+        model.addAttribute("ship", ship);
+        model.addAttribute("nation", ship.getNation());
+        model.addAttribute("class", ship.getShipClass());
+        return "ship";
     }
+
+
 
 }
