@@ -6,7 +6,9 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.model.Ship;
+import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
@@ -43,7 +45,8 @@ public class SearchController {
     public String search(Model model) {
         Queue<String> entityTypes = new ArrayDeque<>();
         entityTypes.add("Ship");
-        entityTypes.add("ShipType");
+        entityTypes.add("Class");
+        entityTypes.add("Type");
         entityTypes.add("Nation");
         entityTypes.add("Pennant");
         entityTypes.add("All");
@@ -57,24 +60,34 @@ public class SearchController {
     @RequestMapping(value="/shipstorm/search", method = RequestMethod.GET, params={"entity", "searchString"} )
     public String searchResult(@RequestParam("entity") String entity,
                                              @RequestParam("searchString") String searchString, Model model) {
-        String message = "";
+        String message = "No ship matching the search criteria has been found.";
         boolean hasResult = false;
+        String resultType = "none";
         List<Ship> result = new ArrayList<>();
+        List<ShipClass> classResult = new ArrayList<>();
+
         switch (entity) {
             case "Ship":
-                message = "No ship matching the search criteria has been found.";
-
                 result = shipService.findByNameContaining(searchString);
-
-                if (!result.isEmpty()) {
-                    if (result.size() > 1) {
-                        message = "Ships has been found.";
-                    } else {
-                        message = "A ship has been found.";
+                model.addAttribute("result", result);
+                resultType = "Ship";
+                break;
+            case "Class":
+                classResult = shipClassService.findByNameContaining(searchString);
+                model.addAttribute("result", classResult);
+                resultType = "Class";
+                break;
+            case "Type":
+                ShipTypes shipType = null;
+                for (ShipTypes type : ShipTypes.values()) {
+                    if (type.toString().contains(searchString)) {
+                        shipType = type;
+                        break;
                     }
                 }
-                break;
-            case "ShipType":
+                classResult = shipClassService.findByType(shipType);
+                model.addAttribute("result", classResult);
+                resultType = "Class";
                 break;
             case "Nation":
                 break;
@@ -86,13 +99,13 @@ public class SearchController {
                 message = "An entity is not recognized.";
         }
 
-        if (!result.isEmpty()) {
+        if (!result.isEmpty() || !classResult.isEmpty()) {
             hasResult = true;
         }
 
         model.addAttribute("hasResult", hasResult);
-        model.addAttribute("message", message);
-        model.addAttribute("result", result);
+        model.addAttribute("resultType", resultType);
+
         return "results";
     }
 }

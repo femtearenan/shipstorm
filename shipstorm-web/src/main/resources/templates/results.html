@@ -39,23 +39,10 @@
 
             <div class="ship">
                 <div th:if="${hasResult}">
-                    <table>
-                        <tr>
-                            <th>Name</th>
-                            <th>Type</th>
-                            <th>Pennant</th>
-                            <th>Nation</th>
-                        </tr>
-
-                        <tr th:each="ship : ${result}">
-                            <td><a th:href="${'/shipstorm/ship/' + ship.id}" th:text="${ship.name}">Example name</a></td>
-                            <td th:text="${ship.shipClass.name}">Example class</td>
-                            <td th:text="${ship.shipClass.type}">Example type</td>
-                            <td th:text="${ship.pennant}">Example pennant</td>
-                            <td th:text="${ship.nation.name}">Example nation</td>
-                            <td th:text="${ship.updated}">Example modified</td>
-                        </tr>
-                    </table>
+                    <div th:switch="${resultType}">
+                        <div th:case="'Ship'" th:include="/fragments/result :: ship"></div>
+                        <div th:case="'Class'" th:include="/fragments/result :: class"></div>
+                    </div>
                 </div>
             </div>
         </article>

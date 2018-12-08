@@ -2,8 +2,11 @@ package se.femtearenan.shipstorm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.repositories.ShipClassRepository;
+
+import java.util.List;
 
 @Service
 public class ShipClassServiceImpl implements ShipClassService {
@@ -27,5 +30,20 @@ public class ShipClassServiceImpl implements ShipClassService {
     @Override
     public ShipClass save(ShipClass shipClass) {
         return shipClassRepository.save(shipClass);
+    }
+
+    @Override
+    public List<ShipClass> findByName(String name) {
+        return shipClassRepository.findByName(name);
+    }
+
+    @Override
+    public List<ShipClass> findByNameContaining(String name) {
+        return shipClassRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<ShipClass> findByType(ShipTypes shipTypes) {
+        return shipClassRepository.findByType(shipTypes);
     }
 }
