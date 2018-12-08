@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.repositories.ShipRepository;
 
+import java.util.List;
+
 @Service
 public class ShipServiceImpl implements ShipService {
     private ShipRepository shipRepository;
@@ -27,5 +29,20 @@ public class ShipServiceImpl implements ShipService {
     @Override
     public Ship save(Ship ship) {
         return shipRepository.save(ship);
+    }
+
+    @Override
+    public List<Ship> findByName(String name) {
+        return shipRepository.findByName(name);
+    }
+
+    @Override
+    public List<Ship> findByNameContaining(String name) {
+        return shipRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<Ship> findByPennant(String pennant) {
+        return shipRepository.findByPennant(pennant);
     }
 }

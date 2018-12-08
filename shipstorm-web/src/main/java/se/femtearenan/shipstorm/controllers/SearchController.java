@@ -63,12 +63,9 @@ public class SearchController {
         switch (entity) {
             case "Ship":
                 message = "No ship matching the search criteria has been found.";
-                List<Ship> ships = (List<Ship>) shipService.listAllShips();
-                for (Ship ship: ships) {
-                    if (ship.getName().toLowerCase().contains(searchString.toLowerCase())) {
-                        result.add(ship);
-                    }
-                }
+
+                result = shipService.findByNameContaining(searchString);
+
                 if (!result.isEmpty()) {
                     if (result.size() > 1) {
                         message = "Ships has been found.";
