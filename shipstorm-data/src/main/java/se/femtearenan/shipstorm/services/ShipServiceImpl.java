@@ -45,4 +45,9 @@ public class ShipServiceImpl implements ShipService {
     public List<Ship> findByPennant(String pennant) {
         return shipRepository.findByPennant(pennant);
     }
+
+    @Override
+    public Ship findTopByOrderByIdDesc() {
+        return shipRepository.findTopByOrderByIdDesc();
+    }
 }

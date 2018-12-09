@@ -32,6 +32,7 @@ public class ShipstormController {
 
     @RequestMapping({"/shipstorm"})
     public String getShipstormPage(Model model) {
+        model.addAttribute("ship", shipService.findTopByOrderByIdDesc());
         return "shipstorm";
     }
 

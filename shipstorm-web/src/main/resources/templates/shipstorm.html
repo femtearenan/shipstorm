@@ -37,13 +37,19 @@
             <div class="text-column">
                 <div class="attribute-title-column">
                     <p>Name</p>
+                    <p>Nation</p>
+                    <p>Class</p>
                     <p>Type</p>
                     <p>Pennant</p>
+                    <p>Updated</p>
                 </div>
                 <div class="attribute-value-column">
-                    <p>Example name</p>
-                    <p>Example type</p>
-                    <p>Example pennant</p>
+                    <p th:text="${ship.name}">Example name</p>
+                    <p th:text="${ship.nation.name}">Example nation</p>
+                    <p th:text="${ship.shipClass.name}">Example class</p>
+                    <p th:text="${ship.shipClass.type.typeDescription}">Example type</p>
+                    <p th:text="${ship.pennant}">Example pennant</p>
+                    <p th:text="${ship.updated}">Example date</p>
                 </div>
             </div>
             <div class="img-column">

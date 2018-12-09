@@ -16,4 +16,7 @@ public interface ShipService {
     List<Ship> findByNameContaining(String name);
 
     List<Ship> findByPennant(String pennant);
+
+    Ship findTopByOrderByIdDesc();
+
 }
