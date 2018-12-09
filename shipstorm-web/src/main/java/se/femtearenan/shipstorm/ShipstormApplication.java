@@ -32,6 +32,11 @@ public class ShipstormApplication {
             denmark.setName("Denmark");
             nationService.save(denmark);
 
+            Nation finland = new Nation();
+            finland.setAbbreviation("FI");
+            finland.setName("Finland");
+            nationService.save(finland);
+
             ShipClass malmo = new ShipClass();
             malmo.setName("Malmö");
             malmo.setType(ShipTypes.PB);
@@ -43,6 +48,13 @@ public class ShipstormApplication {
             stockholm.setShipClass(malmo);
             stockholm.setPennant("P11");
             shipService.save(stockholm);
+
+            Ship mmo = new Ship();
+            mmo.setName("Malmö");
+            mmo.setNation(sweden);
+            mmo.setShipClass(malmo);
+            mmo.setPennant("P12");
+            shipService.save(mmo);
 
             ShipClass visbyClass = new ShipClass();
             visbyClass.setName("Visby");
@@ -56,10 +68,24 @@ public class ShipstormApplication {
             visby.setPennant("K31");
             shipService.save(visby);
 
+            Ship helsingborg = new Ship();
+            helsingborg.setName("Helsingborg");
+            helsingborg.setNation(sweden);
+            helsingborg.setShipClass(visbyClass);
+            helsingborg.setPennant("K32");
+            shipService.save(helsingborg);
+
             ShipClass thetis = new ShipClass();
             thetis.setName("Thetis");
             thetis.setType(ShipTypes.FF);
             shipClassService.save(thetis);
+
+            Ship vaddaren = new Ship();
+            vaddaren.setName("Vædderen");
+            vaddaren.setNation(denmark);
+            vaddaren.setShipClass(thetis);
+            vaddaren.setPennant("F359");
+            shipService.save(vaddaren);
 
             Ship hvidbjornen = new Ship();
             hvidbjornen.setName("Hvidbjørnen");
@@ -67,6 +93,25 @@ public class ShipstormApplication {
             hvidbjornen.setShipClass(thetis);
             hvidbjornen.setPennant("F360");
             shipService.save(hvidbjornen);
+
+            ShipClass hamina = new ShipClass();
+            hamina.setName("Hamina");
+            hamina.setType(ShipTypes.K);
+            shipClassService.save(hamina);
+
+            Ship hma = new Ship();
+            hma.setName("Hamina");
+            hma.setNation(finland);
+            hma.setShipClass(hamina);
+            hma.setPennant("80");
+            shipService.save(hma);
+
+            Ship tornio = new Ship();
+            tornio.setName("Tornio");
+            tornio.setNation(finland);
+            tornio.setShipClass(hamina);
+            tornio.setPennant("81");
+            shipService.save(tornio);
         };
     }
 
