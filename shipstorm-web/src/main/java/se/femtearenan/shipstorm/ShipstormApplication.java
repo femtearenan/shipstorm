@@ -8,9 +8,14 @@ import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
+import se.femtearenan.shipstorm.model.ShipImage;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
+import se.femtearenan.shipstorm.services.ShipImageService;
 import se.femtearenan.shipstorm.services.ShipService;
+
+import java.io.File;
+import java.io.FileInputStream;
 
 @SpringBootApplication //(scanBasePackages = {se.femtearenan.shipstorm.})
 public class ShipstormApplication {
@@ -20,8 +25,25 @@ public class ShipstormApplication {
     }
 
     @Bean
-    public CommandLineRunner demo(NationService nationService, ShipClassService shipClassService, ShipService shipService) {
+    public CommandLineRunner demo(NationService nationService, ShipClassService shipClassService,
+                                  ShipService shipService, ShipImageService shipImageService) {
         return args -> {
+            ShipImage shipImage = new ShipImage();
+            File filePath = new File("");
+            String path = filePath.getAbsolutePath() + "\\shipstorm-web\\src\\main\\resources\\static\\images\\simple_boat.png";
+            File file = new File(path);
+            byte[] bFile = new byte[(int)file.length()];
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                fis.read(bFile);
+                fis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+
+            shipImage.setImage(bFile);
+            shipImageService.save(shipImage);
+
             Nation sweden = new Nation();
             sweden.setAbbreviation("SE");
             sweden.setName("Sweden");
@@ -47,6 +69,7 @@ public class ShipstormApplication {
             stockholm.setNation(sweden);
             stockholm.setShipClass(malmo);
             stockholm.setPennant("P11");
+            stockholm.addShipImage(shipImage);
             shipService.save(stockholm);
 
             Ship mmo = new Ship();

@@ -1,6 +1,7 @@
 package se.femtearenan.shipstorm.model;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -28,6 +29,9 @@ public class Ship {
 
     @ManyToMany
     List<Scrap> scraps;
+
+    @OneToMany(mappedBy = "ship")
+    List<ShipImage> shipImage;
 
     public Ship() {}
 
@@ -110,5 +114,20 @@ public class Ship {
 
     public void setScraps(List<Scrap> scraps) {
         this.scraps = scraps;
+    }
+
+    public List<ShipImage> getShipImage() {
+        return shipImage;
+    }
+
+    public void setShipImage(List<ShipImage> shipImage) {
+        this.shipImage = shipImage;
+    }
+
+    public void addShipImage(ShipImage shipImage) {
+        if (this.shipImage == null) {
+            this.shipImage = new ArrayList<>();
+        }
+        this.shipImage.add(shipImage);
     }
 }
