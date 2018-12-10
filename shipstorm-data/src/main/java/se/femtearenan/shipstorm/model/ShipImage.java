@@ -17,6 +17,8 @@ public class ShipImage {
     @ManyToOne
     Ship ship;
 
+    private String description;
+
     private Date created = new Date();
     private Date updated = new Date();
 
@@ -46,6 +48,14 @@ public class ShipImage {
         this.ship = ship;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     @PreUpdate
     private void setLastUpdate(){
         this.updated = new Date();
@@ -58,4 +68,5 @@ public class ShipImage {
     public Date getUpdated() {
         return updated;
     }
+
 }

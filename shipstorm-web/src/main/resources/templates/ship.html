@@ -56,8 +56,10 @@
             </div>
             <div class="img-column">
                 <div class="img-and-text">
-                    <img class="loggo" th:src="@{/images/shipstorm.png}" alt="Simplistic depiction of a sail boat" />
-                    <p>Image missing</p>
+                    <div th:if="${image.length() > 0}">
+                        <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
+                        <p th:text="${imageDescription}">No description</p>
+                    </div>
                 </div>
             </div>
             <div class="misc-info">

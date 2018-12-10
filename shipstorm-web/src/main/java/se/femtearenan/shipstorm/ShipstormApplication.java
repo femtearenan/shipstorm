@@ -28,21 +28,6 @@ public class ShipstormApplication {
     public CommandLineRunner demo(NationService nationService, ShipClassService shipClassService,
                                   ShipService shipService, ShipImageService shipImageService) {
         return args -> {
-            ShipImage shipImage = new ShipImage();
-            File filePath = new File("");
-            String path = filePath.getAbsolutePath() + "\\shipstorm-web\\src\\main\\resources\\static\\images\\simple_boat.png";
-            File file = new File(path);
-            byte[] bFile = new byte[(int)file.length()];
-            try {
-                FileInputStream fis = new FileInputStream(file);
-                fis.read(bFile);
-                fis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-
-            shipImage.setImage(bFile);
-            shipImageService.save(shipImage);
 
             Nation sweden = new Nation();
             sweden.setAbbreviation("SE");
@@ -69,7 +54,7 @@ public class ShipstormApplication {
             stockholm.setNation(sweden);
             stockholm.setShipClass(malmo);
             stockholm.setPennant("P11");
-            stockholm.addShipImage(shipImage);
+            //stockholm.addShipImage(shipImage);
             shipService.save(stockholm);
 
             Ship mmo = new Ship();
@@ -135,6 +120,27 @@ public class ShipstormApplication {
             tornio.setShipClass(hamina);
             tornio.setPennant("81");
             shipService.save(tornio);
+
+            ShipImage shipImage = new ShipImage();
+            File filePath = new File("");
+            String path = filePath.getAbsolutePath() + "\\shipstorm-web\\src\\main\\resources\\static\\images\\simple_boat.png";
+            File file = new File(path);
+            byte[] bFile = new byte[(int)file.length()];
+            try {
+                FileInputStream fis = new FileInputStream(file);
+                fis.read(bFile);
+                fis.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            System.out.println(bFile);
+            shipImage.setImage(bFile);
+            shipImage.setDescription("Stockholm in all its might.");
+            shipImage.setShip(stockholm);
+            shipImageService.save(shipImage);
+            shipService.save(stockholm);
+
+
         };
     }
 
