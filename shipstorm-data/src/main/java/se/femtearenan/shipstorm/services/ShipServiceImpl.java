@@ -50,4 +50,9 @@ public class ShipServiceImpl implements ShipService {
     public Ship findTopByOrderByIdDesc() {
         return shipRepository.findTopByOrderByIdDesc();
     }
+
+    @Override
+    public void delete(Ship ship) {
+        shipRepository.delete(ship);
+    }
 }

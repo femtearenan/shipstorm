@@ -12,7 +12,9 @@ import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
 public class ShipController {
@@ -65,6 +67,22 @@ public class ShipController {
 
     private String imageBlobToBase64String(byte[] blob) {
         return Base64.getEncoder().encodeToString(blob);
+    }
+
+    @RequestMapping("/shipstorm/ship/{id}/edit")
+    public String editShip(@PathVariable Long id , Model model) {
+        Ship ship = shipService.getShipById(id);
+        model.addAttribute("ship", ship);
+        model.addAttribute("classes", shipClassService.listAllShipClasses());
+        model.addAttribute("nations", nationService.listAllNations());
+        model.addAttribute("sensors", "");
+
+        Map<String, String> images = new HashMap<>();
+        for (ShipImage shipImage : ship.getShipImage()) {
+            images.put(imageBlobToBase64String(shipImage.getImage()), shipImage.getDescription());
+        }
+        model.addAttribute("images", images);
+        return "editShip";
     }
 
 

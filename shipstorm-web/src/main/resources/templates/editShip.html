@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/minerva.css}" />
+    <link rel="stylesheet" th:href="@{/css/shipstorm.css}" />
+    <title>SHIPSTORM - femtearenan.se</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div th:include="/fragments/header :: header(page='ship')">
+        </div>
+
+        <!-- CONTENT -->
+        <main>
+            <article class="news">
+                <div class="news-header">
+                    <h1>Showing ship</h1>
+                </div>
+                <div class="text-column">
+                    <div class="attribute-title-column">
+                        <p>Name</p>
+                        <p>Nation</p>
+                        <p>Class</p>
+                        <p>Type</p>
+                        <p>Pennant</p>
+                        <p>Updated</p>
+                    </div>
+                    <div class="attribute-value-column">
+                        <p th:text="${ship.name}">Example name</p>
+                        <p th:text="${ship.nation.name}">Example nation</p>
+                        <p th:text="${ship.shipClass.name}">Example class</p>
+                        <p th:text="${ship.shipClass.type.typeDescription}">Example type</p>
+                        <p th:text="${ship.pennant}">Example pennant</p>
+                        <p th:text="${ship.updated}">Example date</p>
+                    </div>
+                </div>
+                <div class="img-column">
+                    <div class="img-and-text">
+                        <div th:if="${images.size() > 0}">
+                            <div th:each="image : ${images.keySet()}">
+                                <div th:if="${image.length() > 0}">
+                                    <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
+                                <p><a th:href="${'/shipstorm/ship/' + ship.id} + '/images'"><span th:text="${numberImages}">No images</span></a></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="misc-info">
+                    <h2>Miscellaneous information</h2>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                </div>
+            </article>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="divider"></div>
+            <div id="footer-content">
+                <ul>
+                    <li>Back to <a href="http://femtearenan.se">femtearenan.se</a></li>
+                    <li>&copy;2018</li>
+                </ul>
+                <p> </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

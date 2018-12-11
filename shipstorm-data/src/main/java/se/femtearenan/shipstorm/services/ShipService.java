@@ -19,4 +19,6 @@ public interface ShipService {
 
     Ship findTopByOrderByIdDesc();
 
+    void delete(Ship ship);
+
 }
