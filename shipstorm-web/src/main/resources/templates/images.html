@@ -38,10 +38,14 @@
             </div>
 
             <div class="ship">
-                <div th:if="${hasResult}">
-                    <div th:switch="${resultType}">
-                        <div th:case="'Ship'" th:include="/fragments/result :: ship"></div>
-                        <div th:case="'Class'" th:include="/fragments/result :: class"></div>
+                <div th:if="${images.size() > 0}">
+                    <div th:each="image : ${images.keySet()}">
+                        <div th:if="${image.length() > 0}">
+                            <div class="img-and-text-center">
+                                <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
+                                <p th:text="${images.get(image)}">No images</p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>

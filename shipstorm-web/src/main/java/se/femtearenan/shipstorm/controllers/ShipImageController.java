@@ -12,10 +12,12 @@ import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Controller
-public class ShipController {
+public class ShipImageController {
     private ShipService shipService;
     private NationService nationService;
     private ShipClassService shipClassService;
@@ -35,32 +37,29 @@ public class ShipController {
         this.shipClassService = shipClassService;
     }
 
-    @RequestMapping("/shipstorm/ship/{id}")
+    @RequestMapping("/shipstorm/ship/{id}/images")
     public String showShip(@PathVariable Long id, Model model) {
         Ship ship = shipService.getShipById(id);
         List<ShipImage> shipImages = ship.getShipImage();
-        String imageNumerate = "0";
-        byte[] blob = null;
-        String image = "";
-        String imageDescription = "";
+        Map<String, String> images = new HashMap<>();
+
         if (shipImages != null & shipImages.size() > 0) {
-            ShipImage shipImage = shipImages.get(0);
-            blob = shipImage.getImage();
-            imageDescription = shipImage.getDescription();
-            image = imageBlobToBase64String(blob);
-            if (shipImages.size() == 1) {
-                imageNumerate = "1 image";
-            } else {
-                imageNumerate = shipImages.size() + " images";
+            for (ShipImage shipImage : shipImages) {
+                byte[] blob = null;
+                String image = "";
+
+                blob = shipImage.getImage();
+                image = imageBlobToBase64String(blob);
+                images.put(image, shipImage.getDescription());
             }
+
         }
+
         model.addAttribute("ship", ship);
         model.addAttribute("nation", ship.getNation());
         model.addAttribute("class", ship.getShipClass());
-        model.addAttribute("image", image);
-        model.addAttribute("numberImages", imageNumerate);
-        model.addAttribute("imageDescription", imageDescription);
-        return "ship";
+        model.addAttribute("images", images);
+        return "images";
     }
 
     private String imageBlobToBase64String(byte[] blob) {

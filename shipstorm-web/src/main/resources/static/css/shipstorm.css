@@ -95,6 +95,16 @@ div.controls {
     width: 10rem;
 }
 
+.img-and-text-center {
+    margin: auto;
+    text-align: center;
+    width: 10rem;
+}
+
+.img-and-text-center img {
+    margin: auto;
+}
+
 .img-and-text p {
     text-align: center;
     font-style: italic;

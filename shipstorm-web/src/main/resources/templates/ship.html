@@ -58,7 +58,7 @@
                 <div class="img-and-text">
                     <div th:if="${image.length() > 0}">
                         <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
-                        <p th:text="${numberImages}">No images</p>
+                        <p><a th:href="${'/shipstorm/ship/' + ship.id} + '/images'"><span th:text="${numberImages}">No images</span></a></p>
                     </div>
                 </div>
             </div>

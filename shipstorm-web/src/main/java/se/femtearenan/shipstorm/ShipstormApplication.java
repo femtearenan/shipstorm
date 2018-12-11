@@ -121,27 +121,41 @@ public class ShipstormApplication {
             tornio.setPennant("81");
             shipService.save(tornio);
 
-            ShipImage shipImage = new ShipImage();
-            File filePath = new File("");
-            String path = filePath.getAbsolutePath() + "\\shipstorm-web\\src\\main\\resources\\static\\images\\simple_boat.png";
-            File file = new File(path);
-            byte[] bFile = new byte[(int)file.length()];
-            try {
-                FileInputStream fis = new FileInputStream(file);
-                fis.read(bFile);
-                fis.close();
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-            System.out.println(bFile);
-            shipImage.setImage(bFile);
-            shipImage.setDescription("Stockholm in all its might.");
-            shipImage.setShip(stockholm);
-            shipImageService.save(shipImage);
-            shipService.save(stockholm);
+            ShipImage shipImage1 = new ShipImage();
+            byte[] bFile1 = imageByterOfStaticImages("simple_boat.png");
+
+            shipImage1.setImage(bFile1);
+            shipImage1.setDescription("Stockholm in all its might.");
+            shipImage1.setShip(stockholm);
+
+            ShipImage shipImage2 = new ShipImage();
+            byte[] bFile2 = imageByterOfStaticImages("shipstorm.png");
+
+            shipImage2.setImage(bFile2);
+            shipImage2.setDescription("Shipstorm");
+            shipImage2.setShip(stockholm);
+
+            shipImageService.save(shipImage1);
+            shipImageService.save(shipImage2);
 
 
         };
+    }
+
+
+    private byte[] imageByterOfStaticImages(String fileName) {
+        File filePath = new File("");
+        String path = filePath.getAbsolutePath() + "\\shipstorm-web\\src\\main\\resources\\static\\images\\" + fileName;
+        File file = new File(path);
+        byte[] bFile = new byte[(int)file.length()];
+        try {
+            FileInputStream fis = new FileInputStream(file);
+            fis.read(bFile);
+            fis.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return bFile;
     }
 
 }
