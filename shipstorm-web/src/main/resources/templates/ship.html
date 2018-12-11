@@ -58,7 +58,7 @@
                 <div class="img-and-text">
                     <div th:if="${image.length() > 0}">
                         <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
-                        <p th:text="${imageDescription}">No description</p>
+                        <p th:text="${numberImages}">No images</p>
                     </div>
                 </div>
             </div>

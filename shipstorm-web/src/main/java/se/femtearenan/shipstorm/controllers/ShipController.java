@@ -39,6 +39,7 @@ public class ShipController {
     public String showShip(@PathVariable Long id, Model model) {
         Ship ship = shipService.getShipById(id);
         List<ShipImage> shipImages = ship.getShipImage();
+        String imageNumerate = "0";
         byte[] blob = null;
         String image = "";
         String imageDescription = "";
@@ -46,13 +47,18 @@ public class ShipController {
             ShipImage shipImage = shipImages.get(0);
             blob = shipImage.getImage();
             imageDescription = shipImage.getDescription();
-            System.out.println(imageDescription);
             image = imageBlobToBase64String(blob);
+            if (shipImages.size() ==     1) {
+                imageNumerate = "1 image";
+            } else {
+                imageNumerate = shipImages.size() + " images";
+            }
         }
         model.addAttribute("ship", ship);
         model.addAttribute("nation", ship.getNation());
         model.addAttribute("class", ship.getShipClass());
         model.addAttribute("image", image);
+        model.addAttribute("numberImages", imageNumerate);
         model.addAttribute("imageDescription", imageDescription);
         return "ship";
     }

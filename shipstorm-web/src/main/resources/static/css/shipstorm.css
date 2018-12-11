@@ -106,6 +106,10 @@ div.controls {
 }
 /* ---- END of Right column content  ---- */
 
+.misc-info {
+    display: inline-block;
+}
+
 .misc-info h2 {
     color: #161c26;
 }
@@ -175,6 +179,7 @@ div.controls {
 .submit {
     margin-left: 5.3rem;
 }
+
 
 /* ------ END additional form ----- */
 
