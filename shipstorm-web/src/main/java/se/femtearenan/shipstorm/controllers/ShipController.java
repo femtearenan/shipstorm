@@ -90,10 +90,42 @@ public class ShipController {
         return "editShip";
     }
 
-    @RequestMapping(value = "(shipstorm/edit-ship", method = RequestMethod.POST)
-    public String editShip(GenerateShip generateShip) {
+    @RequestMapping(value = "/shipstorm/ship/{id}/edit", method = RequestMethod.POST)
+    public String editShip(@PathVariable Long id, GenerateShip generateShip) {
+        Ship ship = shipService.getShipById(id);
 
-        return "redirect:/shipstorm/ship/" ; // TODO: Add: + savedShip.getId()
+        // UPDATE SHIP VARIABLES
+        // Ship name
+        if (generateShip.getName() != null) {
+            if (generateShip.getName().length() > 0 & !generateShip.getName().equals(ship.getName())) {
+                ship.setName(generateShip.getName());
+            }
+        }
+
+        // Ship pennant
+        if (generateShip.getPennant() != null) {
+            if (generateShip.getPennant().length() > 0 & !generateShip.getPennant().equals(ship.getPennant())) {
+                ship.setPennant(generateShip.getPennant());
+            }
+        }
+
+        // Ship IMO
+        if (generateShip.getImo() != null) {
+            if (generateShip.getImo().length() > 0 & !generateShip.getImo().equals(ship.getImo())) {
+                ship.setImo(generateShip.getImo());
+            }
+        }
+
+        // Ship misc info
+        if (generateShip.getMiscInfo() != null) {
+            if (!generateShip.getMiscInfo().equals(ship.getMiscInfo())) {
+                ship.setMiscInfo(generateShip.getMiscInfo());
+            }
+        }
+        shipService.save(ship);
+
+
+        return "redirect:/shipstorm/ship/" + id + "/edit";
     }
 
 

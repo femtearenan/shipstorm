@@ -1,5 +1,6 @@
 package se.femtearenan.shipstorm.form.util;
 
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -10,11 +11,22 @@ import se.femtearenan.shipstorm.services.ShipService;
 public class GenerateShip {
     Long id;
 
+    // Ship variables
     Long shipId;
-    Long shipClassId;
-    Long nationId;
     String pennant;
     String name;
+    String imo;
+    String miscInfo;
+
+    // ShipClass variables
+    Long shipClassId;
+    String shipClassName;
+    ShipTypes shipType;
+
+    // Nation variables
+    Long nationId;
+    String nationName;
+    String nationAbbreviation;
 
     public GenerateShip() {
     }
@@ -92,5 +104,53 @@ public class GenerateShip {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getImo() {
+        return imo;
+    }
+
+    public void setImo(String imo) {
+        this.imo = imo;
+    }
+
+    public String getMiscInfo() {
+        return miscInfo;
+    }
+
+    public void setMiscInfo(String miscInfo) {
+        this.miscInfo = miscInfo;
+    }
+
+    public String getShipClassName() {
+        return shipClassName;
+    }
+
+    public void setShipClassName(String shipClassName) {
+        this.shipClassName = shipClassName;
+    }
+
+    public ShipTypes getShipType() {
+        return shipType;
+    }
+
+    public void setShipType(ShipTypes shipType) {
+        this.shipType = shipType;
+    }
+
+    public String getNationName() {
+        return nationName;
+    }
+
+    public void setNationName(String nationName) {
+        this.nationName = nationName;
+    }
+
+    public String getNationAbbreviation() {
+        return nationAbbreviation;
+    }
+
+    public void setNationAbbreviation(String nationAbbreviation) {
+        this.nationAbbreviation = nationAbbreviation;
     }
 }
