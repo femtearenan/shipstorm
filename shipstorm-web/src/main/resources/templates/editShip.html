@@ -15,43 +15,60 @@
         <!-- CONTENT -->
         <main>
             <article class="news">
-                <div class="news-header">
-                    <h1>Showing ship</h1>
-                </div>
-                <div class="text-column">
-                    <div class="attribute-title-column">
-                        <p>Name</p>
-                        <p>Nation</p>
-                        <p>Class</p>
-                        <p>Type</p>
-                        <p>Pennant</p>
-                        <p>Updated</p>
-                    </div>
-                    <div class="attribute-value-column">
-                        <p th:text="${ship.name}">Example name</p>
-                        <p th:text="${ship.nation.name}">Example nation</p>
-                        <p th:text="${ship.shipClass.name}">Example class</p>
-                        <p th:text="${ship.shipClass.type.typeDescription}">Example type</p>
-                        <p th:text="${ship.pennant}">Example pennant</p>
-                        <p th:text="${ship.updated}">Example date</p>
-                    </div>
-                </div>
-                <div class="img-column">
-                    <div class="img-and-text">
-                        <div th:if="${images.size() > 0}">
-                            <div th:each="image : ${images.keySet()}">
-                                <div th:if="${image.length() > 0}">
-                                    <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
-                                <p><a th:href="${'/shipstorm/ship/' + ship.id} + '/images'"><span th:text="${numberImages}">No images</span></a></p>
+                <h1>Edit ship</h1>
+                <form th:object="${generateShip}" th:action="@{edit-ship}" method="post">
+                    <fieldset>
+                        <legend>Edit ship and its components</legend>
+                        <ol>
+                            <li><label>Name</label>
+                            <input type="text" /></li>
+
+                            <li><label>Pennant</label>
+                            <input type="text" /></li>
+
+                            <fieldset>
+                                <li><h2>Class</h2></li>
+                                <li><label>Class name</label>
+                                <input type="text">Example class</li>
+                                <li><label>Class type</label>
+                                <select><option th:each="type : ${types}" th:text="${type}"></option>
+                                </select></li>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>Nation</legend>
+                                <li><label>Nation name</label>
+                                    <input class="lister" list="nation-list" />
+                                    <datalist id="nation-list">
+                                        <option th:each="nation : ${nations}" th:text="${nation}"></option>
+                                    </datalist>
+                                </li>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>Image</legend>
+                                <div class="img-and-text">
+                                    <div th:if="${images.size() > 0}">
+                                        <div th:each="image : ${images.keySet()}">
+                                            <div th:if="${image.length() > 0}">
+                                                <div class="img-and-text-center">
+                                                    <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
+                                                    <label>Description</label><input type="text" th:text="${images.get(image)}" />
+                                                    <label>Remove image</label><input type="checkbox" name="removeImage" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="misc-info">
-                    <h2>Miscellaneous information</h2>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                </div>
+                            </fieldset>
+
+                            <fieldset>
+                                <legend>Miscillaneous information</legend>
+                                <input type="text" />
+                            </fieldset>
+                        </ol>
+                    </fieldset>
+                </form>
             </article>
         </main>
 

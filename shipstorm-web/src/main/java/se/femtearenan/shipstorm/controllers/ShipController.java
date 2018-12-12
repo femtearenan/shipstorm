@@ -5,6 +5,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipImage;
 import se.femtearenan.shipstorm.services.NationService;
@@ -70,12 +73,14 @@ public class ShipController {
     }
 
     @RequestMapping("/shipstorm/ship/{id}/edit")
-    public String editShip(@PathVariable Long id , Model model) {
+    public String getEditShip(@PathVariable Long id , Model model) {
         Ship ship = shipService.getShipById(id);
         model.addAttribute("ship", ship);
         model.addAttribute("classes", shipClassService.listAllShipClasses());
         model.addAttribute("nations", nationService.listAllNations());
         model.addAttribute("sensors", "");
+        model.addAttribute("generateShip", new GenerateShip());
+        model.addAttribute("types", ShipTypes.values());
 
         Map<String, String> images = new HashMap<>();
         for (ShipImage shipImage : ship.getShipImage()) {
@@ -83,6 +88,12 @@ public class ShipController {
         }
         model.addAttribute("images", images);
         return "editShip";
+    }
+
+    @RequestMapping(value = "(shipstorm/edit-ship", method = RequestMethod.POST)
+    public String editShip(GenerateShip generateShip) {
+
+        return "redirect:/shipstorm/ship/" ; // TODO: Add: + savedShip.getId()
     }
 
 

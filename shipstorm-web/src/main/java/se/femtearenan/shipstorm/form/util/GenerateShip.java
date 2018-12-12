@@ -29,7 +29,6 @@ public class GenerateShip {
         }
 
         if (shipClassId != null && shipClassId > -1) {
-            System.out.println(shipClassId); //TODO: Remove printline
             ShipClass shipClass = new ShipClass();
             shipClass = shipClassService.getShipClassById(shipClassId);
             if (shipClass != null) {

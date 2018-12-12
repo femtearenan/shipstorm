@@ -15,6 +15,7 @@ public class Ship {
     String pennant;
     String name;
     String imo;
+    String miscInfo;
     private Date created = new Date();
     private Date updated = new Date();
 
@@ -70,6 +71,14 @@ public class Ship {
 
     public void setImo(String imo) {
         this.imo = imo;
+    }
+
+    public String getMiscInfo() {
+        return miscInfo;
+    }
+
+    public void setMiscInfo(String miscInfo) {
+        this.miscInfo = miscInfo;
     }
 
     public Date getCreated() {
