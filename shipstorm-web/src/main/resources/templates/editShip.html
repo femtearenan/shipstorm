@@ -32,12 +32,19 @@
                             <fieldset>
                                 <legend>Ship class</legend>
                                 <li><label>Class name</label>
-                                <input type="text" th:value="${ship.shipClass.name}" th:placeholder="${ship.shipClass.name}" th:field="*{shipClassName}"></li>
+                                    <input class="lister" list="class-list" th:field="*{shipClass}" th:placeholder="${ship.shipClass}"/>
+                                    <datalist id="class-list">
+                                        <option th:each="shipClass : ${classes}" th:text="${shipClass.name}" th:value="${shipClass.name}"></option>
+                                    </datalist>
+                                </li>
                                 <li><label>Class type</label>
                                     <select>
                                         <option th:each="type : ${types}" th:value="${type}" th:text="${type}" th:selected="${ship.shipClass.type == type}"></option>
                                     </select>
                                 </li>
+                                <li><input type="radio" name="manipulation" value="change" th:field="*{shipClassUpdateType}" checked/> Change class affiliation
+                                <input type="radio" name="manipulation" value="update" th:field="*{shipClassUpdateType}"/> Update class
+                                <input type="radio" name="manipulation" value="add" th:field="*{shipClassUpdateType}"/> Add new class</li>
                             </fieldset>
 
                             <fieldset>

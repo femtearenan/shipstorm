@@ -19,9 +19,11 @@ public class GenerateShip {
     String miscInfo;
 
     // ShipClass variables
+    ShipClass shipClass;
     Long shipClassId;
     String shipClassName;
     ShipTypes shipType;
+    String shipClassUpdateType;
 
     // Nation variables
     Long nationId;
@@ -66,6 +68,14 @@ public class GenerateShip {
         this.id = id;
     }
 
+    public ShipClass getShipClass() {
+        return shipClass;
+    }
+
+    public void setShipClass(ShipClass shipClass) {
+        this.shipClass = shipClass;
+    }
+
     public Long getShipId() {
         return shipId;
     }
@@ -80,6 +90,14 @@ public class GenerateShip {
 
     public void setShipClassId(Long shipClassId) {
         this.shipClassId = shipClassId;
+    }
+
+    public String getShipClassUpdateType() {
+        return shipClassUpdateType;
+    }
+
+    public void setShipClassUpdateType(String shipClassUpdateType) {
+        this.shipClassUpdateType = shipClassUpdateType;
     }
 
     public Long getNationId() {

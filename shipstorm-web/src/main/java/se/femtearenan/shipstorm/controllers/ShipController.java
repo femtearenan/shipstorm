@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import se.femtearenan.shipstorm.enumerations.ShipTypes;
 import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Ship;
+import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.model.ShipImage;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
@@ -126,6 +127,22 @@ public class ShipController {
 
 
         return "redirect:/shipstorm/ship/" + id + "/edit";
+    }
+
+    private void editShipClass(GenerateShip generateShip, Long shipId) {
+        Ship ship = shipService.getShipById(shipId);
+        ShipClass shipClass = generateShip.getShipClass();
+        switch (generateShip.getShipClassUpdateType()) {
+            case "update":
+
+                break;
+            case "change":
+                break;
+            case "add":
+                break;
+            default:
+        }
+
     }
 
 
