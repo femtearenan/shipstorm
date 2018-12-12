@@ -19,29 +19,30 @@
                 <form th:object="${generateShip}" th:action="@{edit-ship}" method="post">
                     <fieldset>
                         <legend>Edit ship and its components</legend>
-                        <ol>
+                        <ul>
                             <li><label>Name</label>
-                            <input type="text" /></li>
+                            <input type="text" th:value="${ship.name}"/></li>
 
                             <li><label>Pennant</label>
-                            <input type="text" /></li>
+                            <input type="text" th:value="${ship.pennant}"/></li>
 
                             <fieldset>
-                                <li><h2>Class</h2></li>
+                                <legend>Ship class</legend>
                                 <li><label>Class name</label>
-                                <input type="text">Example class</li>
+                                <input type="text" th:value="${ship.shipClass.name}"></li>
                                 <li><label>Class type</label>
-                                <select><option th:each="type : ${types}" th:text="${type}"></option>
-                                </select></li>
+                                    <select>
+                                        <option th:each="type : ${types}" th:text="${type}" th:selected="${ship.shipClass.type == type}"></option>
+                                    </select>
+                                </li>
                             </fieldset>
 
                             <fieldset>
                                 <legend>Nation</legend>
                                 <li><label>Nation name</label>
-                                    <input class="lister" list="nation-list" />
-                                    <datalist id="nation-list">
-                                        <option th:each="nation : ${nations}" th:text="${nation}"></option>
-                                    </datalist>
+                                    <select id="nation-list">
+                                        <option th:each="nation : ${nations}" th:text="${nation.name}" th:selected="${ship.nation.name == nation.name}"></option>
+                                    </select>
                                 </li>
                             </fieldset>
 
@@ -53,7 +54,7 @@
                                             <div th:if="${image.length() > 0}">
                                                 <div class="img-and-text-center">
                                                     <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
-                                                    <label>Description</label><input type="text" th:text="${images.get(image)}" />
+                                                    <label>Description</label><input type="text" th:value="${images.get(image)}" />
                                                     <label>Remove image</label><input type="checkbox" name="removeImage" />
                                                 </div>
                                             </div>
@@ -63,10 +64,10 @@
                             </fieldset>
 
                             <fieldset>
-                                <legend>Miscillaneous information</legend>
-                                <input type="text" />
+                                <legend>Miscellaneous information</legend>
+                                <input type="text" th:text="${ship.miscInfo}"/>
                             </fieldset>
-                        </ol>
+                        </ul>
                     </fieldset>
                 </form>
             </article>

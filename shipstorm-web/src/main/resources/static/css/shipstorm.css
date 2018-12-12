@@ -199,3 +199,11 @@ a {
     color: #091526;
 
 }
+
+ul {
+    list-style-type: none;
+}
+
+legend {
+    font-style: italic;
+}
