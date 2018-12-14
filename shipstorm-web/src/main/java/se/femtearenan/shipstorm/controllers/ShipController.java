@@ -123,28 +123,69 @@ public class ShipController {
                 ship.setMiscInfo(generateShip.getMiscInfo());
             }
         }
+
+        // Nation affiliation
+        if (generateShip.getNationId() != null) {
+            if (!generateShip.getNationId().equals(ship.getNation().getId())) {
+                ship.setNation(nationService.getNationById(generateShip.getNationId()));
+            }
+        }
+
         shipService.save(ship);
 
+        // Check if class variables been updated
+        editShipClass(generateShip, id);
 
         return "redirect:/shipstorm/ship/" + id + "/edit";
     }
 
     private void editShipClass(GenerateShip generateShip, Long shipId) {
+        Long shipClassId = generateShip.getShipClassId();
         Ship ship = shipService.getShipById(shipId);
-        ShipClass shipClass = generateShip.getShipClass();
+
+        ShipClass shipClass;
+
         switch (generateShip.getShipClassUpdateType()) {
             case "update":
-
+                shipClass = ship.getShipClass();
+                shipClass = addChangedValues(shipClass, generateShip);
+                if (generateShip.getShipClassName().length() > 0 || generateShip.getShipType() != null) {
+                    shipClassService.save(shipClass);
+                }
                 break;
             case "change":
+                if (shipClassId != null) {
+                    shipClass = shipClassService.getShipClassById(shipClassId);
+                    ship.setShipClass(shipClass);
+                    shipService.save(ship);
+                    shipClassService.save(shipClass);
+                }
                 break;
             case "add":
+                shipClass = new ShipClass();
+                if (generateShip.getShipClassName().length() > 0 && generateShip.getShipType() != null) {
+                    shipClass.setName(generateShip.getShipClassName());
+                    shipClass.setType(generateShip.getShipType());
+                    shipClassService.save(shipClass);
+                    ship.setShipClass(shipClass);
+                    shipService.save(ship);
+                }
                 break;
             default:
         }
 
     }
 
-
+    private ShipClass addChangedValues(ShipClass shipClass, GenerateShip generateShip) {
+        if (generateShip.getShipClassName().length() > 0) {
+            if (generateShip.getShipClassName().equals(shipClass.getName())) {
+                shipClass.setName(generateShip.getShipClassName());
+            }
+        }
+        if (generateShip.getShipType() != null) {
+            shipClass.setType(generateShip.getShipType());
+        }
+        return shipClass;
+    }
 
 }

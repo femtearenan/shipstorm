@@ -21,11 +21,12 @@ public class GenerateShip {
     // ShipClass variables
     ShipClass shipClass;
     Long shipClassId;
-    String shipClassName;
+    String shipClassName = "";
     ShipTypes shipType;
-    String shipClassUpdateType;
+    String shipClassUpdateType = "";
 
     // Nation variables
+    Nation nation;
     Long nationId;
     String nationName;
     String nationAbbreviation;
@@ -154,6 +155,14 @@ public class GenerateShip {
 
     public void setShipType(ShipTypes shipType) {
         this.shipType = shipType;
+    }
+
+    public Nation getNation() {
+        return nation;
+    }
+
+    public void setNation(Nation nation) {
+        this.nation = nation;
     }
 
     public String getNationName() {

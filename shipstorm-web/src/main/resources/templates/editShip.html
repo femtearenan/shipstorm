@@ -31,27 +31,48 @@
 
                             <fieldset>
                                 <legend>Ship class</legend>
-                                <li><label>Class name</label>
-                                    <input class="lister" list="class-list" th:field="*{shipClass}" th:placeholder="${ship.shipClass}"/>
+                                <li><input type="radio" name="manipulation" value="change" th:field="*{shipClassUpdateType}" checked/> Change class affiliation
+                                    <input type="radio" name="manipulation" value="update" th:field="*{shipClassUpdateType}"/> Update class
+                                    <input type="radio" name="manipulation" value="add" th:field="*{shipClassUpdateType}"/> Add new class</li>
+                                <li><label>Change Class</label>
+                                    <select id="shipClassId" name="shipClassId">
+                                        <option th:each="shipClass : ${classes}"
+                                                th:text="${shipClass.name}"
+                                                th:value="${shipClass.id}"
+                                                th:selected="${shipClass.id == ship.shipClass.id}">
+                                        </option>
+                                    </select>
+                                    <!--input class="lister" list="class-id-list" th:field="*{shipClassId}" th:placeholder="${ship.shipClass.id}"/>
+                                    <datalist id="class-id-list">
+                                        <option th:each="shipClass : ${classes}" th:text="${shipClass.name}" th:value="${shipClass.id}"></option>
+                                    </datalist-->
+                                </li>
+                                <li class="ship-class-update"><label>Update name</label>
+                                    <input class="lister" list="class-list" th:field="*{shipClassName}" th:placeholder="${ship.shipClass.name}"/>
                                     <datalist id="class-list">
                                         <option th:each="shipClass : ${classes}" th:text="${shipClass.name}" th:value="${shipClass.name}"></option>
                                     </datalist>
                                 </li>
-                                <li><label>Class type</label>
-                                    <select>
-                                        <option th:each="type : ${types}" th:value="${type}" th:text="${type}" th:selected="${ship.shipClass.type == type}"></option>
+                                <li class="ship-class-update"><label>Update type</label>
+                                    <select id="shipType" name="shipType">
+                                        <option th:each="type : ${types}"
+                                                th:value="${type}"
+                                                th:text="${type}"
+                                                th:selected="${type == ship.shipClass.type}">
+                                        </option>
                                     </select>
                                 </li>
-                                <li><input type="radio" name="manipulation" value="change" th:field="*{shipClassUpdateType}" checked/> Change class affiliation
-                                <input type="radio" name="manipulation" value="update" th:field="*{shipClassUpdateType}"/> Update class
-                                <input type="radio" name="manipulation" value="add" th:field="*{shipClassUpdateType}"/> Add new class</li>
                             </fieldset>
 
                             <fieldset>
                                 <legend>Nation</legend>
                                 <li><label>Nation name</label>
-                                    <select id="nation-list" th:field="*{nationName}">
-                                        <option th:each="nation : ${nations}" th:value="${nation.name}" th:text="${nation.name}" th:selected="${ship.nation.name == nation.name}"></option>
+                                    <select id="nationId" name="nationId">
+                                        <option th:each="nation : ${nations}"
+                                                th:value="${nation.id}"
+                                                th:text="${nation.name}"
+                                                th:selected="${ship.nation.id == nation.id}">
+                                        </option>
                                     </select>
                                 </li>
                             </fieldset>
