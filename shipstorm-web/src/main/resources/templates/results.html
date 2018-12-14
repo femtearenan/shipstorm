@@ -34,7 +34,7 @@
     <main>
         <article class="news">
             <div class="news-header">
-                <h1>Ships</h1>
+                <h1>Results</h1>
             </div>
 
             <div class="ship">
@@ -42,6 +42,7 @@
                     <div th:switch="${resultType}">
                         <div th:case="'Ship'" th:include="/fragments/result :: ship"></div>
                         <div th:case="'Class'" th:include="/fragments/result :: class"></div>
+                        <div th:case="'Type'" th:include="/fragments/result :: type"></div>
                     </div>
                 </div>
             </div>
