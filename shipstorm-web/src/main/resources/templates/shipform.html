@@ -29,117 +29,123 @@
             <span id="spanfill"></span></h1>
         <div class="divider"></div>
     </div>
+
     <!-- CONTENT -->
     <main>
         <article class="ship-article">
-            <div class="ship-header">
-                <h1>Add ship</h1>
-            </div>
             <div class="ship">
-                <form th:object="${generateShip}" th:action="@{add-ship}" method="post">
-                    <input type="hidden" th:field="*{id}"/>
+                <fieldset> <legend>Add components</legend>
 
-                    <div class="form-group-pair">
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Name</label>
-                            </div>
-                            <div class="form-right-column">
-                                <input type="text" th:field="*{name}" />
-                            </div>
-                        </div>
+                    <!-- ================== SHIP FORM ================== -->
+                    <fieldset> <legend>Ship</legend>
+                        <form th:object="${generateShip}" th:action="@{add-ship}" method="post">
+                            <input type="hidden" th:field="*{id}"/>
 
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Pennant</label>
+                            <div class="form-group-pair">
+                                <div class="form-group">
+                                    <div class="form-left-column">
+                                        <label>Name</label>
+                                    </div>
+                                    <div class="form-right-column">
+                                        <input type="text" th:field="*{name}" />
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-left-column">
+                                        <label>Pennant</label>
+                                    </div>
+                                    <div class="form-right-column">
+                                        <input type="text" th:field="*{pennant}" />
+                                    </div>
+                                </div>
                             </div>
-                            <div class="form-right-column">
-                                <input type="text" th:field="*{pennant}" />
+
+                            <div class="form-group-pair">
+                                <div class="form-group">
+                                    <div class="form-left-column">
+                                        <label>Class</label>
+                                    </div>
+                                    <div class="form-right-column">
+                                        <select id="ship-classes-list" th:field="*{shipClassId}">
+                                            <option th:each="shipClass : ${classes}" th:value="${shipClass.id}" th:text="${shipClass.name}">Example</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <div class="form-left-column">
+                                        <label>Nation</label>
+                                    </div>
+                                    <div class="form-right-column">
+                                        <select id="nations-list" th:field="*{nationId}">
+                                            <option th:each="nation :  ${nations}" th:value="${nation.id}" th:text="${nation.name}">Example</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
+
+                            <div class="submit">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
+                    </fieldset>
+
+                    <!-- ================== SHIP CLASS FORM ================== -->
+                    <fieldset><legend>Ship Class</legend>
+                        <div class="show-ship-class">
+                            <form class="form-ship-class" th:object="${shipClass}" th:action="@{add-class}" method="post">
+                                <input type="hidden" th:field="*{id}"/>
+
+                                <div class="form-group">
+                                    <div class="form-left-column">
+                                        <label>Class</label>
+                                    </div>
+                                    <div class="form-right-column">
+                                        <input type="text" th:field="*{name}" />
+                                    </div>
+                                    <input class="lister" list="type-list" th:field="*{type}" />
+                                    <datalist id="type-list">
+                                        <option th:each="type : ${types}" th:text="${type}"></option>
+                                    </datalist>
+                                </div>
+
+                                <div class="submit">
+                                    <button type="submit" class="btn btn-default">Submit</button>
+                                </div>
+                            </form>
                         </div>
+                    </fieldset>
+
+                    <!-- ================== NATIONS FORM ================== -->
+                    <div class="show-nation"><h2>Add a nation</h2>
+                        <form class="form-nation" th:object="${nation}" th:action="@{add-nation}" method="post">
+                            <input type="hidden" th:field="*{id}"/>
+
+                            <div class="form-group">
+                                <div class="form-left-column">
+                                    <label>Nation</label>
+                                </div>
+                                <div class="form-right-column">
+                                    <input type="text" th:field="*{name}" />
+                                </div>
+                            </div>
+
+                            <div class="form-group">
+                                <div class="form-left-column">
+                                    <label>Abbreviation</label>
+                                </div>
+                                <div class="form-right-column">
+                                    <input type="text" th:field="*{abbreviation}" />
+                                </div>
+                            </div>
+
+                            <div class="submit">
+                                <button type="submit" class="btn btn-default">Submit</button>
+                            </div>
+                        </form>
                     </div>
-
-                    <div class="form-group-pair">
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Class</label>
-                            </div>
-                            <div class="form-right-column">
-                                <select id="ship-classes-list" th:field="*{shipClassId}">
-                                    <option th:each="shipClass : ${classes}" th:value="${shipClass.id}" th:text="${shipClass.name}">Example</option>
-                                </select>
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Nation</label>
-                            </div>
-                            <div class="form-right-column">
-                                <select id="nations-list" th:field="*{nationId}">
-                                    <option th:each="nation :  ${nations}" th:value="${nation.id}" th:text="${nation.name}">Example</option>
-                                </select>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="submit">
-                        <button type="submit" class="btn btn-default">Submit</button>
-                    </div>
-                </form>
-
-                <!-- ================== SHIP CLASS FORM ================== -->
-                <div class="show-ship-class"><h3>Add a ship class</h3>
-                    <form class="form-ship-class" th:object="${shipClass}" th:action="@{add-class}" method="post">
-                        <input type="hidden" th:field="*{id}"/>
-
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Class</label>
-                            </div>
-                            <div class="form-right-column">
-                                <input type="text" th:field="*{name}" />
-                            </div>
-                            <input class="lister" list="type-list" th:field="*{type}" />
-                            <datalist id="type-list">
-                                <option th:each="type : ${types}" th:text="${type}"></option>
-                            </datalist>
-                        </div>
-
-                        <div class="submit">
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </div>
-                    </form>
-                </div>
-
-                <!-- ================== NATIONS FORM ================== -->
-                <div class="show-nation"><h3>Add a nation</h3>
-                    <form class="form-nation" th:object="${nation}" th:action="@{add-nation}" method="post">
-                        <input type="hidden" th:field="*{id}"/>
-
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Nation</label>
-                            </div>
-                            <div class="form-right-column">
-                                <input type="text" th:field="*{name}" />
-                            </div>
-                        </div>
-
-                        <div class="form-group">
-                            <div class="form-left-column">
-                                <label>Abbreviation</label>
-                            </div>
-                            <div class="form-right-column">
-                                <input type="text" th:field="*{abbreviation}" />
-                            </div>
-                        </div>
-
-                        <div class="submit">
-                            <button type="submit" class="btn btn-default">Submit</button>
-                        </div>
-                    </form>
-                </div>
+                </fieldset>
                 <!-- ================== End of forms ================== -->
 
                 <div class="divider"></div>

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="stylesheet" th:href="@{/css/minerva.css}" />
+    <link rel="stylesheet" th:href="@{/css/shipstorm.css}" />
+    <title>SHIPSTORM - femtearenan.se</title>
+</head>
+<body>
+    <div id="wrapper">
+        <div th:include="/fragments/header :: header(page='ship')">
+        </div>
+
+        <!-- CONTENT -->
+        <main>
+            <article class="news">
+                <h1>Edit ship</h1>
+                <form th:object="${generateShip}" th:action="@{edit}" method="post">
+                    <fieldset>
+                        <legend>Edit Ship Class</legend>
+                        <ul>
+                            <li class="ship-class-update"><label>Update name</label>
+                                <input type="text" th:field="*{shipClassName}" th:placeholder="${shipClass.name}"/>
+                            </li>
+                            <li class="ship-class-update"><label>Update type</label>
+                                <select id="shipType" name="shipType">
+                                    <option th:each="type : ${types}"
+                                            th:value="${type}"
+                                            th:text="${type}"
+                                            th:selected="${type == shipClass.type}">
+                                    </option>
+                                </select>
+                            </li>
+                        </ul>
+                    </fieldset>
+                    <input type="submit" value="Submit"/>
+                </form>
+            </article>
+        </main>
+
+        <!-- FOOTER -->
+        <footer>
+            <div class="divider"></div>
+            <div id="footer-content">
+                <ul>
+                    <li>Back to <a href="http://femtearenan.se">femtearenan.se</a></li>
+                    <li>&copy;2018</li>
+                </ul>
+                <p> </p>
+            </div>
+        </footer>
+    </div>
+</body>
+</html>

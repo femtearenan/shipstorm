@@ -42,10 +42,6 @@
                                                 th:selected="${shipClass.id == ship.shipClass.id}">
                                         </option>
                                     </select>
-                                    <!--input class="lister" list="class-id-list" th:field="*{shipClassId}" th:placeholder="${ship.shipClass.id}"/>
-                                    <datalist id="class-id-list">
-                                        <option th:each="shipClass : ${classes}" th:text="${shipClass.name}" th:value="${shipClass.id}"></option>
-                                    </datalist-->
                                 </li>
                                 <li class="ship-class-update"><label>Update name</label>
                                     <input class="lister" list="class-list" th:field="*{shipClassName}" th:placeholder="${ship.shipClass.name}"/>

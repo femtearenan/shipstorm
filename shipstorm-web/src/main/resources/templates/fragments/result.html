@@ -38,7 +38,7 @@
             </tr>
 
             <tr th:each="shipClass : ${result}">
-                <td th:text="${shipClass.name}">Example class</td>
+                <td><a th:href="${'/shipstorm/ship-class/' + shipClass.id + '/edit'}" th:text="${shipClass.name}">Example class</a></td>
                 <td th:text="${shipClass.type}">Example type</td>
             </tr>
         </table>
