@@ -4,7 +4,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -46,7 +46,7 @@ public class ShipstormApplication {
 
             ShipClass malmo = new ShipClass();
             malmo.setName("Malmö");
-            malmo.setType(ShipTypes.PB);
+            malmo.setType(ShipType.PB);
             shipClassService.save(malmo);
 
             Ship stockholm = new Ship();
@@ -66,7 +66,7 @@ public class ShipstormApplication {
 
             ShipClass visbyClass = new ShipClass();
             visbyClass.setName("Visby");
-            visbyClass.setType(ShipTypes.K);
+            visbyClass.setType(ShipType.K);
             shipClassService.save(visbyClass);
 
             Ship visby = new Ship();
@@ -85,7 +85,7 @@ public class ShipstormApplication {
 
             ShipClass thetis = new ShipClass();
             thetis.setName("Thetis");
-            thetis.setType(ShipTypes.FF);
+            thetis.setType(ShipType.FF);
             shipClassService.save(thetis);
 
             Ship vaddaren = new Ship();
@@ -104,7 +104,7 @@ public class ShipstormApplication {
 
             ShipClass hamina = new ShipClass();
             hamina.setName("Hamina");
-            hamina.setType(ShipTypes.K);
+            hamina.setType(ShipType.K);
             shipClassService.save(hamina);
 
             Ship hma = new Ship();

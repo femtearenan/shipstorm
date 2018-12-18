@@ -5,7 +5,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
@@ -45,7 +45,7 @@ public class AddController {
         model.addAttribute("generateShip", new GenerateShip());
         model.addAttribute("nations", nationService.listAllNations());
         model.addAttribute("classes", shipClassService.listAllShipClasses());
-        EnumSet<ShipTypes> types = EnumSet.allOf(ShipTypes.class);
+        EnumSet<ShipType> types = EnumSet.allOf(ShipType.class);
         model.addAttribute("types", types);
         return "shipform";
     }

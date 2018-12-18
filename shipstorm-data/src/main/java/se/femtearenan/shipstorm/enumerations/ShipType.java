@@ -1,7 +1,7 @@
 package se.femtearenan.shipstorm.enumerations;
 
 // For reference see https://en.wikipedia.org/wiki/Hull_classification_symbol [2018-12-06]
-public enum ShipTypes {
+public enum ShipType {
     A ("Auxiliary"),
     AM ("Mine Sweeper"),
     CC ("Cruiser"),
@@ -23,7 +23,7 @@ public enum ShipTypes {
         return typeDescription;
     }
 
-    ShipTypes(String typeDescription) {
+    ShipType(String typeDescription) {
         this.typeDescription = typeDescription;
     }
 }

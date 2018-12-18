@@ -1,6 +1,6 @@
 package se.femtearenan.shipstorm.form.util;
 
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -22,7 +22,7 @@ public class GenerateShip {
     ShipClass shipClass;
     Long shipClassId;
     String shipClassName = "";
-    ShipTypes shipType;
+    ShipType shipType;
     String shipClassUpdateType = "";
 
     // Nation variables
@@ -149,11 +149,11 @@ public class GenerateShip {
         this.shipClassName = shipClassName;
     }
 
-    public ShipTypes getShipType() {
+    public ShipType getShipType() {
         return shipType;
     }
 
-    public void setShipType(ShipTypes shipType) {
+    public void setShipType(ShipType shipType) {
         this.shipType = shipType;
     }
 

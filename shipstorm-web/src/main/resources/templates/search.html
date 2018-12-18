@@ -40,7 +40,7 @@
                 <form th:action="@{search}">
                     <div class="search-entity" th:each="entity : ${entityType}">
                         <label th:text="${entity}">Example label</label>
-                        <input type="text" th:name="${entity} + 'String'"/>
+                        <input type="text" th:name="${entity}"/>
                     </div>
 
                     <div class="submit">

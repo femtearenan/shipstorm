@@ -1,6 +1,6 @@
 package se.femtearenan.shipstorm.services;
 
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.ShipClass;
 
 import java.util.List;
@@ -16,5 +16,5 @@ public interface ShipClassService {
 
     List<ShipClass> findByNameContaining(String name);
 
-    List<ShipClass> findByType(ShipTypes shipTypes);
+    List<ShipClass> findByType(ShipType shipType);
 }

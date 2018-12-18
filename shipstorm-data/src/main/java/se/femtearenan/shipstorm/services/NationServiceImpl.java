@@ -5,6 +5,8 @@ import org.springframework.stereotype.Service;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.repositories.NationRepository;
 
+import java.util.List;
+
 @Service
 public class NationServiceImpl implements NationService {
     private NationRepository nationRepository;
@@ -27,5 +29,15 @@ public class NationServiceImpl implements NationService {
     @Override
     public Nation save(Nation nation) {
         return nationRepository.save(nation) ;
+    }
+
+    @Override
+    public List<Nation> findByName(String name) {
+        return nationRepository.findByName(name);
+    }
+
+    @Override
+    public List<Nation> findByNameContaining(String name) {
+        return nationRepository.findByNameContaining(name);
     }
 }

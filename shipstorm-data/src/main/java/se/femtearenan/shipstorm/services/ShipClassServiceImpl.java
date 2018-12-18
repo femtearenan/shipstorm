@@ -2,7 +2,7 @@ package se.femtearenan.shipstorm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.repositories.ShipClassRepository;
 
@@ -43,7 +43,7 @@ public class ShipClassServiceImpl implements ShipClassService {
     }
 
     @Override
-    public List<ShipClass> findByType(ShipTypes shipTypes) {
-        return shipClassRepository.findByType(shipTypes);
+    public List<ShipClass> findByType(ShipType shipType) {
+        return shipClassRepository.findByType(shipType);
     }
 }

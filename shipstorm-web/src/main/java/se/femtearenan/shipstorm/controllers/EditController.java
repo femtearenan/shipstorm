@@ -6,7 +6,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.form.util.GenerateShip;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
@@ -48,7 +48,7 @@ public class EditController {
         model.addAttribute("nations", nationService.listAllNations());
         model.addAttribute("sensors", "");
         model.addAttribute("generateShip", new GenerateShip());
-        model.addAttribute("types", ShipTypes.values());
+        model.addAttribute("types", ShipType.values());
 
         Map<String, String> images = new HashMap<>();
         for (ShipImage shipImage : ship.getShipImage()) {
@@ -117,7 +117,7 @@ public class EditController {
             return "redirect:/shipstorm/";
         }
         model.addAttribute("shipClass", shipClass);
-        model.addAttribute("types", ShipTypes.values());
+        model.addAttribute("types", ShipType.values());
         model.addAttribute("generateShip", new GenerateShip());
         return "editShipClass";
     }

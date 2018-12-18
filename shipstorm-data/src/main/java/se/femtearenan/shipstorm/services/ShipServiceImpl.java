@@ -2,7 +2,11 @@ package se.femtearenan.shipstorm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.femtearenan.shipstorm.enumerations.ShipType;
+import se.femtearenan.shipstorm.model.Nation;
+import se.femtearenan.shipstorm.model.Sensor;
 import se.femtearenan.shipstorm.model.Ship;
+import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.repositories.ShipRepository;
 
 import java.util.List;
@@ -44,6 +48,31 @@ public class ShipServiceImpl implements ShipService {
     @Override
     public List<Ship> findByPennant(String pennant) {
         return shipRepository.findByPennant(pennant);
+    }
+
+    @Override
+    public List<Ship> findByShipClass(ShipClass shipClass) {
+        return shipRepository.findByShipClass(shipClass);
+    }
+
+    @Override
+    public List<Ship> findByShipType(ShipType shipType) {
+        return shipRepository.findByShipType(shipType);
+    }
+
+    @Override
+    public List<Ship> findByNation(Nation nation) {
+        return shipRepository.findByNation(nation);
+    }
+
+    @Override
+    public List<Ship> findBySensor(Sensor sensor) {
+        return shipRepository.findBySensor(sensor);
+    }
+
+    @Override
+    public List<Ship> findByNameAndPennantAndShipClassAndShipTypeAndNationAndSensor(String name, String pennant, ShipClass shipClass, ShipType shipType, Nation nation, Sensor sensor) {
+        return shipRepository.findByNameAndPennantAndShipClassAndShipTypeAndNationAndSensor(name, pennant, shipClass, shipType, nation, sensor);
     }
 
     @Override

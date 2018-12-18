@@ -7,7 +7,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import se.femtearenan.shipstorm.enumerations.ShipTypes;
+import se.femtearenan.shipstorm.enumerations.ShipType;
+import se.femtearenan.shipstorm.exceptions.ResultingListSizeException;
+import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
@@ -18,6 +20,12 @@ import java.util.*;
 
 @Controller
 public class SearchController {
+
+    private final int FIRST_TIER_LIST_LIMIT = 50;
+
+    // Limit to number of JPA look-ups; example is a search for ships by supplying a ship-class
+    // as a search parameter resulting in 6 or more ship-classes would result in 6 or more look-ups.
+    private final int SECOND_TIER_LIST_LIMIT = 5;
 
     private ShipService shipService;
     private NationService nationService;
@@ -52,6 +60,7 @@ public class SearchController {
         entityTypes.add("type");
         entityTypes.add("nation");
         entityTypes.add("pennant");
+        entityTypes.add("sensor");
         entityTypes.add("any");
 
         model.addAttribute("entityType", entityTypes);
@@ -59,39 +68,52 @@ public class SearchController {
         return "search";
     }
 
-
-    @RequestMapping(value="/shipstorm/search/{searchType}/", method = RequestMethod.GET, params={"entity", "searchString", "searchType"} )
+    @RequestMapping(value="/shipstorm/search/{searchType}/", method = RequestMethod.GET, params={"ship", "class", "type", "nation", "pennant", "sensor", "any"} )
     public String searchResult(
             @PathVariable("searchType") String searchType,
-            @RequestParam("entity") String entity,
-            @RequestParam("searchString") String searchString,
+            @RequestParam("ship") String shipString,
+            @RequestParam("class") String classString,
+            @RequestParam("type") String typeString,
+            @RequestParam("nation") String nationString,
+            @RequestParam("pennant") String pennantString,
+            @RequestParam("sensor") String sensorString,
+            @RequestParam("any") String anyString,
             Model model) {
         String message = "No ship matching the search criteria has been found.";
+        Map<String, String> searchStrings = new HashMap<>();
+        searchStrings.put("ship", shipString);
+        searchStrings.put("pennant", pennantString);
+        searchStrings.put("class", classString);
+        searchStrings.put("type", typeString);
+        searchStrings.put("nation", nationString);
+        searchStrings.put("sensor", sensorString);
+        searchStrings.put("any", anyString);
+
         boolean hasResult = false;
         List<Ship> shipResult = new ArrayList<>();
         List<ShipClass> classResult = new ArrayList<>();
-        List<ShipTypes> typeResult = new ArrayList<>();
+        List<ShipType> typeResult = new ArrayList<>();
 
         switch (searchType) {
             case "ship":
-                shipResult = shipService.findByNameContaining(searchString);
+                //shipResult = searchShip(searchStrings);
                 model.addAttribute("result", shipResult);
                 searchType = "Ship";
                 break;
             case "class":
-                classResult = shipClassService.findByNameContaining(searchString);
+                classResult = shipClassService.findByNameContaining(classString);
                 model.addAttribute("result", classResult);
                 searchType = "Class";
                 break;
             case "type":
-                if (searchString.length() > 0) {
-                    for (ShipTypes type : ShipTypes.values()) {
-                        if (type.toString().contains(searchString)) {
+                if (typeString.length() > 0) {
+                    for (ShipType type : ShipType.values()) {
+                        if (type.toString().contains(typeString)) {
                             typeResult.add(type);
                         }
                     }
                 } else {
-                    typeResult.addAll(Arrays.asList(ShipTypes.values()));
+                    typeResult.addAll(Arrays.asList(ShipType.values()));
                 }
                 model.addAttribute("result", typeResult);
                 searchType = "Type";
@@ -114,5 +136,74 @@ public class SearchController {
         model.addAttribute("resultType", searchType);
 
         return "results";
+    }
+
+    private List<Ship> searchShip(Map<String, String> searchStrings) throws Exception {
+        List<Ship> result = new ArrayList<>();
+
+        // Waterfall logic of JPA/Hibernate command to limit number of look-ups.
+        if (searchStrings.get("ship").length() > 0) {
+            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
+
+        } else if (searchStrings.get("pennant").length() > 0) {
+            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
+
+        } else if (searchStrings.get("class").length() > 0) {
+            List<Ship> shipByClass = new ArrayList<>();
+            List<ShipClass> shipClasses = shipClassService.findByNameContaining(searchStrings.get("class"));
+            if (shipClasses.size() > 0 && shipClasses.size() <= FIRST_TIER_LIST_LIMIT) {
+                for (ShipClass shipClass : shipClasses) {
+                    shipByClass.addAll(shipService.findByShipClass(shipClass));
+                }
+            } else if (shipClasses.size() > FIRST_TIER_LIST_LIMIT) {
+                throw new ResultingListSizeException("Resulting list exceeds set limit of " + FIRST_TIER_LIST_LIMIT + ".");
+            }
+
+        } else if (searchStrings.get("type").length() > 0) {
+            List<Ship> shipByType = new ArrayList<>();
+            String shipTypeString = searchStrings.get("type");
+            try {
+                ShipType shipType = ShipType.valueOf(shipTypeString);
+                shipByType = shipService.findByShipType(shipType);
+            } catch (IllegalArgumentException e){
+                e.printStackTrace();
+            }
+
+        } else if (searchStrings.get("nation").length() > 0) {
+            List<Ship> shipByNation = new ArrayList<>();
+            List<Nation> nations = nationService.findByNameContaining(searchStrings.get("nation"));
+            if (nations.size() > 0 && nations.size() <= FIRST_TIER_LIST_LIMIT) {
+                for (Nation nation : nations) {
+                    shipByNation.addAll(shipService.findByNation(nation));
+                }
+            } else if (nations.size() > FIRST_TIER_LIST_LIMIT) {
+                throw new ResultingListSizeException("Resulting list exceeds set limit of " + FIRST_TIER_LIST_LIMIT + ".");
+            }
+
+        } else if (searchStrings.get("sensor").length() > 0) {
+
+        } else if (searchStrings.get("any").length() > 0) {
+
+        }
+
+/*
+
+
+
+
+        */
+
+        return result;
+    }
+
+    private List<Ship> filterPennant(List<Ship> ships, String pennant) {
+        List<Ship> filteredPennantResult = new ArrayList<>();
+        for (Ship ship : ships) {
+            if (ship.getPennant().contains(pennant)) {
+                filteredPennantResult.add(ship);
+            }
+        }
+
+        return filteredPennantResult;
     }
 }
