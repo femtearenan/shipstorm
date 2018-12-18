@@ -10,9 +10,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.exceptions.ResultingListSizeException;
 import se.femtearenan.shipstorm.model.Nation;
+import se.femtearenan.shipstorm.model.Sensor;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
+import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
@@ -30,6 +32,7 @@ public class SearchController {
     private ShipService shipService;
     private NationService nationService;
     private ShipClassService shipClassService;
+    private SensorService sensorService;
 
     @Autowired
     public void setShipService(ShipService shipService) {
@@ -44,6 +47,11 @@ public class SearchController {
     @Autowired
     public void setShipClassService(ShipClassService shipClassService) {
         this.shipClassService = shipClassService;
+    }
+
+    @Autowired
+    public void setSensorService(SensorService sensorService) {
+        this.sensorService = sensorService;
     }
 
     @RequestMapping(value="/shipstorm/search")
@@ -145,15 +153,25 @@ public class SearchController {
         if (searchStrings.get("ship").length() > 0) {
             List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
 
+            if (shipByName.size() > 0) {
+                result = filterList(shipByName, searchStrings);
+            }
+
         } else if (searchStrings.get("pennant").length() > 0) {
             List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
 
+            if (shipByPennant.size() > 0) {
+                result = filterList(shipByPennant, searchStrings);
+            }
         } else if (searchStrings.get("class").length() > 0) {
             List<Ship> shipByClass = new ArrayList<>();
             List<ShipClass> shipClasses = shipClassService.findByNameContaining(searchStrings.get("class"));
             if (shipClasses.size() > 0 && shipClasses.size() <= FIRST_TIER_LIST_LIMIT) {
                 for (ShipClass shipClass : shipClasses) {
                     shipByClass.addAll(shipService.findByShipClass(shipClass));
+                }
+                if (shipByClass.size() > 0) {
+                    result = filterList(shipByClass, searchStrings);
                 }
             } else if (shipClasses.size() > FIRST_TIER_LIST_LIMIT) {
                 throw new ResultingListSizeException("Resulting list exceeds set limit of " + FIRST_TIER_LIST_LIMIT + ".");
@@ -168,6 +186,9 @@ public class SearchController {
             } catch (IllegalArgumentException e){
                 e.printStackTrace();
             }
+            if (shipByType.size() > 0) {
+                result = filterList(shipByType, searchStrings);
+            }
 
         } else if (searchStrings.get("nation").length() > 0) {
             List<Ship> shipByNation = new ArrayList<>();
@@ -176,24 +197,74 @@ public class SearchController {
                 for (Nation nation : nations) {
                     shipByNation.addAll(shipService.findByNation(nation));
                 }
+                if (shipByNation.size() > 0) {
+                    result = filterList(shipByNation, searchStrings);
+                }
             } else if (nations.size() > FIRST_TIER_LIST_LIMIT) {
                 throw new ResultingListSizeException("Resulting list exceeds set limit of " + FIRST_TIER_LIST_LIMIT + ".");
             }
 
         } else if (searchStrings.get("sensor").length() > 0) {
-
+            List<Ship> shipBySensor = new ArrayList<>();
+            List<Sensor> sensors = sensorService.findByNameContaining(searchStrings.get("sensor"));
+            if (sensors.size() > 0 && sensors.size() <= FIRST_TIER_LIST_LIMIT) {
+                for (Sensor sensor : sensors) {
+                    shipBySensor.addAll(shipService.findBySensor(sensor));
+                }
+            } else if (sensors.size() > FIRST_TIER_LIST_LIMIT) {
+                throw new ResultingListSizeException("Resulting list exceeds set limit of " + FIRST_TIER_LIST_LIMIT + ".");
+            }
         } else if (searchStrings.get("any").length() > 0) {
 
+            List<Ship> ships = new ArrayList<>();
+
+            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
+
+            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
+
+            List<Ship> shipByClass = new ArrayList<>();
+            List<ShipClass> shipClasses = shipClassService.findByNameContaining(searchStrings.get("class"));
+            if (shipClasses.size() > 0 && shipClasses.size() <= SECOND_TIER_LIST_LIMIT) {
+                for (ShipClass shipClass : shipClasses) {
+                    shipByClass.addAll(shipService.findByShipClass(shipClass));
+                }
+            } else if (shipClasses.size() > SECOND_TIER_LIST_LIMIT) {
+                throw new ResultingListSizeException("Resulting list exceeds set limit of " + SECOND_TIER_LIST_LIMIT + ".");
+            }
+
+            List<Ship> shipByType = new ArrayList<>();
+            String shipTypeString = searchStrings.get("type");
+            try {
+                ShipType shipType = ShipType.valueOf(shipTypeString);
+                shipByType = shipService.findByShipType(shipType);
+            } catch (IllegalArgumentException e){
+                e.printStackTrace();
+            }
+
+            List<Ship> shipByNation = new ArrayList<>();
+            List<Nation> nations = nationService.findByNameContaining(searchStrings.get("nation"));
+            if (nations.size() > 0 && nations.size() <= SECOND_TIER_LIST_LIMIT) {
+                for (Nation nation : nations) {
+                    shipByNation.addAll(shipService.findByNation(nation));
+                }
+            } else if (nations.size() > SECOND_TIER_LIST_LIMIT) {
+                throw new ResultingListSizeException("Resulting list exceeds set limit of " + SECOND_TIER_LIST_LIMIT + ".");
+            }
+
+            ships.addAll(shipByName);
+            ships.addAll(shipByPennant);
+            ships.addAll(shipByClass);
+            ships.addAll(shipByType);
+            ships.addAll(shipByNation);
+            result = ships;
         }
 
-/*
-
-
-
-
-        */
 
         return result;
+    }
+
+    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) {
+        return null;
     }
 
     private List<Ship> filterPennant(List<Ship> ships, String pennant) {
