@@ -21,19 +21,19 @@
                         <legend>Edit ship and its components</legend>
                         <ul>
                             <li><label>Name</label>
-                            <input type="text" th:field="*{name}" th:value="${ship.name}" th:placeholder="${ship.name}"/></li>
+                            <input shipType="text" th:field="*{name}" th:value="${ship.name}" th:placeholder="${ship.name}"/></li>
 
                             <li><label>Pennant</label>
-                            <input type="text" th:field="*{pennant}" th:value="${ship.pennant}" th:placeholder="${ship.pennant}" /></li>
+                            <input shipType="text" th:field="*{pennant}" th:value="${ship.pennant}" th:placeholder="${ship.pennant}" /></li>
 
                             <li><label>IMO</label>
-                            <input type="text" th:field="*{imo}" th:value="${ship.imo}" th:placeholder="${ship.imo}" /></li>
+                            <input shipType="text" th:field="*{imo}" th:value="${ship.imo}" th:placeholder="${ship.imo}" /></li>
 
                             <fieldset>
                                 <legend>Ship class</legend>
-                                <li><input type="radio" name="manipulation" value="change" th:field="*{shipClassUpdateType}" checked/> Change class affiliation
-                                    <input type="radio" name="manipulation" value="update" th:field="*{shipClassUpdateType}"/> Update class
-                                    <input type="radio" name="manipulation" value="add" th:field="*{shipClassUpdateType}"/> Add new class</li>
+                                <li><input shipType="radio" name="manipulation" value="change" th:field="*{shipClassUpdateType}" checked/> Change class affiliation
+                                    <input shipType="radio" name="manipulation" value="update" th:field="*{shipClassUpdateType}"/> Update class
+                                    <input shipType="radio" name="manipulation" value="add" th:field="*{shipClassUpdateType}"/> Add new class</li>
                                 <li><label>Change Class</label>
                                     <select id="shipClassId" name="shipClassId">
                                         <option th:each="shipClass : ${classes}"
@@ -49,12 +49,12 @@
                                         <option th:each="shipClass : ${classes}" th:text="${shipClass.name}" th:value="${shipClass.name}"></option>
                                     </datalist>
                                 </li>
-                                <li class="ship-class-update"><label>Update type</label>
+                                <li class="ship-class-update"><label>Update shipType</label>
                                     <select id="shipType" name="shipType">
-                                        <option th:each="type : ${types}"
-                                                th:value="${type}"
-                                                th:text="${type}"
-                                                th:selected="${type == ship.shipClass.type}">
+                                        <option th:each="shipType : ${types}"
+                                                th:value="${shipType}"
+                                                th:text="${shipType}"
+                                                th:selected="${shipType == ship.shipClass.shipType}">
                                         </option>
                                     </select>
                                 </li>
@@ -81,24 +81,24 @@
                                             <li><div th:if="${image.length() > 0}">
                                                 <div class="img-and-text-center">
                                                     <img class="loggo"  th:src="@{'data:image/jpeg;base64,'+${image}}" alt="Simplistic depiction of a sail boat" />
-                                                    <label>Description</label><input type="text" th:value="${images.get(image)}" />
-                                                    <label>Remove image</label><input type="checkbox" name="removeImage" />
+                                                    <label>Description</label><input shipType="text" th:value="${images.get(image)}" />
+                                                    <label>Remove image</label><input shipType="checkbox" name="removeImage" />
                                                 </div>
                                             </div></li>
                                         </div>
                                     </div>
                                     <li><label>Add image</label>
-                                    <input type="file" value="Choose image"/></li>
+                                    <input shipType="file" value="Choose image"/></li>
                                 </div>
                             </fieldset>
 
                             <fieldset>
                                 <legend>Miscellaneous information</legend>
-                                <input type="text" th:value="${ship.miscInfo}" th:placeholder="${ship.miscInfo}" th:field="*{miscInfo}"/>
+                                <input shipType="text" th:value="${ship.miscInfo}" th:placeholder="${ship.miscInfo}" th:field="*{miscInfo}"/>
                             </fieldset>
                         </ul>
                     </fieldset>
-                    <input type="submit" value="Submit"/>
+                    <input shipType="submit" value="Submit"/>
                 </form>
             </article>
         </main>

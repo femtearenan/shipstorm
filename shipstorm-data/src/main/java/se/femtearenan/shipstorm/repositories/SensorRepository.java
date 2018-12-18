@@ -13,8 +13,8 @@ public interface SensorRepository extends JpaRepository<Sensor, Long> {
     List<Sensor> findByNameContaining(String name);
     List<Sensor> findByType(String type);
     List<Sensor> findByFrequencyBand(String frequencyBand);
-    List<Sensor> findByShipClass(ShipClass shipClass);
-    List<Sensor> findByShipType(ShipType shipType);
-    List<Sensor> findByNation(Nation nation);
+    List<Sensor> findByShipsShipClass(ShipClass shipClass);
+    List<Sensor> findByShipsShipClassShipType(ShipType shipType);
+    List<Sensor> findByShipsNation(Nation nation);
     Sensor findTopByOrderByIdDesc();
 }

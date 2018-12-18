@@ -87,6 +87,7 @@ public class SearchController {
             @RequestParam("sensor") String sensorString,
             @RequestParam("any") String anyString,
             Model model) {
+
         String message = "No ship matching the search criteria has been found.";
         Map<String, String> searchStrings = new HashMap<>();
         searchStrings.put("ship", shipString);
@@ -104,9 +105,13 @@ public class SearchController {
 
         switch (searchType) {
             case "ship":
-                //shipResult = searchShip(searchStrings);
-                model.addAttribute("result", shipResult);
-                searchType = "Ship";
+                try {
+                    shipResult = searchShip(searchStrings);
+                    model.addAttribute("result", shipResult);
+                    searchType = "Ship";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case "class":
                 classResult = shipClassService.findByNameContaining(classString);
@@ -296,7 +301,7 @@ public class SearchController {
             }
         }
 
-        return null;
+        return filteredList;
     }
 
     private List<Ship> pennantFilter(List<Ship> ships, String pennant) {

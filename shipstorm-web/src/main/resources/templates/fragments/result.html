@@ -26,7 +26,7 @@
             <tr th:each="ship : ${result}">
                 <td><a th:href="${'/shipstorm/ship/' + ship.id}" th:text="${ship.name}">Example name</a></td>
                 <td th:text="${ship.shipClass.name}">Example class</td>
-                <td th:text="${ship.shipClass.type}">Example type</td>
+                <td th:text="${ship.shipClass.shipType}">Example shipType</td>
                 <td th:text="${ship.pennant}">Example pennant</td>
                 <td th:text="${ship.nation.name}">Example nation</td>
                 <td th:text="${ship.updated}">Example modified</td>
@@ -45,12 +45,12 @@
 
             <tr th:each="shipClass : ${result}">
                 <td th:text="${shipClass.name}">Example class</td>
-                <td th:text="${shipClass.type}">Example type</td>
+                <td th:text="${shipClass.shipType}">Example shipType</td>
                 <td><a th:href="${'/shipstorm/ship-class/' + shipClass.id + '/edit'}">Edit</a></td>
             </tr>
         </table>
     </div>
-    <div th:fragment="type">
+    <div th:fragment="shipType">
         <h2>Ship Type</h2>
         <table>
             <tr>
@@ -59,10 +59,10 @@
                 <th></th>
             </tr>
 
-            <tr th:each="type : ${result}">
-                <td th:text="${type.typeDescription}">Example type</td>
-                <td th:text="${type}">Example abb</td>
-                <td><a th:href="${'/shipstorm/ship-class/'}">Classes of type</a></td>
+            <tr th:each="shipType : ${result}">
+                <td th:text="${shipType.typeDescription}">Example shipType</td>
+                <td th:text="${shipType}">Example abb</td>
+                <td><a th:href="${'/shipstorm/ship-class/'}">Classes of shipType</a></td>
             </tr>
         </table>
     </div>

@@ -29,6 +29,9 @@ public class Ship {
     ShipClass shipClass;
 
     @ManyToMany
+    List<Sensor> sensors;
+
+    @ManyToMany
     List<Scrap> scraps;
 
     @OneToMany(mappedBy = "ship")
@@ -115,6 +118,14 @@ public class Ship {
 
     public String getShipClassName() {
         return shipClass.getName();
+    }
+
+    public List<Sensor> getSensors() {
+        return sensors;
+    }
+
+    public void setSensors(List<Sensor> sensors) {
+        this.sensors = sensors;
     }
 
     public List<Scrap> getScraps() {

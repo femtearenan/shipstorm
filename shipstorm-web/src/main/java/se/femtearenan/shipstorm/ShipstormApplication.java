@@ -46,7 +46,7 @@ public class ShipstormApplication {
 
             ShipClass malmo = new ShipClass();
             malmo.setName("Malmö");
-            malmo.setType(ShipType.PB);
+            malmo.setShipType(ShipType.PB);
             shipClassService.save(malmo);
 
             Ship stockholm = new Ship();
@@ -66,7 +66,7 @@ public class ShipstormApplication {
 
             ShipClass visbyClass = new ShipClass();
             visbyClass.setName("Visby");
-            visbyClass.setType(ShipType.K);
+            visbyClass.setShipType(ShipType.K);
             shipClassService.save(visbyClass);
 
             Ship visby = new Ship();
@@ -85,7 +85,7 @@ public class ShipstormApplication {
 
             ShipClass thetis = new ShipClass();
             thetis.setName("Thetis");
-            thetis.setType(ShipType.FF);
+            thetis.setShipType(ShipType.FF);
             shipClassService.save(thetis);
 
             Ship vaddaren = new Ship();
@@ -104,7 +104,7 @@ public class ShipstormApplication {
 
             ShipClass hamina = new ShipClass();
             hamina.setName("Hamina");
-            hamina.setType(ShipType.K);
+            hamina.setShipType(ShipType.K);
             shipClassService.save(hamina);
 
             Ship hma = new Ship();

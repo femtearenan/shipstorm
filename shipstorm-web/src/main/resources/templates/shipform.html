@@ -39,7 +39,7 @@
                     <!-- ================== SHIP FORM ================== -->
                     <fieldset> <legend>Ship</legend>
                         <form th:object="${generateShip}" th:action="@{add-ship}" method="post">
-                            <input type="hidden" th:field="*{id}"/>
+                            <input shipType="hidden" th:field="*{id}"/>
 
                             <div class="form-group-pair">
                                 <div class="form-group">
@@ -47,7 +47,7 @@
                                         <label>Name</label>
                                     </div>
                                     <div class="form-right-column">
-                                        <input type="text" th:field="*{name}" />
+                                        <input shipType="text" th:field="*{name}" />
                                     </div>
                                 </div>
 
@@ -56,7 +56,7 @@
                                         <label>Pennant</label>
                                     </div>
                                     <div class="form-right-column">
-                                        <input type="text" th:field="*{pennant}" />
+                                        <input shipType="text" th:field="*{pennant}" />
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +86,7 @@
                             </div>
 
                             <div class="submit">
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button shipType="submit" class="btn btn-default">Submit</button>
                             </div>
                         </form>
                     </fieldset>
@@ -95,23 +95,23 @@
                     <fieldset><legend>Ship Class</legend>
                         <div class="show-ship-class">
                             <form class="form-ship-class" th:object="${shipClass}" th:action="@{add-class}" method="post">
-                                <input type="hidden" th:field="*{id}"/>
+                                <input shipType="hidden" th:field="*{id}"/>
 
                                 <div class="form-group">
                                     <div class="form-left-column">
                                         <label>Class</label>
                                     </div>
                                     <div class="form-right-column">
-                                        <input type="text" th:field="*{name}" />
+                                        <input shipType="text" th:field="*{name}" />
                                     </div>
-                                    <input class="lister" list="type-list" th:field="*{type}" />
-                                    <datalist id="type-list">
-                                        <option th:each="type : ${types}" th:text="${type}"></option>
+                                    <input class="lister" list="shipType-list" th:field="*{shipType}" />
+                                    <datalist id="shipType-list">
+                                        <option th:each="shipType : ${types}" th:text="${shipType}"></option>
                                     </datalist>
                                 </div>
 
                                 <div class="submit">
-                                    <button type="submit" class="btn btn-default">Submit</button>
+                                    <button shipType="submit" class="btn btn-default">Submit</button>
                                 </div>
                             </form>
                         </div>
@@ -120,14 +120,14 @@
                     <!-- ================== NATIONS FORM ================== -->
                     <div class="show-nation"><h2>Add a nation</h2>
                         <form class="form-nation" th:object="${nation}" th:action="@{add-nation}" method="post">
-                            <input type="hidden" th:field="*{id}"/>
+                            <input shipType="hidden" th:field="*{id}"/>
 
                             <div class="form-group">
                                 <div class="form-left-column">
                                     <label>Nation</label>
                                 </div>
                                 <div class="form-right-column">
-                                    <input type="text" th:field="*{name}" />
+                                    <input shipType="text" th:field="*{name}" />
                                 </div>
                             </div>
 
@@ -136,12 +136,12 @@
                                     <label>Abbreviation</label>
                                 </div>
                                 <div class="form-right-column">
-                                    <input type="text" th:field="*{abbreviation}" />
+                                    <input shipType="text" th:field="*{abbreviation}" />
                                 </div>
                             </div>
 
                             <div class="submit">
-                                <button type="submit" class="btn btn-default">Submit</button>
+                                <button shipType="submit" class="btn btn-default">Submit</button>
                             </div>
                         </form>
                     </div>

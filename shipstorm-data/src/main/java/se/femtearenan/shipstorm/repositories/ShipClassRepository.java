@@ -9,5 +9,5 @@ import java.util.List;
 public interface ShipClassRepository extends JpaRepository<ShipClass, Long> {
     List<ShipClass> findByName(String name);
     List<ShipClass> findByNameContaining(String name);
-    List<ShipClass> findByType(ShipType shipType);
+    List<ShipClass> findByShipType(ShipType shipType);
 }

@@ -46,17 +46,17 @@ public class SensorServiceImpl implements SensorService {
 
     @Override
     public List<Sensor> findByShipClass(ShipClass shipClass) {
-        return sensorRepository.findByShipClass(shipClass);
+        return sensorRepository.findByShipsShipClass(shipClass);
     }
 
     @Override
     public List<Sensor> findByShipType(ShipType shipType) {
-        return sensorRepository.findByShipType(shipType);
+        return sensorRepository.findByShipsShipClassShipType(shipType);
     }
 
     @Override
     public List<Sensor> findByNation(Nation nation) {
-        return sensorRepository.findByNation(nation);
+        return sensorRepository.findByShipsNation(nation);
     }
 
     @Override

@@ -57,7 +57,7 @@ public class ShipServiceImpl implements ShipService {
 
     @Override
     public List<Ship> findByShipType(ShipType shipType) {
-        return shipRepository.findByShipType(shipType);
+        return shipRepository.findByShipClassShipType(shipType);
     }
 
     @Override
@@ -67,12 +67,12 @@ public class ShipServiceImpl implements ShipService {
 
     @Override
     public List<Ship> findBySensor(Sensor sensor) {
-        return shipRepository.findBySensor(sensor);
+        return shipRepository.findBySensors(sensor);
     }
 
     @Override
     public List<Ship> findByNameAndPennantAndShipClassAndShipTypeAndNationAndSensor(String name, String pennant, ShipClass shipClass, ShipType shipType, Nation nation, Sensor sensor) {
-        return shipRepository.findByNameAndPennantAndShipClassAndShipTypeAndNationAndSensor(name, pennant, shipClass, shipType, nation, sensor);
+        return shipRepository.findByNameAndPennantAndShipClassAndShipClassShipTypeAndNationAndSensors(name, pennant, shipClass, shipType, nation, sensor);
     }
 
     @Override

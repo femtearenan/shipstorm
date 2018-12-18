@@ -14,7 +14,7 @@ public class ShipClass {
 
     String name;
 
-    ShipType type;
+    ShipType shipType;
 
     @OneToMany(mappedBy = "shipClass")
     List<ShipClassAlternateNames> alternativeNames;
@@ -41,12 +41,12 @@ public class ShipClass {
         this.name = name;
     }
 
-    public ShipType getType() {
-        return type;
+    public ShipType getShipType() {
+        return shipType;
     }
 
-    public void setType(ShipType type) {
-        this.type = type;
+    public void setShipType(ShipType shipType) {
+        this.shipType = shipType;
     }
 
     public List<ShipClassAlternateNames> getAlternativeNames() {

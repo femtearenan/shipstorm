@@ -44,6 +44,6 @@ public class ShipClassServiceImpl implements ShipClassService {
 
     @Override
     public List<ShipClass> findByType(ShipType shipType) {
-        return shipClassRepository.findByType(shipType);
+        return shipClassRepository.findByShipType(shipType);
     }
 }

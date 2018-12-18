@@ -14,10 +14,10 @@ public interface ShipRepository extends JpaRepository<Ship, Long> {
     List<Ship> findByNameContaining(String name);
     List<Ship> findByPennant(String pennant);
     List<Ship> findByShipClass(ShipClass shipClass);
-    List<Ship> findByShipType(ShipType shipType);
+    List<Ship> findByShipClassShipType(ShipType shipType);
     List<Ship> findByNation(Nation nation);
-    List<Ship> findBySensor(Sensor sensor);
-    List<Ship> findByNameAndPennantAndShipClassAndShipTypeAndNationAndSensor(
+    List<Ship> findBySensors(Sensor sensor);
+    List<Ship> findByNameAndPennantAndShipClassAndShipClassShipTypeAndNationAndSensors(
             String name,
             String pennant,
             ShipClass shipClass,

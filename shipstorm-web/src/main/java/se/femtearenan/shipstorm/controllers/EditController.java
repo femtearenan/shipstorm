@@ -160,7 +160,7 @@ public class EditController {
                 shipClass = new ShipClass();
                 if (generateShip.getShipClassName().length() > 0 && generateShip.getShipType() != null) {
                     shipClass.setName(generateShip.getShipClassName());
-                    shipClass.setType(generateShip.getShipType());
+                    shipClass.setShipType(generateShip.getShipType());
                     shipClassService.save(shipClass);
                     ship.setShipClass(shipClass);
                     shipService.save(ship);
@@ -178,8 +178,8 @@ public class EditController {
             }
         }
         if (generateShip.getShipType() != null) {
-            if (!shipClass.getType().equals(generateShip.getShipType())) {
-                shipClass.setType(generateShip.getShipType());
+            if (!shipClass.getShipType().equals(generateShip.getShipType())) {
+                shipClass.setShipType(generateShip.getShipType());
             }
         }
         return shipClass;

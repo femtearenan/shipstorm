@@ -21,20 +21,20 @@
                         <legend>Edit Ship Class</legend>
                         <ul>
                             <li class="ship-class-update"><label>Update name</label>
-                                <input type="text" th:field="*{shipClassName}" th:placeholder="${shipClass.name}"/>
+                                <input shipType="text" th:field="*{shipClassName}" th:placeholder="${shipClass.name}"/>
                             </li>
-                            <li class="ship-class-update"><label>Update type</label>
+                            <li class="ship-class-update"><label>Update shipType</label>
                                 <select id="shipType" name="shipType">
-                                    <option th:each="type : ${types}"
-                                            th:value="${type}"
-                                            th:text="${type}"
-                                            th:selected="${type == shipClass.type}">
+                                    <option th:each="shipType : ${types}"
+                                            th:value="${shipType}"
+                                            th:text="${shipType}"
+                                            th:selected="${shipType == shipClass.shipType}">
                                     </option>
                                 </select>
                             </li>
                         </ul>
                     </fieldset>
-                    <input type="submit" value="Submit"/>
+                    <input shipType="submit" value="Submit"/>
                 </form>
             </article>
         </main>
