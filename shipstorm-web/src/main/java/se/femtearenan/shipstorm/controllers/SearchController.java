@@ -154,43 +154,52 @@ public class SearchController {
             List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
 
             if (shipByName.size() > 0) {
+                searchStrings.remove("ship");
                 result = filterList(shipByName, searchStrings);
             }
 
         } else if (searchStrings.get("pennant").length() > 0) {
             List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
             if (shipByPennant.size() > 0) {
+                searchStrings.remove("pennant");
                 result = filterList(shipByPennant, searchStrings);
             }
 
         } else if (searchStrings.get("class").length() > 0) {
             List<Ship> shipByClass = shipsByAssociatedShipClass(searchStrings.get("class"), FIRST_TIER_LIST_LIMIT);
             if (shipByClass.size() > 0) {
+                searchStrings.remove("class");
                 result = filterList(shipByClass, searchStrings);
             }
 
         } else if (searchStrings.get("type").length() > 0) {
             List<Ship> shipByType = shipsByAssociatedShipType(searchStrings.get("type"));
             if (shipByType.size() > 0) {
+                searchStrings.remove("type");
                 result = filterList(shipByType, searchStrings);
             }
 
         } else if (searchStrings.get("nation").length() > 0) {
             List<Ship> shipByNation = shipsByAssociatedNation(searchStrings.get("nation"), FIRST_TIER_LIST_LIMIT);
             if (shipByNation.size() > 0) {
+                searchStrings.remove("nation");
                 result = filterList(shipByNation, searchStrings);
             }
 
         } else if (searchStrings.get("sensor").length() > 0) {
             List<Ship> shipBySensor = shipsByAssociatedSensor(searchStrings.get("sensor"), FIRST_TIER_LIST_LIMIT);
+            if (shipBySensor.size() > 0) {
+                searchStrings.remove("ship");
+                result = filterList(shipBySensor, searchStrings);
+            }
 
         } else if (searchStrings.get("any").length() > 0) {
 
             List<Ship> ships = new ArrayList<>();
 
-            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
+            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("any"));
 
-            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
+            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("any"));
 
             List<Ship> shipByClass = shipsByAssociatedShipClass(searchStrings.get("any"), SECOND_TIER_LIST_LIMIT);
 
@@ -263,7 +272,30 @@ public class SearchController {
         return shipBySensor;
     }
 
-    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) {
+    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) throws ResultingListSizeException {
+
+        List<Ship> filteredList = ships;
+        Set<String> searchKeys = searchStrings.keySet();
+        for (String key : searchKeys) {
+            switch  (key) {
+                case "pennant":
+                    filteredList = pennantFilter(filteredList, searchStrings.get(key));
+                    break;
+                case "class":
+                    filteredList = shipClassFilter(filteredList, searchStrings.get(key));
+                    break;
+                case "type":
+                    filteredList = shipTypeFilter(filteredList, searchStrings.get(key));
+                    break;
+                case "nation":
+                    filteredList = nationFilter(filteredList, searchStrings.get(key));
+                    break;
+                case "sensor":
+                    filteredList = sensorFilter(filteredList, searchStrings.get(key));
+                    break;
+            }
+        }
+
         return null;
     }
 
