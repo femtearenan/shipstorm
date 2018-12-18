@@ -209,28 +209,6 @@ public class SearchController {
         return result;
     }
 
-    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) {
-        return null;
-    }
-
-    private List<Ship> pennantFilter(List<Ship> ships, String pennant) {
-        List<Ship> pennantFilterResult = new ArrayList<>();
-        for (Ship ship : ships) {
-            if (ship.getPennant().contains(pennant)) {
-                pennantFilterResult.add(ship);
-            }
-        }
-
-        return pennantFilterResult;
-    }
-
-    private List<Ship> shipClassFilter(List<Ship> ships, String shipClassString) throws ResultingListSizeException {
-        List<Ship> shipClassFilterResult = new ArrayList<>();
-        List<Ship> shipByClass = shipsByAssociatedShipClass(shipClassString, SECOND_TIER_LIST_LIMIT);
-
-        return shipClassFilterResult;
-    }
-
     private List<Ship> shipsByAssociatedShipClass(String shipClassString, int limit) throws ResultingListSizeException {
         List<Ship> shipByClass = new ArrayList<>();
         List<ShipClass> shipClasses = shipClassService.findByNameContaining(shipClassString);
@@ -283,5 +261,79 @@ public class SearchController {
         }
 
         return shipBySensor;
+    }
+
+    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) {
+        return null;
+    }
+
+    private List<Ship> pennantFilter(List<Ship> ships, String pennant) {
+        List<Ship> pennantFilterResult = new ArrayList<>();
+        for (Ship ship : ships) {
+            if (ship.getPennant().contains(pennant)) {
+                pennantFilterResult.add(ship);
+            }
+        }
+
+        return pennantFilterResult;
+    }
+
+    private List<Ship> shipClassFilter(List<Ship> ships, String shipClassString) throws ResultingListSizeException {
+        List<Ship> shipClassFilterResult = new ArrayList<>();
+        List<Ship> shipByClass = shipsByAssociatedShipClass(shipClassString, SECOND_TIER_LIST_LIMIT);
+
+        for (Ship ship : ships) {
+            for (Ship filterShip : shipByClass) {
+                if (ship.equals(filterShip)) {
+                    shipClassFilterResult.add(ship);
+                }
+            }
+        }
+        return shipClassFilterResult;
+    }
+
+    private List<Ship> shipTypeFilter(List<Ship> ships, String shipTypeString) {
+        List<Ship> shipTypeFilterResult = new ArrayList<>();
+        List<Ship> shipByType = shipsByAssociatedShipType(shipTypeString);
+
+        for (Ship ship : ships) {
+            for (Ship filterShip : shipByType) {
+                if (ship.equals(filterShip)) {
+                    shipTypeFilterResult.add(ship);
+                }
+            }
+        }
+
+        return shipTypeFilterResult;
+    }
+
+    private List<Ship> nationFilter(List<Ship> ships, String nationString) throws ResultingListSizeException {
+        List<Ship> nationFilterResult = new ArrayList<>();
+        List<Ship> shipByNation = shipsByAssociatedNation(nationString, SECOND_TIER_LIST_LIMIT);
+
+        for (Ship ship : ships) {
+            for (Ship filterShip : shipByNation) {
+                if (ship.equals(filterShip)) {
+                    nationFilterResult.add(ship);
+                }
+            }
+        }
+
+        return nationFilterResult;
+    }
+
+    private List<Ship> sensorFilter(List<Ship> ships, String sensorString) throws ResultingListSizeException {
+        List<Ship> sensorFilterResult = new ArrayList<>();
+        List<Ship> shipBySensor = shipsByAssociatedSensor(sensorString, SECOND_TIER_LIST_LIMIT);
+
+        for (Ship ship : ships) {
+            for (Ship filterShip : shipBySensor) {
+                if (ship.equals(filterShip)) {
+                    sensorFilterResult.add(ship);
+                }
+            }
+        }
+
+        return sensorFilterResult;
     }
 }
