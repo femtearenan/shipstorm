@@ -3,6 +3,7 @@ package se.femtearenan.shipstorm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -37,16 +38,21 @@ public class SearchController {
         this.shipClassService = shipClassService;
     }
 
+    @RequestMapping(value="/shipstorm/search")
+    public String chooseSearchType() {
+        return "searchMenu";
+    }
 
-    @RequestMapping(value = "/shipstorm/search")
-    public String search(Model model) {
+
+    @RequestMapping(value = "/shipstorm/search/{searchType}")
+    public String search(@PathVariable ("searchType") String searchType, Model model) {
         Queue<String> entityTypes = new ArrayDeque<>();
-        entityTypes.add("Ship");
-        entityTypes.add("Class");
-        entityTypes.add("Type");
-        entityTypes.add("Nation");
-        entityTypes.add("Pennant");
-        entityTypes.add("All");
+        entityTypes.add("ship");
+        entityTypes.add("class");
+        entityTypes.add("type");
+        entityTypes.add("nation");
+        entityTypes.add("pennant");
+        entityTypes.add("any");
 
         model.addAttribute("entityType", entityTypes);
 
@@ -54,28 +60,30 @@ public class SearchController {
     }
 
 
-    @RequestMapping(value="/shipstorm/search", method = RequestMethod.GET, params={"entity", "searchString"} )
-    public String searchResult(@RequestParam("entity") String entity,
-                                             @RequestParam("searchString") String searchString, Model model) {
+    @RequestMapping(value="/shipstorm/search/{searchType}/", method = RequestMethod.GET, params={"entity", "searchString", "searchType"} )
+    public String searchResult(
+            @PathVariable("searchType") String searchType,
+            @RequestParam("entity") String entity,
+            @RequestParam("searchString") String searchString,
+            Model model) {
         String message = "No ship matching the search criteria has been found.";
         boolean hasResult = false;
-        String searchType = "none";
         List<Ship> shipResult = new ArrayList<>();
         List<ShipClass> classResult = new ArrayList<>();
         List<ShipTypes> typeResult = new ArrayList<>();
 
-        switch (entity) {
-            case "Ship":
+        switch (searchType) {
+            case "ship":
                 shipResult = shipService.findByNameContaining(searchString);
                 model.addAttribute("result", shipResult);
                 searchType = "Ship";
                 break;
-            case "Class":
+            case "class":
                 classResult = shipClassService.findByNameContaining(searchString);
                 model.addAttribute("result", classResult);
                 searchType = "Class";
                 break;
-            case "Type":
+            case "type":
                 if (searchString.length() > 0) {
                     for (ShipTypes type : ShipTypes.values()) {
                         if (type.toString().contains(searchString)) {
@@ -88,11 +96,11 @@ public class SearchController {
                 model.addAttribute("result", typeResult);
                 searchType = "Type";
                 break;
-            case "Nation":
+            case "nation":
                 break;
-            case "Pennant":
+            case "pennant":
                 break;
-            case "All":
+            case "any":
                 break;
             default:
                 message = "An entity is not recognized.";
