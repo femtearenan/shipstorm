@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import se.femtearenan.shipstorm.enumerations.ShipType;
-import se.femtearenan.shipstorm.form.util.GenerateShip;
+import se.femtearenan.shipstorm.utilities.GenerateShip;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.model.ShipImage;

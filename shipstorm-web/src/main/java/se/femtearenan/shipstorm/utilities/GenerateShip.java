@@ -1,4 +1,4 @@
-package se.femtearenan.shipstorm.form.util;
+package se.femtearenan.shipstorm.utilities;
 
 import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.Nation;
