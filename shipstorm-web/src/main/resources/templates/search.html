@@ -33,18 +33,73 @@
     <main>
         <article class="news">
             <div class="news-header">
-                <h1>Ships</h1>
+                <h1>Search</h1>
             </div>
 
             <div class="ship">
-                <form th:action="@{search}">
-                    <div class="search-entity" th:each="entity : ${entityType}">
-                        <label th:text="${entity}">Example label</label>
-                        <input shipType="text" th:name="${entity}"/>
+                <form th:action="@{query}">
+
+                    <div class="buttons">
+                        <fieldset>
+                            <legend>Type of components</legend>
+                            <select name="searchType">
+                                <option value="ship">Ship</option>
+                                <option value="class">Ship Class</option>
+                                <option value="type">Ship Type</option>
+                                <option value="nation">Nation</option>
+                                <option value="sensor">Sensor</option>
+                            </select>
+                        </fieldset>
+                    </div>
+
+                    <div class="search-entity">
+                        <fieldset>
+                            <legend>Search parameters</legend>
+                            <div>
+                                <label>Ship name</label>
+                                <input type="text" name="ship"/>
+                            </div>
+
+                            <div>
+                                <label>Class</label>
+                                <input type="text" name="class"/>
+                            </div>
+
+                            <div>
+                                <label>Type</label>
+                                <select name="type">
+                                    <option th:each="shipType : ${types}" th:text="${shipType.typeDescription}"></option>
+                                    <option selected></option>
+                                </select>
+                            </div>
+
+                            <div>
+                                <label>Nation</label>
+                                <input class="lister" list="nation-list" name="nation" />
+                                <datalist id="nation-list">
+                                    <option th:each="nation : ${nations}" th:text="${nation.name}"></option>
+                                </datalist>
+                            </div>
+
+                            <div>
+                                <label>Ship Pennant</label>
+                                <input type="text" name="pennant"/>
+                            </div>
+
+                            <div>
+                                <label>Sensor</label>
+                                <input type="text" name="sensor"/>
+                            </div>
+
+                            <div>
+                                <label>Any</label>
+                                <input type="text" name="any"/>
+                            </div>
+                        </fieldset>
                     </div>
 
                     <div class="submit">
-                        <button shipType="submit" class="btn btn-default">Submit</button>
+                        <button type="submit" class="btn btn-default">Submit</button>
                     </div>
 
                 </form>

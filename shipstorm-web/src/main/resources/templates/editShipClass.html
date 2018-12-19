@@ -21,7 +21,7 @@
                         <legend>Edit Ship Class</legend>
                         <ul>
                             <li class="ship-class-update"><label>Update name</label>
-                                <input shipType="text" th:field="*{shipClassName}" th:placeholder="${shipClass.name}"/>
+                                <input type="text" th:field="*{shipClassName}" th:placeholder="${shipClass.name}"/>
                             </li>
                             <li class="ship-class-update"><label>Update shipType</label>
                                 <select id="shipType" name="shipType">
@@ -34,7 +34,7 @@
                             </li>
                         </ul>
                     </fieldset>
-                    <input shipType="submit" value="Submit"/>
+                    <input type="submit" value="Submit"/>
                 </form>
             </article>
         </main>

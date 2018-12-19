@@ -55,13 +55,8 @@ public class SearchController {
     }
 
     @RequestMapping(value="/shipstorm/search")
-    public String chooseSearchType() {
-        return "searchMenu";
-    }
-
-
-    @RequestMapping(value = "/shipstorm/search/{searchType}")
-    public String search(@PathVariable ("searchType") String searchType, Model model) {
+    public String chooseSearchType(Model model) {
+        /*
         Queue<String> entityTypes = new ArrayDeque<>();
         entityTypes.add("ship");
         entityTypes.add("class");
@@ -70,15 +65,19 @@ public class SearchController {
         entityTypes.add("pennant");
         entityTypes.add("sensor");
         entityTypes.add("any");
-
         model.addAttribute("entityType", entityTypes);
+        */
+
+        model.addAttribute("nations", nationService.listAllNations());
+        EnumSet<ShipType> types = EnumSet.allOf(ShipType.class);
+        model.addAttribute("types", types);
 
         return "search";
     }
 
-    @RequestMapping(value="/shipstorm/search/{searchType}/", method = RequestMethod.GET, params={"ship", "class", "type", "nation", "pennant", "sensor", "any"} )
+    @RequestMapping(value="/shipstorm/query", method = RequestMethod.GET, params={"searchType", "ship", "class", "type", "nation", "pennant", "sensor", "any"} )
     public String searchResult(
-            @PathVariable("searchType") String searchType,
+            @RequestParam("searchType") String searchType,
             @RequestParam("ship") String shipString,
             @RequestParam("class") String classString,
             @RequestParam("type") String typeString,
@@ -105,8 +104,10 @@ public class SearchController {
 
         switch (searchType) {
             case "ship":
+                System.out.println("Querying for ships.");
                 try {
                     shipResult = searchShip(searchStrings);
+                    System.out.println("Found: " + shipResult.size() + " number of ships.");
                     model.addAttribute("result", shipResult);
                     searchType = "Ship";
                 } catch (Exception e) {
@@ -157,7 +158,7 @@ public class SearchController {
         // Waterfall logic of JPA/Hibernate command to limit number of look-ups.
         if (searchStrings.get("ship").length() > 0) {
             List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
-
+            System.out.println("Initial result is: " + shipByName.size() + " number of ships.");
             if (shipByName.size() > 0) {
                 searchStrings.remove("ship");
                 result = filterList(shipByName, searchStrings);
@@ -240,8 +241,13 @@ public class SearchController {
     private List<Ship> shipsByAssociatedShipType(String shipTypeString) {
         List<Ship> shipByType = new ArrayList<>();
         try {
-            ShipType shipType = ShipType.valueOf(shipTypeString);
-            shipByType = shipService.findByShipType(shipType);
+            ShipType shipType;
+            for (ShipType shipType1 : ShipType.values()) {
+                if (shipType1.getTypeDescription().contentEquals(shipTypeString)) {
+                    shipType = shipType1;
+                    shipByType = shipService.findByShipType(shipType);
+                }
+            }
         } catch (IllegalArgumentException e){
             e.printStackTrace();
         }
@@ -282,22 +288,24 @@ public class SearchController {
         List<Ship> filteredList = ships;
         Set<String> searchKeys = searchStrings.keySet();
         for (String key : searchKeys) {
-            switch  (key) {
-                case "pennant":
-                    filteredList = pennantFilter(filteredList, searchStrings.get(key));
-                    break;
-                case "class":
-                    filteredList = shipClassFilter(filteredList, searchStrings.get(key));
-                    break;
-                case "type":
-                    filteredList = shipTypeFilter(filteredList, searchStrings.get(key));
-                    break;
-                case "nation":
-                    filteredList = nationFilter(filteredList, searchStrings.get(key));
-                    break;
-                case "sensor":
-                    filteredList = sensorFilter(filteredList, searchStrings.get(key));
-                    break;
+            if (searchStrings.get(key).length() > 0) {
+                switch (key) {
+                    case "pennant":
+                        filteredList = pennantFilter(filteredList, searchStrings.get(key));
+                        break;
+                    case "class":
+                        filteredList = shipClassFilter(filteredList, searchStrings.get(key));
+                        break;
+                    case "type":
+                        filteredList = shipTypeFilter(filteredList, searchStrings.get(key));
+                        break;
+                    case "nation":
+                        filteredList = nationFilter(filteredList, searchStrings.get(key));
+                        break;
+                    case "sensor":
+                        filteredList = sensorFilter(filteredList, searchStrings.get(key));
+                        break;
+                }
             }
         }
 
