@@ -10,4 +10,8 @@ public interface ShipClassRepository extends JpaRepository<ShipClass, Long> {
     List<ShipClass> findByName(String name);
     List<ShipClass> findByNameContaining(String name);
     List<ShipClass> findByShipType(ShipType shipType);
+    List<ShipClass> findByShipsNameContaining(String name);
+    List<ShipClass> findByShipsPennantContaining(String pennant);
+    List<ShipClass> findByShipsNationNameContaining(String nation);
+    List<ShipClass> findByShipsSensorsNameContaining(String sensor);
 }

@@ -17,4 +17,12 @@ public interface ShipClassService {
     List<ShipClass> findByNameContaining(String name);
 
     List<ShipClass> findByType(ShipType shipType);
+
+    List<ShipClass> findByShipsNameContaining(String name);
+
+    List<ShipClass> findByShipsPennantContaining(String pennant);
+
+    List<ShipClass> findByShipsNationNameContaining(String nation);
+
+    List<ShipClass> findByShipsSensorsNameContaining(String sensor);
 }

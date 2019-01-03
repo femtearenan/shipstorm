@@ -11,14 +11,10 @@ import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("ALL")
-public class ShipSearch {
-
+public class ShipClassSearch {
     // Limit to number of JPA look-ups; example is a search for ships by supplying a ship-class
     // as a search parameter resulting in 6 or more ship-classes would result in 6 or more look-ups.
     private final int FIRST_TIER_LIST_LIMIT = 50;
@@ -29,56 +25,56 @@ public class ShipSearch {
     private ShipClassService shipClassService;
     private SensorService sensorService;
 
-    public ShipSearch(ServicePackage servicePackage) {
+    public ShipClassSearch(ServicePackage servicePackage) {
         shipService = servicePackage.getShipService();
         nationService = servicePackage.getNationService();
         shipClassService = servicePackage.getShipClassService();
         sensorService = servicePackage.getSensorService();
     }
 
-    public List<Ship> searchShip(Map<String, String> searchStrings) throws Exception {
+    public List<ShipClass> searchShipClass(Map<String, String> searchStrings) throws Exception {
 
-        List<Ship> result = new ArrayList<>();
+        List<ShipClass> result = new ArrayList<>();
 
         // Waterfall logic of JPA/Hibernate command to limit number of look-ups.
         if (searchStrings.get("ship").length() > 0) {
-            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("ship"));
-            System.out.println("Initial result is: " + shipByName.size() + " number of ships.");
-            if (shipByName.size() > 0) {
+            List<ShipClass> shipClassByShipName = shipClassService.findByShipsNameContaining(searchStrings.get("ship"));
+            if (shipClassByShipName.size() > 0) {
                 searchStrings.remove("ship");
-                result = filterList(shipByName, searchStrings);
+                result = filterList(shipClassByShipName, searchStrings);
             }
 
         } else if (searchStrings.get("pennant").length() > 0) {
-            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("pennant"));
-            if (shipByPennant.size() > 0) {
+            List<ShipClass> shipClassByPennant = shipClassService.findByShipsPennantContaining(searchStrings.get("pennant"));
+            if (shipClassByPennant.size() > 0) {
                 searchStrings.remove("pennant");
-                result = filterList(shipByPennant, searchStrings);
+                result = filterList(shipClassByPennant, searchStrings);
             }
 
         } else if (searchStrings.get("class").length() > 0) {
-            List<Ship> shipByClass = shipsByAssociatedShipClass(searchStrings.get("class"), FIRST_TIER_LIST_LIMIT);
+            List<ShipClass> shipByClass = shipClassService.findByNameContaining(searchStrings.get("class"));
             if (shipByClass.size() > 0) {
                 searchStrings.remove("class");
                 result = filterList(shipByClass, searchStrings);
             }
 
         } else if (searchStrings.get("type").length() > 0) {
-            List<Ship> shipByType = shipsByAssociatedShipType(searchStrings.get("type"));
+            ShipType shipType = ShipType.valueOf(searchStrings.get("type"));
+            List<ShipClass> shipByType = shipClassService.findByType(shipType);
             if (shipByType.size() > 0) {
                 searchStrings.remove("type");
                 result = filterList(shipByType, searchStrings);
             }
 
         } else if (searchStrings.get("nation").length() > 0) {
-            List<Ship> shipByNation = shipsByAssociatedNation(searchStrings.get("nation"), FIRST_TIER_LIST_LIMIT);
+            List<ShipClass> shipByNation = shipClassService.findByShipsNationNameContaining(searchStrings.get("nation"));
             if (shipByNation.size() > 0) {
                 searchStrings.remove("nation");
                 result = filterList(shipByNation, searchStrings);
             }
 
         } else if (searchStrings.get("sensor").length() > 0) {
-            List<Ship> shipBySensor = shipsByAssociatedSensor(searchStrings.get("sensor"), FIRST_TIER_LIST_LIMIT);
+            List<ShipClass> shipBySensor = shipClassService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
             if (shipBySensor.size() > 0) {
                 searchStrings.remove("ship");
                 result = filterList(shipBySensor, searchStrings);
@@ -86,24 +82,22 @@ public class ShipSearch {
 
         } else if (searchStrings.get("any").length() > 0) {
 
-            List<Ship> ships = new ArrayList<>();
+            List<ShipClass> shipClasses = new ArrayList<>();
 
-            List<Ship> shipByName = shipService.findByNameContaining(searchStrings.get("any"));
+            List<ShipClass> shipClassByShipName = shipClassService.findByShipsNameContaining(searchStrings.get("ship"));
+            List<ShipClass> shipClassByPennant = shipClassService.findByShipsPennantContaining(searchStrings.get("pennant"));
+            List<ShipClass> shipByClass = shipClassService.findByNameContaining(searchStrings.get("class"));
+            List<ShipClass> shipByType = new ArrayList<>();
+            try {
+                ShipType shipType = ShipType.valueOf(searchStrings.get("type"));
+                shipByType = shipClassService.findByType(shipType);
+            } catch (Exception e) {e.printStackTrace();}
+            List<ShipClass> shipByNation = shipClassService.findByShipsNationNameContaining(searchStrings.get("nation"));
+            List<ShipClass> shipBySensor = shipClassService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
 
-            List<Ship> shipByPennant = shipService.findByPennant(searchStrings.get("any"));
+//ADD THEM ALL
 
-            List<Ship> shipByClass = shipsByAssociatedShipClass(searchStrings.get("any"), SECOND_TIER_LIST_LIMIT);
-
-            List<Ship> shipByType = shipsByAssociatedShipType(searchStrings.get("any"));
-
-            List<Ship> shipByNation = shipsByAssociatedNation(searchStrings.get("any"), SECOND_TIER_LIST_LIMIT);
-
-            ships.addAll(shipByName);
-            ships.addAll(shipByPennant);
-            ships.addAll(shipByClass);
-            ships.addAll(shipByType);
-            ships.addAll(shipByNation);
-            result = ships;
+            result = shipClasses;
         }
 
         return result;
@@ -168,9 +162,9 @@ public class ShipSearch {
         return shipBySensor;
     }
 
-    private List<Ship> filterList(List<Ship> ships, Map<String, String> searchStrings) throws ResultingListSizeException {
+    private List<ShipClass> filterList(List<ShipClass> shipClasses, Map<String, String> searchStrings) throws ResultingListSizeException {
 
-        List<Ship> filteredList = ships;
+        List<ShipClass> filteredList = shipClasses;
         Set<String> searchKeys = searchStrings.keySet();
         for (String key : searchKeys) {
             if (searchStrings.get(key).length() > 0) {
@@ -197,72 +191,52 @@ public class ShipSearch {
         return filteredList;
     }
 
-    private List<Ship> pennantFilter(List<Ship> ships, String pennant) {
-        List<Ship> pennantFilterResult = new ArrayList<>();
-        for (Ship ship : ships) {
-            if (ship.getPennant().contains(pennant)) {
-                pennantFilterResult.add(ship);
-            }
-        }
-
+    private List<ShipClass> pennantFilter(List<ShipClass> shipClasses, String pennant) {
+        List<ShipClass> pennantFilterResult = new ArrayList<>();
+        pennantFilterResult.addAll(shipClassService.findByShipsPennantContaining(pennant));
+        pennantFilterResult.retainAll(shipClasses);
         return pennantFilterResult;
     }
 
-    private List<Ship> shipClassFilter(List<Ship> ships, String shipClassString) throws ResultingListSizeException {
-        List<Ship> shipClassFilterResult = new ArrayList<>();
-        List<Ship> shipByClass = shipsByAssociatedShipClass(shipClassString, SECOND_TIER_LIST_LIMIT);
+    private List<ShipClass> shipClassFilter(List<ShipClass> shipClasses, String shipClassString) throws ResultingListSizeException {
+        List<ShipClass> shipClassFilterResult = new ArrayList<>();
+        shipClassFilterResult.addAll(shipClassService.findByName(shipClassString));
+        shipClassFilterResult.retainAll(shipClasses);
 
-        for (Ship ship : ships) {
-            for (Ship filterShip : shipByClass) {
-                if (ship.equals(filterShip)) {
-                    shipClassFilterResult.add(ship);
-                }
-            }
-        }
         return shipClassFilterResult;
     }
 
-    private List<Ship> shipTypeFilter(List<Ship> ships, String shipTypeString) {
-        List<Ship> shipTypeFilterResult = new ArrayList<>();
-        List<Ship> shipByType = shipsByAssociatedShipType(shipTypeString);
+    private List<ShipClass> shipTypeFilter(List<ShipClass> shipClasses, String shipTypeString) {
+        List<ShipClass> shipTypeFilterResult = new ArrayList<>();
 
-        for (Ship ship : ships) {
-            for (Ship filterShip : shipByType) {
-                if (ship.equals(filterShip)) {
-                    shipTypeFilterResult.add(ship);
+        try {
+            ShipType shipType;
+            for (ShipType shipType1 : ShipType.values()) {
+                if (shipType1.getTypeDescription().contentEquals(shipTypeString)) {
+                    shipType = shipType1;
+                    shipTypeFilterResult.addAll(shipClassService.findByType(shipType));
                 }
             }
+            shipTypeFilterResult.retainAll(shipClasses);
+        } catch (IllegalArgumentException e){
+            e.printStackTrace();
         }
 
         return shipTypeFilterResult;
     }
 
-    private List<Ship> nationFilter(List<Ship> ships, String nationString) throws ResultingListSizeException {
-        List<Ship> nationFilterResult = new ArrayList<>();
-        List<Ship> shipByNation = shipsByAssociatedNation(nationString, SECOND_TIER_LIST_LIMIT);
-
-        for (Ship ship : ships) {
-            for (Ship filterShip : shipByNation) {
-                if (ship.equals(filterShip)) {
-                    nationFilterResult.add(ship);
-                }
-            }
-        }
+    private List<ShipClass> nationFilter(List<ShipClass> shipClasses, String nationString) throws ResultingListSizeException {
+        List<ShipClass> nationFilterResult = new ArrayList<>();
+        nationFilterResult.addAll(shipClassService.findByShipsNationNameContaining(nationString));
+        nationFilterResult.retainAll(shipClasses);
 
         return nationFilterResult;
     }
 
-    private List<Ship> sensorFilter(List<Ship> ships, String sensorString) throws ResultingListSizeException {
-        List<Ship> sensorFilterResult = new ArrayList<>();
-        List<Ship> shipBySensor = shipsByAssociatedSensor(sensorString, SECOND_TIER_LIST_LIMIT);
-
-        for (Ship ship : ships) {
-            for (Ship filterShip : shipBySensor) {
-                if (ship.equals(filterShip)) {
-                    sensorFilterResult.add(ship);
-                }
-            }
-        }
+    private List<ShipClass> sensorFilter(List<ShipClass> shipClasses, String sensorString) throws ResultingListSizeException {
+        List<ShipClass> sensorFilterResult = new ArrayList<>();
+        sensorFilterResult.addAll(shipClassService.findByShipsSensorsNameContaining(sensorString));
+        sensorFilterResult.retainAll(shipClasses);
 
         return sensorFilterResult;
     }

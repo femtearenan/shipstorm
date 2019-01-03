@@ -46,4 +46,24 @@ public class ShipClassServiceImpl implements ShipClassService {
     public List<ShipClass> findByType(ShipType shipType) {
         return shipClassRepository.findByShipType(shipType);
     }
+
+    @Override
+    public List<ShipClass> findByShipsNameContaining(String name) {
+        return shipClassRepository.findByShipsNameContaining(name);
+    }
+
+    @Override
+    public List<ShipClass> findByShipsPennantContaining(String pennant) {
+        return shipClassRepository.findByShipsPennantContaining(pennant);
+    }
+
+    @Override
+    public List<ShipClass> findByShipsNationNameContaining(String nation) {
+        return shipClassRepository.findByShipsNationNameContaining(nation);
+    }
+
+    @Override
+    public List<ShipClass> findByShipsSensorsNameContaining(String sensor) {
+        return shipClassRepository.findByShipsSensorsNameContaining(sensor);
+    }
 }
