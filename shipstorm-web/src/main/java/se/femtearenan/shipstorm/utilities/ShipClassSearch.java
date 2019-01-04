@@ -32,7 +32,7 @@ public class ShipClassSearch {
         sensorService = servicePackage.getSensorService();
     }
 
-    public List<ShipClass> searchShipClass(Map<String, String> searchStrings) throws Exception {
+    public Set<ShipClass> searchShipClass(Map<String, String> searchStrings) throws Exception {
 
         List<ShipClass> result = new ArrayList<>();
 
@@ -95,12 +95,11 @@ public class ShipClassSearch {
             List<ShipClass> shipByNation = shipClassService.findByShipsNationNameContaining(searchStrings.get("nation"));
             List<ShipClass> shipBySensor = shipClassService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
 
-//ADD THEM ALL
 
             result = shipClasses;
         }
 
-        return result;
+        return new HashSet<ShipClass>(result);
     }
 
     private List<Ship> shipsByAssociatedShipClass(String shipClassString, int limit) throws ResultingListSizeException {

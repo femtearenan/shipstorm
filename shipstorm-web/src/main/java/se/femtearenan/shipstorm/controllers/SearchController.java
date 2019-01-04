@@ -3,14 +3,10 @@ package se.femtearenan.shipstorm.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.femtearenan.shipstorm.enumerations.ShipType;
-import se.femtearenan.shipstorm.exceptions.ResultingListSizeException;
-import se.femtearenan.shipstorm.model.Nation;
-import se.femtearenan.shipstorm.model.Sensor;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
@@ -18,6 +14,7 @@ import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 import se.femtearenan.shipstorm.utilities.ServicePackage;
+import se.femtearenan.shipstorm.utilities.ShipClassSearch;
 import se.femtearenan.shipstorm.utilities.ShipSearch;
 
 import java.util.*;
@@ -84,7 +81,7 @@ public class SearchController {
 
         boolean hasResult = false;
         List<Ship> shipResult = new ArrayList<>();
-        List<ShipClass> classResult = new ArrayList<>();
+        Set<ShipClass> classResult = new HashSet<>();
         List<ShipType> typeResult = new ArrayList<>();
 
         switch (searchType) {
@@ -102,9 +99,16 @@ public class SearchController {
                 }
                 break;
             case "class":
-                classResult = shipClassService.findByNameContaining(classString);
-                model.addAttribute("result", classResult);
-                searchType = "Class";
+                try {
+                    ServicePackage servicePackage = new ServicePackage(shipService, nationService,  shipClassService, sensorService);
+                    ShipClassSearch shipClassSearch = new ShipClassSearch(servicePackage);
+                    classResult = shipClassSearch.searchShipClass(searchStrings);
+                    System.out.println("Found: " + classResult.size() + " number of ship classes.");
+                    model.addAttribute("result", classResult);
+                    searchType = "Class";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
                 break;
             case "type":
                 if (typeString.length() > 0) {
