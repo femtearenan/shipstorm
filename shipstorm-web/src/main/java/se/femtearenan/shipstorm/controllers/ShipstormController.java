@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
@@ -32,7 +33,13 @@ public class ShipstormController {
 
     @RequestMapping({"/shipstorm"})
     public String getShipstormPage(Model model) {
-        model.addAttribute("ship", shipService.findTopByOrderByIdDesc());
+        Ship ship = shipService.findTopByOrderByIdDesc();
+        model.addAttribute("ship", ship);
+        String info = ship.getMiscInfo();
+        if (info == null) {
+            info = "";
+        }
+        model.addAttribute("info", info);
         return "shipstorm";
     }
 
