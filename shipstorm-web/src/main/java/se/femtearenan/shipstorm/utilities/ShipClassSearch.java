@@ -59,8 +59,18 @@ public class ShipClassSearch {
             }
 
         } else if (searchStrings.get("type").length() > 0) {
-            ShipType shipType = ShipType.valueOf(searchStrings.get("type"));
-            List<ShipClass> shipByType = shipClassService.findByType(shipType);
+            ShipType shipType;
+            List<ShipClass> shipByType = new ArrayList<>();
+            try {
+                for (ShipType shipType1 : ShipType.values()) {
+                    if (shipType1.getTypeDescription().contentEquals(searchStrings.get("type"))) {
+                        shipType = shipType1;
+                        shipByType = shipClassService.findByType(shipType);
+                    }
+                }
+            } catch (IllegalArgumentException e){
+                e.printStackTrace();
+            }
             if (shipByType.size() > 0) {
                 searchStrings.remove("type");
                 result = filterList(shipByType, searchStrings);
@@ -212,6 +222,7 @@ public class ShipClassSearch {
             ShipType shipType;
             for (ShipType shipType1 : ShipType.values()) {
                 if (shipType1.getTypeDescription().contentEquals(shipTypeString)) {
+                    System.out.println("Search class by type: " + shipType1.getTypeDescription());
                     shipType = shipType1;
                     shipTypeFilterResult.addAll(shipClassService.findByType(shipType));
                 }
