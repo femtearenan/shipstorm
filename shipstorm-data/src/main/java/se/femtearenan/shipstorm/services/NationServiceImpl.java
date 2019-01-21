@@ -2,6 +2,7 @@ package se.femtearenan.shipstorm.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.repositories.NationRepository;
 
@@ -39,5 +40,30 @@ public class NationServiceImpl implements NationService {
     @Override
     public List<Nation> findByNameContaining(String name) {
         return nationRepository.findByNameContaining(name);
+    }
+
+    @Override
+    public List<Nation> findByShipClassesShipType(ShipType shipType) {
+        return nationRepository.findByShipClassesShipType(shipType);
+    }
+
+    @Override
+    public List<Nation> findByShipsNameContaining(String name) {
+        return nationRepository.findByShipsNameContaining(name);
+    }
+
+    @Override
+    public List<Nation> findByShipsPennantContaining(String pennant) {
+        return nationRepository.findByShipsPennantContaining(pennant);
+    }
+
+    @Override
+    public List<Nation> findByShipClassesNameContaining(String name) {
+        return nationRepository.findByShipClassesNameContaining(name);
+    }
+
+    @Override
+    public List<Nation> findByShipsSensorsNameContaining(String sensor) {
+        return nationRepository.findByShipsSensorsNameContaining(sensor);
     }
 }
