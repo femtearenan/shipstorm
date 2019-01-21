@@ -3,7 +3,6 @@ package se.femtearenan.shipstorm.utilities;
 import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.exceptions.ResultingListSizeException;
 import se.femtearenan.shipstorm.model.Nation;
-import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
@@ -31,84 +30,83 @@ public class NationSearch {
 
         // Waterfall logic of JPA/Hibernate command to limit number of look-ups.
         if (searchStrings.get("ship").length() > 0) {
-            //List<ShipClass> shipClassByShipName = shipClassService.findByShipsNameContaining(searchStrings.get("ship"));
-            //List<Nation> nationByShipName = nationService
-            if (shipClassByShipName.size() > 0) {
+            List<Nation> nationByShipName = nationService.findByShipsNameContaining(searchStrings.get("ship"));
+            if (nationByShipName.size() > 0) {
                 searchStrings.remove("ship");
-                result = filterList(shipClassByShipName, searchStrings);
+                result = filterList(nationByShipName, searchStrings);
             }
 
         } else if (searchStrings.get("pennant").length() > 0) {
-            List<ShipClass> shipClassByPennant = shipClassService.findByShipsPennantContaining(searchStrings.get("pennant"));
-            if (shipClassByPennant.size() > 0) {
+            List<Nation> nationsByPennant =  nationService.findByShipsPennantContaining(searchStrings.get("pennant"));
+            if (nationsByPennant.size() > 0) {
                 searchStrings.remove("pennant");
-                result = filterList(shipClassByPennant, searchStrings);
+                result = filterList(nationsByPennant, searchStrings);
             }
 
         } else if (searchStrings.get("class").length() > 0) {
-            List<ShipClass> shipByClass = shipClassService.findByNameContaining(searchStrings.get("class"));
-            if (shipByClass.size() > 0) {
+            List<Nation> nationsByShipClass = nationService.findByShipClassesNameContaining("class");
+            if (nationsByShipClass.size() > 0) {
                 searchStrings.remove("class");
-                result = filterList(shipByClass, searchStrings);
+                result = filterList(nationsByShipClass, searchStrings);
             }
 
         } else if (searchStrings.get("type").length() > 0) {
             ShipType shipType;
-            List<ShipClass> shipByType = new ArrayList<>();
+            List<Nation> nationsByType = new ArrayList<>();
             try {
                 for (ShipType shipType1 : ShipType.values()) {
                     if (shipType1.getTypeDescription().contentEquals(searchStrings.get("type"))) {
                         shipType = shipType1;
-                        shipByType = shipClassService.findByType(shipType);
+                        nationsByType = nationService.findByShipClassesShipType(shipType);
                     }
                 }
             } catch (IllegalArgumentException e){
                 e.printStackTrace();
             }
-            if (shipByType.size() > 0) {
+            if (nationsByType.size() > 0) {
                 searchStrings.remove("type");
-                result = filterList(shipByType, searchStrings);
+                result = filterList(nationsByType, searchStrings);
             }
 
         } else if (searchStrings.get("nation").length() > 0) {
-            List<ShipClass> shipByNation = shipClassService.findByShipsNationNameContaining(searchStrings.get("nation"));
-            if (shipByNation.size() > 0) {
+            List<Nation> nationsByName = nationService.findByNameContaining(searchStrings.get("nation"));
+            if (nationsByName.size() > 0) {
                 searchStrings.remove("nation");
-                result = filterList(shipByNation, searchStrings);
+                result = filterList(nationsByName, searchStrings);
             }
 
         } else if (searchStrings.get("sensor").length() > 0) {
-            List<ShipClass> shipBySensor = shipClassService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
-            if (shipBySensor.size() > 0) {
+            List<Nation> nationsBySensor = nationService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
+            if (nationsBySensor.size() > 0) {
                 searchStrings.remove("ship");
-                result = filterList(shipBySensor, searchStrings);
+                result = filterList(nationsBySensor, searchStrings);
             }
 
         } else if (searchStrings.get("any").length() > 0) {
 
-            List<ShipClass> shipClasses = new ArrayList<>();
 
-            List<ShipClass> shipClassByShipName = shipClassService.findByShipsNameContaining(searchStrings.get("ship"));
-            List<ShipClass> shipClassByPennant = shipClassService.findByShipsPennantContaining(searchStrings.get("pennant"));
-            List<ShipClass> shipByClass = shipClassService.findByNameContaining(searchStrings.get("class"));
-            List<ShipClass> shipByType = new ArrayList<>();
+            List<Nation> nations = new ArrayList<>();
+
+            List<Nation> nationsByShipName = nationService.findByShipsNameContaining(searchStrings.get("ship"));
+            List<Nation> nationsByShipPennant = nationService.findByShipsPennantContaining(searchStrings.get("pennant"));
+            List<Nation> nationsByShipClass = nationService.findByShipClassesNameContaining(searchStrings.get("class"));
+            List<Nation> nationsByType = new ArrayList<>();
             try {
                 ShipType shipType = ShipType.valueOf(searchStrings.get("type"));
-                shipByType = shipClassService.findByType(shipType);
+                nationsByType = nationService.findByShipClassesShipType(shipType);
             } catch (Exception e) {e.printStackTrace();}
-            List<ShipClass> shipByNation = shipClassService.findByShipsNationNameContaining(searchStrings.get("nation"));
-            List<ShipClass> shipBySensor = shipClassService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
+            List<Nation> nationsByName = nationService.findByNameContaining(searchStrings.get("nation"));
+            List<Nation> nationsBySensor = nationService.findByShipsSensorsNameContaining(searchStrings.get("sensor"));
 
-
-            result = shipClasses;
+            result = nations;
         }
 
-        return new HashSet<ShipClass>(result);
+        return new HashSet<Nation>(result);
     }
 
-    private List<ShipClass> filterList(List<ShipClass> shipClasses, Map<String, String> searchStrings) throws ResultingListSizeException {
+    private List<Nation> filterList(List<Nation> nations, Map<String, String> searchStrings) throws ResultingListSizeException {
 
-        List<ShipClass> filteredList = shipClasses;
+        List<Nation> filteredList = nations;
         Set<String> searchKeys = searchStrings.keySet();
         for (String key : searchKeys) {
             if (searchStrings.get(key).length() > 0) {
@@ -135,23 +133,23 @@ public class NationSearch {
         return filteredList;
     }
 
-    private List<ShipClass> pennantFilter(List<ShipClass> shipClasses, String pennant) {
-        List<ShipClass> pennantFilterResult = new ArrayList<>();
-        pennantFilterResult.addAll(shipClassService.findByShipsPennantContaining(pennant));
-        pennantFilterResult.retainAll(shipClasses);
+    private List<Nation> pennantFilter(List<Nation> nations, String pennant) {
+        List<Nation> pennantFilterResult = new ArrayList<>();
+        pennantFilterResult.addAll(nationService.findByShipsPennantContaining(pennant));
+        pennantFilterResult.retainAll(nations);
         return pennantFilterResult;
     }
 
-    private List<ShipClass> shipClassFilter(List<ShipClass> shipClasses, String shipClassString) throws ResultingListSizeException {
-        List<ShipClass> shipClassFilterResult = new ArrayList<>();
-        shipClassFilterResult.addAll(shipClassService.findByName(shipClassString));
-        shipClassFilterResult.retainAll(shipClasses);
+    private List<Nation> shipClassFilter(List<Nation> nations, String shipClassString) throws ResultingListSizeException {
+        List<Nation> shipClassFilterResult = new ArrayList<>();
+        shipClassFilterResult.addAll(nationService.findByShipClassesNameContaining(shipClassString));
+        shipClassFilterResult.retainAll(nations);
 
         return shipClassFilterResult;
     }
 
-    private List<ShipClass> shipTypeFilter(List<ShipClass> shipClasses, String shipTypeString) {
-        List<ShipClass> shipTypeFilterResult = new ArrayList<>();
+    private List<Nation> shipTypeFilter(List<Nation> nations, String shipTypeString) {
+        List<Nation> shipTypeFilterResult = new ArrayList<>();
 
         try {
             ShipType shipType;
@@ -159,10 +157,10 @@ public class NationSearch {
                 if (shipType1.getTypeDescription().contentEquals(shipTypeString)) {
                     System.out.println("Search class by type: " + shipType1.getTypeDescription());
                     shipType = shipType1;
-                    shipTypeFilterResult.addAll(shipClassService.findByType(shipType));
+                    shipTypeFilterResult.addAll(nationService.findByShipClassesShipType(shipType));
                 }
             }
-            shipTypeFilterResult.retainAll(shipClasses);
+            shipTypeFilterResult.retainAll(nations);
         } catch (IllegalArgumentException e){
             e.printStackTrace();
         }
@@ -170,18 +168,18 @@ public class NationSearch {
         return shipTypeFilterResult;
     }
 
-    private List<ShipClass> nationFilter(List<ShipClass> shipClasses, String nationString) throws ResultingListSizeException {
-        List<ShipClass> nationFilterResult = new ArrayList<>();
-        nationFilterResult.addAll(shipClassService.findByShipsNationNameContaining(nationString));
-        nationFilterResult.retainAll(shipClasses);
+    private List<Nation> nationFilter(List<Nation> nations, String nationString) throws ResultingListSizeException {
+        List<Nation> nationFilterResult = new ArrayList<>();
+        nationFilterResult.addAll(nationService.findByNameContaining(nationString));
+        nationFilterResult.retainAll(nations);
 
         return nationFilterResult;
     }
 
-    private List<ShipClass> sensorFilter(List<ShipClass> shipClasses, String sensorString) throws ResultingListSizeException {
-        List<ShipClass> sensorFilterResult = new ArrayList<>();
-        sensorFilterResult.addAll(shipClassService.findByShipsSensorsNameContaining(sensorString));
-        sensorFilterResult.retainAll(shipClasses);
+    private List<Nation> sensorFilter(List<Nation> nations, String sensorString) throws ResultingListSizeException {
+        List<Nation> sensorFilterResult = new ArrayList<>();
+        sensorFilterResult.addAll(nationService.findByShipsSensorsNameContaining(sensorString));
+        sensorFilterResult.retainAll(nations);
 
         return sensorFilterResult;
     }
