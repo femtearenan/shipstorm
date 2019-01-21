@@ -7,12 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import se.femtearenan.shipstorm.enumerations.ShipType;
+import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
+import se.femtearenan.shipstorm.utilities.NationSearch;
 import se.femtearenan.shipstorm.utilities.ServicePackage;
 import se.femtearenan.shipstorm.utilities.ShipClassSearch;
 import se.femtearenan.shipstorm.utilities.ShipSearch;
@@ -50,7 +52,7 @@ public class SearchController {
     @RequestMapping(value="/shipstorm/search")
     public String chooseSearchType(Model model) {
 
-        model.addAttribute("nations", nationService.listAllNations());
+        //model.addAttribute("nations", nationService.listAllNations());
         EnumSet<ShipType> types = EnumSet.allOf(ShipType.class);
         model.addAttribute("types", types);
 
@@ -83,6 +85,7 @@ public class SearchController {
         List<Ship> shipResult = new ArrayList<>();
         Set<ShipClass> classResult = new HashSet<>();
         List<ShipType> typeResult = new ArrayList<>();
+        List<Nation> nationResult = new ArrayList<>();
 
         switch (searchType) {
             case "ship":
@@ -124,6 +127,18 @@ public class SearchController {
                 searchType = "Type";
                 break;
             case "nation":
+                System.out.println("Searching for nations."); // TODO: remove
+                try {
+                    ServicePackage servicePackage = new ServicePackage(shipService, nationService, shipClassService, sensorService);
+                    NationSearch nationSearch = new NationSearch(servicePackage);
+                    nationResult = nationSearch.searchNation(searchStrings);
+                    System.out.println("Found: " + nationResult.size() + " number of nations.");
+                    model.addAttribute("result", nationResult);
+                    searchType = "Nation";
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
                 break;
             case "pennant":
                 break;
@@ -133,7 +148,10 @@ public class SearchController {
                 message = "An entity is not recognized.";
         }
 
-        if (!shipResult.isEmpty() || !classResult.isEmpty() || !typeResult.isEmpty()) {
+        if (!shipResult.isEmpty()
+                || !classResult.isEmpty()
+                || !typeResult.isEmpty()
+                || !nationResult.isEmpty()) {
             hasResult = true;
         }
 

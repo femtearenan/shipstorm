@@ -67,7 +67,20 @@
         </table>
     </div>
     <div th:fragment="nation">
+        <h2>Nation</h2>
+        <table>
+            <tr>
+                <th>Name</th>
+                <th>Abbreviation</th>
+                <th></th>
+            </tr>
 
+            <tr th:each="nation : ${result}">
+                <td th:text="${nation.name}">Example name</td>
+                <td th:text="${nation.abbreviation}">Example shipType</td>
+                <td><a th:href="${'/shipstorm/nation/' + nation.id + '/edit'}">Edit</a></td>
+            </tr>
+        </table>
     </div>
 </div>
 </body>
