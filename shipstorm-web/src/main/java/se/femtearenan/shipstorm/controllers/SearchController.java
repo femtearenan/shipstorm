@@ -85,7 +85,7 @@ public class SearchController {
         List<Ship> shipResult = new ArrayList<>();
         Set<ShipClass> classResult = new HashSet<>();
         List<ShipType> typeResult = new ArrayList<>();
-        List<Nation> nationResult = new ArrayList<>();
+        Set<Nation> nationResult = new HashSet<>();
 
         switch (searchType) {
             case "ship":

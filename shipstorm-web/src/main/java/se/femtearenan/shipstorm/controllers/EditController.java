@@ -7,13 +7,14 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import se.femtearenan.shipstorm.enumerations.ShipType;
-import se.femtearenan.shipstorm.utilities.GenerateShip;
+import se.femtearenan.shipstorm.model.Nation;
 import se.femtearenan.shipstorm.model.Ship;
 import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.model.ShipImage;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
+import se.femtearenan.shipstorm.utilities.GenerateShip;
 
 import java.util.Base64;
 import java.util.HashMap;
@@ -183,5 +184,33 @@ public class EditController {
             }
         }
         return shipClass;
+    }
+
+    @RequestMapping("/shipstorm/nation/{id}/edit")
+    public String editNation(@PathVariable Long id, Model model) {
+        Nation nation = nationService.getNationById(id);
+        if (nation == null) {
+            return "redirect:/shipstorm/";
+        }
+        model.addAttribute("nation", nation);
+        return "editNation";
+    }
+
+    @RequestMapping(value = "/shipstorm/nation/{id}/edit", method = RequestMethod.POST)
+    public String editNation(@PathVariable Long id, Nation nationUpdate) {
+        Nation nation = nationService.getNationById(id);
+        if (nation == null) {
+            return "redirect:/shipstorm/";
+        }
+        if (!nation.getName().equals(nationUpdate.getName())) {
+            nation.setName(nationUpdate.getName());
+        }
+        if (!nation.getAbbreviation().equals(nationUpdate.getAbbreviation())) {
+            nation.setAbbreviation(nationUpdate.getAbbreviation());
+        }
+
+        nationService.save(nation);
+
+        return "redirect:/shipstorm/nation/" + id + "/edit";
     }
 }

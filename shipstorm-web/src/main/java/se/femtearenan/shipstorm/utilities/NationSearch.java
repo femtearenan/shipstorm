@@ -9,10 +9,7 @@ import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
 import se.femtearenan.shipstorm.services.ShipService;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @SuppressWarnings("ALL")
 public class NationSearch {
@@ -28,7 +25,7 @@ public class NationSearch {
         sensorService = servicePackage.getSensorService();
     }
 
-    public List<Nation> searchNation(Map<String, String> searchStrings) throws Exception {
+    public Set<Nation> searchNation(Map<String, String> searchStrings) throws Exception {
 
         List<Nation> result = new ArrayList<>();
 
@@ -114,7 +111,7 @@ public class NationSearch {
             result = nations;
         }
 
-        return result;
+        return new HashSet<>(result);
     }
 
     private List<Nation> filterList(List<Nation> nations, Map<String, String> searchStrings) throws ResultingListSizeException {
