@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.model.Nation;
+import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.repositories.NationRepository;
 
 import java.util.List;
@@ -44,7 +45,7 @@ public class NationServiceImpl implements NationService {
 
     @Override
     public List<Nation> findByShipClassesShipType(ShipType shipType) {
-        return nationRepository.findByShipClassesShipType(shipType);
+        return nationRepository.findByShipsShipClassShipType(shipType);
     }
 
     @Override
@@ -58,8 +59,8 @@ public class NationServiceImpl implements NationService {
     }
 
     @Override
-    public List<Nation> findByShipClassesNameContaining(String name) {
-        return nationRepository.findByShipClassesNameContaining(name);
+    public List<Nation> findByShipsShipClass(ShipClass shipClass) {
+        return nationRepository.findByShipsShipClass(shipClass);
     }
 
     @Override

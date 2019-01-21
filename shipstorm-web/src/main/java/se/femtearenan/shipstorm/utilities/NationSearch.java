@@ -3,6 +3,7 @@ package se.femtearenan.shipstorm.utilities;
 import se.femtearenan.shipstorm.enumerations.ShipType;
 import se.femtearenan.shipstorm.exceptions.ResultingListSizeException;
 import se.femtearenan.shipstorm.model.Nation;
+import se.femtearenan.shipstorm.model.ShipClass;
 import se.femtearenan.shipstorm.services.NationService;
 import se.femtearenan.shipstorm.services.SensorService;
 import se.femtearenan.shipstorm.services.ShipClassService;
@@ -44,7 +45,11 @@ public class NationSearch {
             }
 
         } else if (searchStrings.get("class").length() > 0) {
-            List<Nation> nationsByShipClass = nationService.findByShipClassesNameContaining("class");
+            List<ShipClass> shipClasses = shipClassService.findByNameContaining(searchStrings.get("class"));
+            List<Nation> nationsByShipClass = new ArrayList<>();
+            for (ShipClass shipClass : shipClasses) {
+                nationsByShipClass.addAll(nationService.findByShipsShipClass(shipClass));
+            }
             if (nationsByShipClass.size() > 0) {
                 searchStrings.remove("class");
                 result = filterList(nationsByShipClass, searchStrings);
@@ -89,7 +94,11 @@ public class NationSearch {
 
             List<Nation> nationsByShipName = nationService.findByShipsNameContaining(searchStrings.get("ship"));
             List<Nation> nationsByShipPennant = nationService.findByShipsPennantContaining(searchStrings.get("pennant"));
-            List<Nation> nationsByShipClass = nationService.findByShipClassesNameContaining(searchStrings.get("class"));
+            List<ShipClass> shipClasses = shipClassService.findByNameContaining(searchStrings.get("class"));
+            List<Nation> nationsByShipClass = new ArrayList<>();
+            for (ShipClass shipClass : shipClasses) {
+                nationsByShipClass.addAll(nationService.findByShipsShipClass(shipClass));
+            }
             List<Nation> nationsByType = new ArrayList<>();
             try {
                 ShipType shipType = ShipType.valueOf(searchStrings.get("type"));
@@ -142,7 +151,11 @@ public class NationSearch {
 
     private List<Nation> shipClassFilter(List<Nation> nations, String shipClassString) throws ResultingListSizeException {
         List<Nation> shipClassFilterResult = new ArrayList<>();
-        shipClassFilterResult.addAll(nationService.findByShipClassesNameContaining(shipClassString));
+        List<ShipClass> shipClasses = shipClassService.findByNameContaining(shipClassString);
+        List<Nation> nationsByShipClass = new ArrayList<>();
+        for (ShipClass shipClass : shipClasses) {
+            nationsByShipClass.addAll(nationService.findByShipsShipClass(shipClass));
+        }
         shipClassFilterResult.retainAll(nations);
 
         return shipClassFilterResult;
